@@ -7,9 +7,16 @@ WYPopoverController is used for the presentation of content in popover on iPhone
 
 ![Potrait Screenshot](https://raw.github.com/nicolaschengdev/WYPopoverController/master/README/wypopover_screenshots.png)
 
+## Features
+
+* Works like UIPopoverController
+* UIAppearance support (gloss, shadows, corner radius, tint color, ...)
+* Automatic orientation
+* ARC support
+
 ## Installation
 
-Simply add the files `WYPopoverController.h` and `WYPopoverController.m` to your project.
+Add the files `WYPopoverController.h` and `WYPopoverController.m` to your project.
 
 ## Examples
 
@@ -21,3 +28,4 @@ popoverController.delegate = self;
 [popoverController presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
 ```
 
+Appearance

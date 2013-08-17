@@ -415,17 +415,17 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
         fillBottomColor = nil;
         
         glossShadowColor = nil;
-        glossShadowOffset = CGSizeMake(0, 2);
+        glossShadowOffset = CGSizeMake(0, 1.5);
         glossShadowBlurRadius = 0;
         
         outerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
         outerShadowBlurRadius = 8;
-        outerShadowOffset = CGSizeMake(0, 4);
+        outerShadowOffset = CGSizeMake(0, 2);
         outerCornerRadius = 8;
         
         innerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
         innerShadowBlurRadius = 2;
-        innerShadowOffset = CGSizeMake(0, 2);
+        innerShadowOffset = CGSizeMake(0, 1);
         innerCornerRadius = 6;
         
         viewContentInsets = UIEdgeInsetsMake(3, 0, 0, 0);
@@ -629,7 +629,7 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
         CGFloat baseColorRGBA[4];
         [baseColor getRed: &baseColorRGBA[0] green: &baseColorRGBA[1] blue: &baseColorRGBA[2] alpha: &baseColorRGBA[3]];
         
-        result = [UIColor colorWithRed: (baseColorRGBA[0] * 0.3 + 0.7) green: (baseColorRGBA[1] * 0.3 + 0.7) blue: (baseColorRGBA[2] * 0.3 + 0.7) alpha: 1];
+        result = [UIColor colorWithRed: (baseColorRGBA[0] * 0.3 + 0.7) green: (baseColorRGBA[1] * 0.3 + 0.7) blue: (baseColorRGBA[2] * 0.3 + 0.7) alpha: 0.5];
     }
     
     return result;
