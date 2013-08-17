@@ -9,10 +9,38 @@ WYPopoverController is used for the presentation of content in popover on iPhone
 
 ## Features
 
+* UIAppearance support (see [Appearance](https://github.com/nicolaschengdev/WYPopover/wiki/Appearance))
 * Works like UIPopoverController
-* UIAppearance support (gloss, shadows, corner radius, tint color, ...)
 * Automatic orientation
 * ARC support
+
+## Appearance
+
+* tintColor
+* strokeColor
+* fillTopColor
+* fillBottomColor
+* glossShadowColor
+* glossShadowOffset
+* glossShadowBlurRadius
+* borderWidth
+* arrowBase
+* arrowHeight
+* outerShadowColor
+* outerShadowBlurRadius
+* outerShadowOffset
+* outerCornerRadius
+* innerShadowColor
+* innerShadowBlurRadius
+* innerShadowOffset
+* innerCornerRadius
+* viewContentInsets
+
+## Works like UIPopoverController 
+
+* passthroughViews
+* wantsDefaultContentAppearance
+* popoverLayoutMargins
 
 ## Installation
 
