@@ -7,3 +7,4 @@ Screenshots
 ---
 
 ![Potrait Screenshot](https://raw.github.com/nicolaschengdev/WYPopoverController/master/README/wypopover_portrait_screenshot.png)
+![Landscape Screenshot](https://raw.github.com/nicolaschengdev/WYPopoverController/master/README/wypopover_landscape_screenshot.png)
