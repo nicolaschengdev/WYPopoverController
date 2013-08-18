@@ -5,7 +5,7 @@ WYPopoverController is used for the presentation of content in popover on iPhone
 
 ## Screenshots
 
-![Potrait Screenshot](https://raw.github.com/nicolaschengdev/WYPopoverController/master/README/wypopover_screenshots.png)
+![Potrait Screenshot](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_screenshots.png)
 
 ## Features
 
