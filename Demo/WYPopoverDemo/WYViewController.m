@@ -32,6 +32,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIImage* normal = [[UIImage imageNamed:@"button-normal"] stretchableImageWithLeftCapWidth:16 topCapHeight:0];
+    UIImage* highlighted = [[UIImage imageNamed:@"button-highlighted"] stretchableImageWithLeftCapWidth:16 topCapHeight:0];
+    
+    [topLeftButton setBackgroundImage:normal forState:UIControlStateNormal]; [topLeftButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
+    [topButton setBackgroundImage:normal forState:UIControlStateNormal]; [topButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
+    [topRightButton setBackgroundImage:normal forState:UIControlStateNormal]; [topRightButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
+    [leftButton setBackgroundImage:normal forState:UIControlStateNormal]; [leftButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
+    [centerButton setBackgroundImage:normal forState:UIControlStateNormal]; [centerButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
+    [rightButton setBackgroundImage:normal forState:UIControlStateNormal]; [rightButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
+    [bottomLeftButton setBackgroundImage:normal forState:UIControlStateNormal]; [bottomLeftButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
+    [bottomButton setBackgroundImage:normal forState:UIControlStateNormal]; [bottomButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
+    [bottomRightButton setBackgroundImage:normal forState:UIControlStateNormal]; [bottomRightButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
 }
 
 - (IBAction)tapOnButton:(id)sender

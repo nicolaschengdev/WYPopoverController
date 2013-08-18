@@ -1,7 +1,7 @@
 WYPopoverController
 ===================
 
-WYPopoverController is used for the presentation of content in popover on iPhone / iPad devices.
+WYPopoverController is used for the presentation of content in popover on iPhone / iPad devices. Very customizable.
 
 ## Screenshots
 
@@ -12,7 +12,6 @@ WYPopoverController is used for the presentation of content in popover on iPhone
 * UIAppearance support (see [Appearance](https://github.com/nicolaschengdev/WYPopover/wiki/Appearance))
 * Works like UIPopoverController
 * Automatic orientation
-* ARC support
 
 ## Appearance
 
@@ -41,6 +40,10 @@ WYPopoverController is used for the presentation of content in popover on iPhone
 * passthroughViews
 * wantsDefaultContentAppearance
 * popoverLayoutMargins
+
+## ARC
+
+WYPopoverController uses ARC.
 
 ## Installation
 

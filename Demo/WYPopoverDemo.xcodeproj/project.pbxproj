@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9722D80417C1667E000D922B /* button-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 9722D80017C1667E000D922B /* button-highlighted.png */; };
+		9722D80517C1667E000D922B /* button-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9722D80117C1667E000D922B /* button-highlighted@2x.png */; };
+		9722D80617C1667E000D922B /* button-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 9722D80217C1667E000D922B /* button-normal.png */; };
+		9722D80717C1667E000D922B /* button-normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9722D80317C1667E000D922B /* button-normal@2x.png */; };
 		976A341F17BB9AEB0071BF21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976A341E17BB9AEB0071BF21 /* UIKit.framework */; };
 		976A342117BB9AEB0071BF21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976A342017BB9AEB0071BF21 /* Foundation.framework */; };
 		976A342317BB9AEB0071BF21 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976A342217BB9AEB0071BF21 /* CoreGraphics.framework */; };
@@ -25,6 +29,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9722D80017C1667E000D922B /* button-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-highlighted.png"; sourceTree = "<group>"; };
+		9722D80117C1667E000D922B /* button-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-highlighted@2x.png"; sourceTree = "<group>"; };
+		9722D80217C1667E000D922B /* button-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-normal.png"; sourceTree = "<group>"; };
+		9722D80317C1667E000D922B /* button-normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-normal@2x.png"; sourceTree = "<group>"; };
 		976A341B17BB9AEB0071BF21 /* WYPopoverDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WYPopoverDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		976A341E17BB9AEB0071BF21 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		976A342017BB9AEB0071BF21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -63,6 +71,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9722D7FF17C1667E000D922B /* images */ = {
+			isa = PBXGroup;
+			children = (
+				9722D80017C1667E000D922B /* button-highlighted.png */,
+				9722D80117C1667E000D922B /* button-highlighted@2x.png */,
+				9722D80217C1667E000D922B /* button-normal.png */,
+				9722D80317C1667E000D922B /* button-normal@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		976A341217BB9AEB0071BF21 = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +131,7 @@
 		976A342517BB9AEB0071BF21 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9722D7FF17C1667E000D922B /* images */,
 				976A342617BB9AEB0071BF21 /* WYPopoverDemo-Info.plist */,
 				976A342717BB9AEB0071BF21 /* InfoPlist.strings */,
 				976A342A17BB9AEB0071BF21 /* main.m */,
@@ -182,6 +202,10 @@
 				976A343B17BB9AEB0071BF21 /* WYViewController_iPhone.xib in Resources */,
 				976A343E17BB9AEB0071BF21 /* WYViewController_iPad.xib in Resources */,
 				976A344B17BBAA4C0071BF21 /* WYSettingsViewController.xib in Resources */,
+				9722D80417C1667E000D922B /* button-highlighted.png in Resources */,
+				9722D80517C1667E000D922B /* button-highlighted@2x.png in Resources */,
+				9722D80617C1667E000D922B /* button-normal.png in Resources */,
+				9722D80717C1667E000D922B /* button-normal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
