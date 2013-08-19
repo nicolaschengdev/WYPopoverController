@@ -1,7 +1,7 @@
 WYPopoverController
 ===================
 
-WYPopoverController is used for the presentation of content in popover on iPhone / iPad devices. Very customizable.
+WYPopoverController is for the presentation of content in popover on iPhone / iPad devices. Very customizable.
 
 ## Screenshots
 
@@ -109,7 +109,7 @@ UINavigationBar* appearance2 = [UINavigationBar appearanceWhenContainedIn:[UINav
 
 ## License
 
-Version 0.1
+Version 0.1.0
 
 WYPopoverController is available under the MIT license.
 
