@@ -47,7 +47,7 @@ WYPopoverController uses ARC.
 
 ## Installation
 
-Add the files `WYPopoverController.h` and `WYPopoverController.m` to your project.
+Add this line `pod 'WYPopoverController', '~> 0.1.0'` to your PodFile or add manually these 2 files `WYPopoverController.h` and `WYPopoverController.m` to your project.
 
 ## Examples
 
