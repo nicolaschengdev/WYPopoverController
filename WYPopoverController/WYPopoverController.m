@@ -312,10 +312,7 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
 
 - (void)setEventInterceptDelegate:(id)value
 {
-    //if (value != nil)
-    {
-        objc_setAssociatedObject(self, WYPopoverEventInterceptDelegateTagKey, value, OBJC_ASSOCIATION_ASSIGN);
-    }
+    objc_setAssociatedObject(self, WYPopoverEventInterceptDelegateTagKey, value, OBJC_ASSOCIATION_ASSIGN);
 }
 
 - (void)swizzled_sendEvent:(UIEvent *)event
@@ -328,16 +325,10 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
 
 + (void)load
 {
-    //if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
-        Method original, swizzle;
-        
-        original = class_getInstanceMethod(self, @selector(sendEvent:));
-        
-        swizzle = class_getInstanceMethod(self, @selector(swizzled_sendEvent:));
-        
-        method_exchangeImplementations(original, swizzle);
-    }
+    Method original, swizzle;
+    original = class_getInstanceMethod(self, @selector(sendEvent:));
+    swizzle = class_getInstanceMethod(self, @selector(swizzled_sendEvent:));
+    method_exchangeImplementations(original, swizzle);
 }
 
 @end
@@ -1015,8 +1006,6 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     if (self)
     {
         viewController = aViewController;
-        //UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], nil];
-        //[appearance setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
         popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
     }
     

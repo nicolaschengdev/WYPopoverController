@@ -69,6 +69,10 @@
         popoverController.wantsDefaultContentAppearance = NO;
         [popoverController presentPopoverFromRect:btn.bounds inView:btn permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
     }
+    else
+    {
+        [self done:nil];
+    }
 }
 
 #pragma mark - Selectors

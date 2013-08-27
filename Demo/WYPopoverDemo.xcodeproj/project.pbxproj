@@ -26,6 +26,8 @@
 		976A344617BBA04F0071BF21 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976A344517BBA04F0071BF21 /* WYPopoverController.m */; };
 		976A344A17BBAA4C0071BF21 /* WYSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976A344817BBAA4C0071BF21 /* WYSettingsViewController.m */; };
 		976A344B17BBAA4C0071BF21 /* WYSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 976A344917BBAA4C0071BF21 /* WYSettingsViewController.xib */; };
+		97B3CB2F17CD57910005E1A1 /* WYAnotherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB2D17CD57910005E1A1 /* WYAnotherViewController.m */; };
+		97B3CB3017CD57910005E1A1 /* WYAnotherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB2E17CD57910005E1A1 /* WYAnotherViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,9 @@
 		976A344717BBAA4C0071BF21 /* WYSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYSettingsViewController.h; sourceTree = "<group>"; };
 		976A344817BBAA4C0071BF21 /* WYSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYSettingsViewController.m; sourceTree = "<group>"; };
 		976A344917BBAA4C0071BF21 /* WYSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYSettingsViewController.xib; sourceTree = "<group>"; };
+		97B3CB2C17CD57910005E1A1 /* WYAnotherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYAnotherViewController.h; sourceTree = "<group>"; };
+		97B3CB2D17CD57910005E1A1 /* WYAnotherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYAnotherViewController.m; sourceTree = "<group>"; };
+		97B3CB2E17CD57910005E1A1 /* WYAnotherViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYAnotherViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +126,9 @@
 				976A342E17BB9AEB0071BF21 /* WYAppDelegate.m */,
 				976A343617BB9AEB0071BF21 /* WYViewController.h */,
 				976A343717BB9AEB0071BF21 /* WYViewController.m */,
+				97B3CB2C17CD57910005E1A1 /* WYAnotherViewController.h */,
+				97B3CB2D17CD57910005E1A1 /* WYAnotherViewController.m */,
+				97B3CB2E17CD57910005E1A1 /* WYAnotherViewController.xib */,
 				976A343917BB9AEB0071BF21 /* WYViewController_iPhone.xib */,
 				976A343C17BB9AEB0071BF21 /* WYViewController_iPad.xib */,
 				976A342517BB9AEB0071BF21 /* Supporting Files */,
@@ -206,6 +214,7 @@
 				9722D80517C1667E000D922B /* button-highlighted@2x.png in Resources */,
 				9722D80617C1667E000D922B /* button-normal.png in Resources */,
 				9722D80717C1667E000D922B /* button-normal@2x.png in Resources */,
+				97B3CB3017CD57910005E1A1 /* WYAnotherViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +230,7 @@
 				976A343817BB9AEB0071BF21 /* WYViewController.m in Sources */,
 				976A344617BBA04F0071BF21 /* WYPopoverController.m in Sources */,
 				976A344A17BBAA4C0071BF21 /* WYSettingsViewController.m in Sources */,
+				97B3CB2F17CD57910005E1A1 /* WYAnotherViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,7 +289,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -304,7 +314,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

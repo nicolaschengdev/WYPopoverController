@@ -6,6 +6,7 @@
 //
 
 #import "WYSettingsViewController.h"
+#import "WYAnotherViewController.h"
 
 @interface WYSettingsViewController ()
 {
@@ -22,7 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"WYSettingsTableViewCell"];
+    //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"WYSettingsTableViewCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,17 +39,25 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    NSInteger result = 1;
+    
+    if (section == 0)
+    {
+        result = 2;
+    }
+    return result;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [aTableView dequeueReusableCellWithIdentifier:@"WYSettingsTableViewCell" forIndexPath:indexPath];
+    //UITableViewCell* cell = [aTableView dequeueReusableCellWithIdentifier:@"WYSettingsTableViewCell" forIndexPath:indexPath];
+    
+    UITableViewCell* cell = [aTableView dequeueReusableCellWithIdentifier:@"WYSettingsTableViewCell"];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"WYSettingsTableViewCell"];
@@ -64,21 +73,29 @@
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [aTableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    NSString* pdfPhotoSize = (indexPath.row == 0) ? @"large" : @"half";
-    [defaults setObject:pdfPhotoSize forKey:@"PDF_PHOTO_SIZE"];
-    [defaults synchronize];
     
-    UITableViewCell* cell;
-    
-    indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    [self updateCell:cell atIndexPath:indexPath];
-    
-    
-    indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
-    cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    [self updateCell:cell atIndexPath:indexPath];
+    if (indexPath.section == 0)
+    {
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        NSString* pdfPhotoSize = (indexPath.row == 0) ? @"large" : @"half";
+        [defaults setObject:pdfPhotoSize forKey:@"PDF_PHOTO_SIZE"];
+        [defaults synchronize];
+        
+        UITableViewCell* cell;
+        
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        [self updateCell:cell atIndexPath:indexPath];
+        
+        indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+        cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        [self updateCell:cell atIndexPath:indexPath];
+    }
+    else
+    {
+        WYAnotherViewController *anotherViewController = [[WYAnotherViewController alloc] init];
+        [self.navigationController pushViewController:anotherViewController animated:YES];
+    }
 }
 
 #pragma mark - Private
@@ -90,21 +107,29 @@
     cell.textLabel.text = @"";
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    if (indexPath.row == 0)
+    if (indexPath.section == 0)
     {
-        cell.textLabel.text = @"Medium - 100%";
-        if ([pdfPhotoSize isEqualToString:@"large"])
+        if (indexPath.row == 0)
         {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell.textLabel.text = @"Medium - 100%";
+            if ([pdfPhotoSize isEqualToString:@"large"])
+            {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
+        }
+        else if (indexPath.row == 1)
+        {
+            cell.textLabel.text = @"Small - 50%";
+            if ([pdfPhotoSize isEqualToString:@"half"])
+            {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
         }
     }
-    else if (indexPath.row == 1)
+    else
     {
-        cell.textLabel.text = @"Small - 50%";
-        if ([pdfPhotoSize isEqualToString:@"half"])
-        {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        }
+        cell.textLabel.text = @"Push another view";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 }
 
