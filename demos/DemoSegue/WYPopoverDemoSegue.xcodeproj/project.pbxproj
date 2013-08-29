@@ -1,0 +1,458 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		97B3CB3E17CDE8E50005E1A1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B3CB3D17CDE8E50005E1A1 /* UIKit.framework */; };
+		97B3CB4017CDE8E50005E1A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B3CB3F17CDE8E50005E1A1 /* Foundation.framework */; };
+		97B3CB4217CDE8E50005E1A1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B3CB4117CDE8E50005E1A1 /* CoreGraphics.framework */; };
+		97B3CB4817CDE8E50005E1A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB4617CDE8E50005E1A1 /* InfoPlist.strings */; };
+		97B3CB4A17CDE8E50005E1A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB4917CDE8E50005E1A1 /* main.m */; };
+		97B3CB4E17CDE8E50005E1A1 /* WYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB4D17CDE8E50005E1A1 /* WYAppDelegate.m */; };
+		97B3CB5017CDE8E50005E1A1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB4F17CDE8E50005E1A1 /* Default.png */; };
+		97B3CB5217CDE8E50005E1A1 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB5117CDE8E50005E1A1 /* Default@2x.png */; };
+		97B3CB5417CDE8E50005E1A1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB5317CDE8E50005E1A1 /* Default-568h@2x.png */; };
+		97B3CB5717CDE8E50005E1A1 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB5517CDE8E50005E1A1 /* MainStoryboard.storyboard */; };
+		97B3CB5D17CDE8E50005E1A1 /* WYViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB5C17CDE8E50005E1A1 /* WYViewController.m */; };
+		97B3CB7C17CF582D0005E1A1 /* 1Star.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6417CF582D0005E1A1 /* 1Star.png */; };
+		97B3CB7D17CF582D0005E1A1 /* 1Star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6517CF582D0005E1A1 /* 1Star@2x.png */; };
+		97B3CB7E17CF582D0005E1A1 /* 1StarSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6617CF582D0005E1A1 /* 1StarSmall.png */; };
+		97B3CB7F17CF582D0005E1A1 /* 1StarSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6717CF582D0005E1A1 /* 1StarSmall@2x.png */; };
+		97B3CB8017CF582D0005E1A1 /* 2Stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6817CF582D0005E1A1 /* 2Stars.png */; };
+		97B3CB8117CF582D0005E1A1 /* 2Stars@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6917CF582D0005E1A1 /* 2Stars@2x.png */; };
+		97B3CB8217CF582D0005E1A1 /* 2StarsSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6A17CF582D0005E1A1 /* 2StarsSmall.png */; };
+		97B3CB8317CF582D0005E1A1 /* 2StarsSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6B17CF582D0005E1A1 /* 2StarsSmall@2x.png */; };
+		97B3CB8417CF582D0005E1A1 /* 3Stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6C17CF582D0005E1A1 /* 3Stars.png */; };
+		97B3CB8517CF582D0005E1A1 /* 3Stars@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6D17CF582D0005E1A1 /* 3Stars@2x.png */; };
+		97B3CB8617CF582D0005E1A1 /* 3StarsSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6E17CF582D0005E1A1 /* 3StarsSmall.png */; };
+		97B3CB8717CF582D0005E1A1 /* 3StarsSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB6F17CF582D0005E1A1 /* 3StarsSmall@2x.png */; };
+		97B3CB8817CF582D0005E1A1 /* 4Stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7017CF582D0005E1A1 /* 4Stars.png */; };
+		97B3CB8917CF582D0005E1A1 /* 4Stars@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7117CF582D0005E1A1 /* 4Stars@2x.png */; };
+		97B3CB8A17CF582D0005E1A1 /* 4StarsSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7217CF582D0005E1A1 /* 4StarsSmall.png */; };
+		97B3CB8B17CF582D0005E1A1 /* 4StarsSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7317CF582D0005E1A1 /* 4StarsSmall@2x.png */; };
+		97B3CB8C17CF582D0005E1A1 /* 5Stars.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7417CF582D0005E1A1 /* 5Stars.png */; };
+		97B3CB8D17CF582D0005E1A1 /* 5Stars@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7517CF582D0005E1A1 /* 5Stars@2x.png */; };
+		97B3CB8E17CF582D0005E1A1 /* 5StarsSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7617CF582D0005E1A1 /* 5StarsSmall.png */; };
+		97B3CB8F17CF582D0005E1A1 /* 5StarsSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7717CF582D0005E1A1 /* 5StarsSmall@2x.png */; };
+		97B3CB9017CF582D0005E1A1 /* Gestures.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7817CF582D0005E1A1 /* Gestures.png */; };
+		97B3CB9117CF582D0005E1A1 /* Gestures@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7917CF582D0005E1A1 /* Gestures@2x.png */; };
+		97B3CB9217CF582D0005E1A1 /* Players.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7A17CF582D0005E1A1 /* Players.png */; };
+		97B3CB9317CF582D0005E1A1 /* Players@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97B3CB7B17CF582D0005E1A1 /* Players@2x.png */; };
+		97B3CB9617CF58F60005E1A1 /* WYPlayersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB9517CF58F60005E1A1 /* WYPlayersViewController.m */; };
+		97B3CB9917CF595E0005E1A1 /* WYPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB9817CF595E0005E1A1 /* WYPlayer.m */; };
+		97B3CB9C17CF8D700005E1A1 /* WYPlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB9B17CF8D700005E1A1 /* WYPlayerCell.m */; };
+		97B3CBA217CF936A0005E1A1 /* WYPlayerDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CBA117CF936A0005E1A1 /* WYPlayerDetailsViewController.m */; };
+		97B3CBAE17CFEEAC0005E1A1 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CBAB17CFEEAC0005E1A1 /* WYPopoverController.m */; };
+		97B3CBAF17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CBAD17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		97B3CB3A17CDE8E50005E1A1 /* WYPopoverDemoSegue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WYPopoverDemoSegue.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		97B3CB3D17CDE8E50005E1A1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		97B3CB3F17CDE8E50005E1A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		97B3CB4117CDE8E50005E1A1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		97B3CB4517CDE8E50005E1A1 /* WYPopoverDemoSegue-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "WYPopoverDemoSegue-Info.plist"; sourceTree = "<group>"; };
+		97B3CB4717CDE8E50005E1A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		97B3CB4917CDE8E50005E1A1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		97B3CB4B17CDE8E50005E1A1 /* WYPopoverDemoSegue-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WYPopoverDemoSegue-Prefix.pch"; sourceTree = "<group>"; };
+		97B3CB4C17CDE8E50005E1A1 /* WYAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WYAppDelegate.h; sourceTree = "<group>"; };
+		97B3CB4D17CDE8E50005E1A1 /* WYAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WYAppDelegate.m; sourceTree = "<group>"; };
+		97B3CB4F17CDE8E50005E1A1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		97B3CB5117CDE8E50005E1A1 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		97B3CB5317CDE8E50005E1A1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		97B3CB5617CDE8E50005E1A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		97B3CB5B17CDE8E50005E1A1 /* WYViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WYViewController.h; sourceTree = "<group>"; };
+		97B3CB5C17CDE8E50005E1A1 /* WYViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WYViewController.m; sourceTree = "<group>"; };
+		97B3CB6417CF582D0005E1A1 /* 1Star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1Star.png; sourceTree = "<group>"; };
+		97B3CB6517CF582D0005E1A1 /* 1Star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1Star@2x.png"; sourceTree = "<group>"; };
+		97B3CB6617CF582D0005E1A1 /* 1StarSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1StarSmall.png; sourceTree = "<group>"; };
+		97B3CB6717CF582D0005E1A1 /* 1StarSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1StarSmall@2x.png"; sourceTree = "<group>"; };
+		97B3CB6817CF582D0005E1A1 /* 2Stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2Stars.png; sourceTree = "<group>"; };
+		97B3CB6917CF582D0005E1A1 /* 2Stars@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2Stars@2x.png"; sourceTree = "<group>"; };
+		97B3CB6A17CF582D0005E1A1 /* 2StarsSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2StarsSmall.png; sourceTree = "<group>"; };
+		97B3CB6B17CF582D0005E1A1 /* 2StarsSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2StarsSmall@2x.png"; sourceTree = "<group>"; };
+		97B3CB6C17CF582D0005E1A1 /* 3Stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3Stars.png; sourceTree = "<group>"; };
+		97B3CB6D17CF582D0005E1A1 /* 3Stars@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "3Stars@2x.png"; sourceTree = "<group>"; };
+		97B3CB6E17CF582D0005E1A1 /* 3StarsSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3StarsSmall.png; sourceTree = "<group>"; };
+		97B3CB6F17CF582D0005E1A1 /* 3StarsSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "3StarsSmall@2x.png"; sourceTree = "<group>"; };
+		97B3CB7017CF582D0005E1A1 /* 4Stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4Stars.png; sourceTree = "<group>"; };
+		97B3CB7117CF582D0005E1A1 /* 4Stars@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4Stars@2x.png"; sourceTree = "<group>"; };
+		97B3CB7217CF582D0005E1A1 /* 4StarsSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4StarsSmall.png; sourceTree = "<group>"; };
+		97B3CB7317CF582D0005E1A1 /* 4StarsSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4StarsSmall@2x.png"; sourceTree = "<group>"; };
+		97B3CB7417CF582D0005E1A1 /* 5Stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5Stars.png; sourceTree = "<group>"; };
+		97B3CB7517CF582D0005E1A1 /* 5Stars@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5Stars@2x.png"; sourceTree = "<group>"; };
+		97B3CB7617CF582D0005E1A1 /* 5StarsSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5StarsSmall.png; sourceTree = "<group>"; };
+		97B3CB7717CF582D0005E1A1 /* 5StarsSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5StarsSmall@2x.png"; sourceTree = "<group>"; };
+		97B3CB7817CF582D0005E1A1 /* Gestures.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gestures.png; sourceTree = "<group>"; };
+		97B3CB7917CF582D0005E1A1 /* Gestures@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gestures@2x.png"; sourceTree = "<group>"; };
+		97B3CB7A17CF582D0005E1A1 /* Players.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Players.png; sourceTree = "<group>"; };
+		97B3CB7B17CF582D0005E1A1 /* Players@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Players@2x.png"; sourceTree = "<group>"; };
+		97B3CB9417CF58F60005E1A1 /* WYPlayersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPlayersViewController.h; sourceTree = "<group>"; };
+		97B3CB9517CF58F60005E1A1 /* WYPlayersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPlayersViewController.m; sourceTree = "<group>"; };
+		97B3CB9717CF595E0005E1A1 /* WYPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPlayer.h; sourceTree = "<group>"; };
+		97B3CB9817CF595E0005E1A1 /* WYPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPlayer.m; sourceTree = "<group>"; };
+		97B3CB9A17CF8D700005E1A1 /* WYPlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPlayerCell.h; sourceTree = "<group>"; };
+		97B3CB9B17CF8D700005E1A1 /* WYPlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPlayerCell.m; sourceTree = "<group>"; };
+		97B3CBA017CF936A0005E1A1 /* WYPlayerDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPlayerDetailsViewController.h; sourceTree = "<group>"; };
+		97B3CBA117CF936A0005E1A1 /* WYPlayerDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPlayerDetailsViewController.m; sourceTree = "<group>"; };
+		97B3CBAA17CFEEAC0005E1A1 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
+		97B3CBAB17CFEEAC0005E1A1 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
+		97B3CBAC17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
+		97B3CBAD17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		97B3CB3717CDE8E50005E1A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97B3CB3E17CDE8E50005E1A1 /* UIKit.framework in Frameworks */,
+				97B3CB4017CDE8E50005E1A1 /* Foundation.framework in Frameworks */,
+				97B3CB4217CDE8E50005E1A1 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		97B3CB3117CDE8E50005E1A1 = {
+			isa = PBXGroup;
+			children = (
+				97B3CB4317CDE8E50005E1A1 /* WYPopoverDemoSegue */,
+				97B3CB3C17CDE8E50005E1A1 /* Frameworks */,
+				97B3CB3B17CDE8E50005E1A1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		97B3CB3B17CDE8E50005E1A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				97B3CB3A17CDE8E50005E1A1 /* WYPopoverDemoSegue.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		97B3CB3C17CDE8E50005E1A1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				97B3CB3D17CDE8E50005E1A1 /* UIKit.framework */,
+				97B3CB3F17CDE8E50005E1A1 /* Foundation.framework */,
+				97B3CB4117CDE8E50005E1A1 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		97B3CB4317CDE8E50005E1A1 /* WYPopoverDemoSegue */ = {
+			isa = PBXGroup;
+			children = (
+				97B3CBA917CFEEAC0005E1A1 /* WYPopoverController */,
+				97B3CB4C17CDE8E50005E1A1 /* WYAppDelegate.h */,
+				97B3CB4D17CDE8E50005E1A1 /* WYAppDelegate.m */,
+				97B3CB5517CDE8E50005E1A1 /* MainStoryboard.storyboard */,
+				97B3CB5B17CDE8E50005E1A1 /* WYViewController.h */,
+				97B3CB5C17CDE8E50005E1A1 /* WYViewController.m */,
+				97B3CB9417CF58F60005E1A1 /* WYPlayersViewController.h */,
+				97B3CB9517CF58F60005E1A1 /* WYPlayersViewController.m */,
+				97B3CBA017CF936A0005E1A1 /* WYPlayerDetailsViewController.h */,
+				97B3CBA117CF936A0005E1A1 /* WYPlayerDetailsViewController.m */,
+				97B3CB9717CF595E0005E1A1 /* WYPlayer.h */,
+				97B3CB9817CF595E0005E1A1 /* WYPlayer.m */,
+				97B3CB9A17CF8D700005E1A1 /* WYPlayerCell.h */,
+				97B3CB9B17CF8D700005E1A1 /* WYPlayerCell.m */,
+				97B3CB4417CDE8E50005E1A1 /* Supporting Files */,
+			);
+			path = WYPopoverDemoSegue;
+			sourceTree = "<group>";
+		};
+		97B3CB4417CDE8E50005E1A1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				97B3CB6317CF582D0005E1A1 /* images */,
+				97B3CB4517CDE8E50005E1A1 /* WYPopoverDemoSegue-Info.plist */,
+				97B3CB4617CDE8E50005E1A1 /* InfoPlist.strings */,
+				97B3CB4917CDE8E50005E1A1 /* main.m */,
+				97B3CB4B17CDE8E50005E1A1 /* WYPopoverDemoSegue-Prefix.pch */,
+				97B3CB4F17CDE8E50005E1A1 /* Default.png */,
+				97B3CB5117CDE8E50005E1A1 /* Default@2x.png */,
+				97B3CB5317CDE8E50005E1A1 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		97B3CB6317CF582D0005E1A1 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				97B3CB6417CF582D0005E1A1 /* 1Star.png */,
+				97B3CB6517CF582D0005E1A1 /* 1Star@2x.png */,
+				97B3CB6617CF582D0005E1A1 /* 1StarSmall.png */,
+				97B3CB6717CF582D0005E1A1 /* 1StarSmall@2x.png */,
+				97B3CB6817CF582D0005E1A1 /* 2Stars.png */,
+				97B3CB6917CF582D0005E1A1 /* 2Stars@2x.png */,
+				97B3CB6A17CF582D0005E1A1 /* 2StarsSmall.png */,
+				97B3CB6B17CF582D0005E1A1 /* 2StarsSmall@2x.png */,
+				97B3CB6C17CF582D0005E1A1 /* 3Stars.png */,
+				97B3CB6D17CF582D0005E1A1 /* 3Stars@2x.png */,
+				97B3CB6E17CF582D0005E1A1 /* 3StarsSmall.png */,
+				97B3CB6F17CF582D0005E1A1 /* 3StarsSmall@2x.png */,
+				97B3CB7017CF582D0005E1A1 /* 4Stars.png */,
+				97B3CB7117CF582D0005E1A1 /* 4Stars@2x.png */,
+				97B3CB7217CF582D0005E1A1 /* 4StarsSmall.png */,
+				97B3CB7317CF582D0005E1A1 /* 4StarsSmall@2x.png */,
+				97B3CB7417CF582D0005E1A1 /* 5Stars.png */,
+				97B3CB7517CF582D0005E1A1 /* 5Stars@2x.png */,
+				97B3CB7617CF582D0005E1A1 /* 5StarsSmall.png */,
+				97B3CB7717CF582D0005E1A1 /* 5StarsSmall@2x.png */,
+				97B3CB7817CF582D0005E1A1 /* Gestures.png */,
+				97B3CB7917CF582D0005E1A1 /* Gestures@2x.png */,
+				97B3CB7A17CF582D0005E1A1 /* Players.png */,
+				97B3CB7B17CF582D0005E1A1 /* Players@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		97B3CBA917CFEEAC0005E1A1 /* WYPopoverController */ = {
+			isa = PBXGroup;
+			children = (
+				97B3CBAA17CFEEAC0005E1A1 /* WYPopoverController.h */,
+				97B3CBAB17CFEEAC0005E1A1 /* WYPopoverController.m */,
+				97B3CBAC17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.h */,
+				97B3CBAD17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.m */,
+			);
+			path = WYPopoverController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		97B3CB3917CDE8E50005E1A1 /* WYPopoverDemoSegue */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 97B3CB6017CDE8E50005E1A1 /* Build configuration list for PBXNativeTarget "WYPopoverDemoSegue" */;
+			buildPhases = (
+				97B3CB3617CDE8E50005E1A1 /* Sources */,
+				97B3CB3717CDE8E50005E1A1 /* Frameworks */,
+				97B3CB3817CDE8E50005E1A1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WYPopoverDemoSegue;
+			productName = WYPopoverDemoSegue;
+			productReference = 97B3CB3A17CDE8E50005E1A1 /* WYPopoverDemoSegue.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		97B3CB3217CDE8E50005E1A1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = WY;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Nicolas CHENG";
+			};
+			buildConfigurationList = 97B3CB3517CDE8E50005E1A1 /* Build configuration list for PBXProject "WYPopoverDemoSegue" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 97B3CB3117CDE8E50005E1A1;
+			productRefGroup = 97B3CB3B17CDE8E50005E1A1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				97B3CB3917CDE8E50005E1A1 /* WYPopoverDemoSegue */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		97B3CB3817CDE8E50005E1A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97B3CB4817CDE8E50005E1A1 /* InfoPlist.strings in Resources */,
+				97B3CB5017CDE8E50005E1A1 /* Default.png in Resources */,
+				97B3CB5217CDE8E50005E1A1 /* Default@2x.png in Resources */,
+				97B3CB5417CDE8E50005E1A1 /* Default-568h@2x.png in Resources */,
+				97B3CB5717CDE8E50005E1A1 /* MainStoryboard.storyboard in Resources */,
+				97B3CB7C17CF582D0005E1A1 /* 1Star.png in Resources */,
+				97B3CB7D17CF582D0005E1A1 /* 1Star@2x.png in Resources */,
+				97B3CB7E17CF582D0005E1A1 /* 1StarSmall.png in Resources */,
+				97B3CB7F17CF582D0005E1A1 /* 1StarSmall@2x.png in Resources */,
+				97B3CB8017CF582D0005E1A1 /* 2Stars.png in Resources */,
+				97B3CB8117CF582D0005E1A1 /* 2Stars@2x.png in Resources */,
+				97B3CB8217CF582D0005E1A1 /* 2StarsSmall.png in Resources */,
+				97B3CB8317CF582D0005E1A1 /* 2StarsSmall@2x.png in Resources */,
+				97B3CB8417CF582D0005E1A1 /* 3Stars.png in Resources */,
+				97B3CB8517CF582D0005E1A1 /* 3Stars@2x.png in Resources */,
+				97B3CB8617CF582D0005E1A1 /* 3StarsSmall.png in Resources */,
+				97B3CB8717CF582D0005E1A1 /* 3StarsSmall@2x.png in Resources */,
+				97B3CB8817CF582D0005E1A1 /* 4Stars.png in Resources */,
+				97B3CB8917CF582D0005E1A1 /* 4Stars@2x.png in Resources */,
+				97B3CB8A17CF582D0005E1A1 /* 4StarsSmall.png in Resources */,
+				97B3CB8B17CF582D0005E1A1 /* 4StarsSmall@2x.png in Resources */,
+				97B3CB8C17CF582D0005E1A1 /* 5Stars.png in Resources */,
+				97B3CB8D17CF582D0005E1A1 /* 5Stars@2x.png in Resources */,
+				97B3CB8E17CF582D0005E1A1 /* 5StarsSmall.png in Resources */,
+				97B3CB8F17CF582D0005E1A1 /* 5StarsSmall@2x.png in Resources */,
+				97B3CB9017CF582D0005E1A1 /* Gestures.png in Resources */,
+				97B3CB9117CF582D0005E1A1 /* Gestures@2x.png in Resources */,
+				97B3CB9217CF582D0005E1A1 /* Players.png in Resources */,
+				97B3CB9317CF582D0005E1A1 /* Players@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		97B3CB3617CDE8E50005E1A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97B3CB4A17CDE8E50005E1A1 /* main.m in Sources */,
+				97B3CB4E17CDE8E50005E1A1 /* WYAppDelegate.m in Sources */,
+				97B3CB5D17CDE8E50005E1A1 /* WYViewController.m in Sources */,
+				97B3CB9617CF58F60005E1A1 /* WYPlayersViewController.m in Sources */,
+				97B3CB9917CF595E0005E1A1 /* WYPlayer.m in Sources */,
+				97B3CB9C17CF8D700005E1A1 /* WYPlayerCell.m in Sources */,
+				97B3CBA217CF936A0005E1A1 /* WYPlayerDetailsViewController.m in Sources */,
+				97B3CBAE17CFEEAC0005E1A1 /* WYPopoverController.m in Sources */,
+				97B3CBAF17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		97B3CB4617CDE8E50005E1A1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				97B3CB4717CDE8E50005E1A1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		97B3CB5517CDE8E50005E1A1 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				97B3CB5617CDE8E50005E1A1 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		97B3CB5E17CDE8E50005E1A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		97B3CB5F17CDE8E50005E1A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		97B3CB6117CDE8E50005E1A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WYPopoverDemoSegue/WYPopoverDemoSegue-Prefix.pch";
+				INFOPLIST_FILE = "WYPopoverDemoSegue/WYPopoverDemoSegue-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		97B3CB6217CDE8E50005E1A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "WYPopoverDemoSegue/WYPopoverDemoSegue-Prefix.pch";
+				INFOPLIST_FILE = "WYPopoverDemoSegue/WYPopoverDemoSegue-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		97B3CB3517CDE8E50005E1A1 /* Build configuration list for PBXProject "WYPopoverDemoSegue" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97B3CB5E17CDE8E50005E1A1 /* Debug */,
+				97B3CB5F17CDE8E50005E1A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		97B3CB6017CDE8E50005E1A1 /* Build configuration list for PBXNativeTarget "WYPopoverDemoSegue" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				97B3CB6117CDE8E50005E1A1 /* Debug */,
+				97B3CB6217CDE8E50005E1A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 97B3CB3217CDE8E50005E1A1 /* Project object */;
+}

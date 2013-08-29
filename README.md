@@ -12,6 +12,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 * UIAppearance support (see [Appearance](https://github.com/nicolaschengdev/WYPopover/wiki/Appearance))
 * Works like UIPopoverController
 * Automatic orientation
+* Storyboard
 
 ## Appearance
 
@@ -47,7 +48,7 @@ WYPopoverController uses ARC.
 
 ## Installation
 
-Add this line `pod 'WYPopoverController', '~> 0.1.0'` to your PodFile or add manually these 2 files `WYPopoverController.h` and `WYPopoverController.m` to your project.
+Add this line `pod 'WYPopoverController', '~> 0.1.0'` to your PodFile or add manually these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` to your project.
 
 ## Examples
 
@@ -100,6 +101,26 @@ UINavigationBar* appearance2 = [UINavigationBar appearanceWhenContainedIn:[UINav
              UITextAttributeTextShadowColor: [UIColor clearColor],
             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]}];
 ```
+
+Storyboard
+
+```objective-c
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	if ([segue.identifier isEqualToString:@"AddPlayer"])
+	{
+		WYStoryboardPopoverSegue* popoverSegue = (WYStoryboardPopoverSegue*)segue;
+
+		UINavigationController *navigationController = popoverSegue.destinationViewController;
+		WYPlayerDetailsViewController* playerDetailsViewController = [[navigationController viewControllers] objectAtIndex:0];
+		playerDetailsViewController.delegate = self;
+
+        popoverController = [popoverSegue popoverControllerWithSender:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+        popoverController.delegate = self;
+	}
+}
+```
+
 
 ## Contact
 
