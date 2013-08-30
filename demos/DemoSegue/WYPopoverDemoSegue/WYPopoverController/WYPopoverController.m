@@ -1316,7 +1316,7 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
         
         [viewController viewWillAppear:YES];
         
-        [UIView animateWithDuration:0.15 animations:^{
+        [UIView animateWithDuration:WYPOPOVER_DEFAULT_ANIMATION_DURATION animations:^{
             containerView.alpha = 1;
         } completion:^(BOOL finished) {
             [viewController viewDidAppear:YES];
@@ -1393,11 +1393,12 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     if (aAnimated)
     {
         [viewController viewWillDisappear:YES];
-        completionBlock(YES);
         
-        [UIView animateWithDuration:0.15 animations:^{
-            overlayView.alpha = 0;
-        } completion:completionBlock];
+        [UIView animateWithDuration:WYPOPOVER_DEFAULT_ANIMATION_DURATION animations:^{
+            containerView.alpha = 0;
+        } completion:^(BOOL finished) {
+            completionBlock(finished);
+        }];
     }
     else
     {
