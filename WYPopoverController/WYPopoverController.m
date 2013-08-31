@@ -409,6 +409,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (BOOL)isTouchedAtPoint:(CGPoint)point;
 
+- (NSString*)colorToHexString:(UIColor*)color;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -854,6 +856,20 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 }
 
 #pragma mark Private
+
+- (NSString*)colorToHexString:(UIColor*)color
+{
+    CGFloat rFloat, gFloat, bFloat, aFloat;
+    int r, g, b, a;
+    [color getRed:&rFloat green:&gFloat blue:&bFloat alpha:&aFloat];
+    
+    r = (int)(255.0 * rFloat);
+    g = (int)(255.0 * gFloat);
+    b = (int)(255.0 * bFloat);
+    a = (int)(255.0 * aFloat);
+    
+    return [NSString stringWithFormat:@"%02x%02x%02x%02x",r,g,b,a];
+}
 
 - (CGRect)outerRect
 {
