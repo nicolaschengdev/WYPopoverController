@@ -5,10 +5,10 @@
 //  Copyright (c) 2013 WHYERS. All rights reserved.
 //
 
-#import "WYViewController.h"
+#import "WYAllDirectionsViewController.h"
 #import "WYSettingsViewController.h"
 
-@interface WYViewController ()
+@interface WYAllDirectionsViewController ()
 {
     WYPopoverController* popoverController;
 }
@@ -17,7 +17,7 @@
 
 ////////////////////////////////////////////////////////////////////////////
 
-@implementation WYViewController
+@implementation WYAllDirectionsViewController
 
 @synthesize topLeftButton;
 @synthesize topButton;
@@ -54,7 +54,7 @@
         UIView* btn = (UIView*)sender;
         
         WYSettingsViewController* settingsViewController = [[WYSettingsViewController alloc] init];
-        settingsViewController.contentSizeForViewInPopover = CGSizeMake(280, 140);
+        settingsViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);
         settingsViewController.title = @"PDF Settings";
         [settingsViewController.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)]];
         

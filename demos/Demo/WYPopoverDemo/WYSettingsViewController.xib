@@ -43,9 +43,12 @@
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAgMAA</bytes>
-							<string key="IBUIColorCocoaTouchKeyPath">groupTableViewBackgroundColor</string>
+							<int key="NSColorSpace">5</int>
+							<bytes key="NSCMYK">MC4wMjYxNzgxNzU0IDAgMCAwLjA3OTEzMzA2NDUyAA</bytes>
+							<object class="NSColorSpace" key="NSCustomColorSpace">
+								<int key="NSID">3</int>
+							</object>
+							<characters key="NSComponents">0.0261781754 0 0 0.07913306452 1</characters>
 						</object>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

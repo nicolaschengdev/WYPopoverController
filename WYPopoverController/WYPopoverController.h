@@ -26,9 +26,9 @@
 #import <Foundation/Foundation.h>
 
 #define WYPOPOVER_DEFAULT_TINT_COLOR            [UIColor colorWithRed:55.f/255.f green:63.f/255.f blue:71.f/255.f alpha:1.f]
-#define WYPOPOVER_DEFAULT_OVERLAY_COLOR         [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.f]
+#define WYPOPOVER_DEFAULT_OVERLAY_COLOR         [UIColor clearColor]
 #define WYPOPOVER_DEFAULT_ANIMATION_DURATION    0.15f
-#define WYPOPOVER_MIN_POPOVER_SIZE              CGSizeMake(200, 100)
+#define WYPOPOVER_MIN_POPOVER_SIZE              CGSizeMake(200, 200)
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
     WYPopoverArrowDirectionUp = 1UL << 0,
@@ -39,7 +39,9 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
     WYPopoverArrowDirectionUnknown = NSUIntegerMax
 };
 
-@interface WYPopoverBackgroundView : UIView <UIAppearance>
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface WYPopoverBackgroundView : UIView
 {
 }
 
@@ -71,11 +73,11 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 
 @end
 
-////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @protocol WYPopoverControllerDelegate;
 
-@interface WYPopoverController : NSObject <UIAppearanceContainer>
+@interface WYPopoverController : NSObject
 {
 }
 
@@ -98,7 +100,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 
 @end
 
-////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @protocol WYPopoverControllerDelegate <NSObject>
 @optional

@@ -39,6 +39,9 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#pragma mark
+#pragma mark - WYPopoverArea
+
 @implementation WYPopoverArea
 
 @synthesize arrowDirection;
@@ -121,6 +124,9 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#pragma mark
+#pragma mark - UIImage (WYPopover)
+
 @implementation UIImage (WYPopover)
 
 static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
@@ -185,6 +191,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#pragma mark
+#pragma mark - WYPopoverInnerView
 
 @implementation WYPopoverInnerView
 
@@ -283,55 +292,90 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@protocol WYPopoverEventInterceptDelegate;
+@protocol WYPopoverOverlayViewDelegate;
 
-@interface UIWindow (WYPopoverEventIntercept)
+@interface WYPopoverOverlayView : UIView
 
-@property(nonatomic, unsafe_unretained) id <WYPopoverEventInterceptDelegate> eventInterceptDelegate;
+@property(nonatomic, assign) id <WYPopoverOverlayViewDelegate> delegate;
+@property(nonatomic, assign) BOOL testHits;
+@property(nonatomic, unsafe_unretained) NSArray *passthroughViews;
 
 @end
 
-@protocol WYPopoverEventInterceptDelegate
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#pragma mark
+#pragma mark - WYPopoverOverlayViewDelegate
+
+@protocol WYPopoverOverlayViewDelegate <NSObject>
 
 @optional
-- (BOOL)interceptEvent:(UIEvent *)event; // return YES if event handled
+- (void)popoverOverlayViewDidTouch:(WYPopoverOverlayView*)overlayView;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEventInterceptDelegateTagKey";
+#pragma mark
+#pragma mark - WYPopoverOverlayView
 
-@implementation UIWindow (WYPopoverEventIntercept)
+@implementation WYPopoverOverlayView
 
-@dynamic eventInterceptDelegate;
-
-- (id)eventInterceptDelegate
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    return objc_getAssociatedObject(self, WYPopoverEventInterceptDelegateTagKey);
-}
-
-- (void)setEventInterceptDelegate:(id)value
-{
-    objc_setAssociatedObject(self, WYPopoverEventInterceptDelegateTagKey, value, OBJC_ASSOCIATION_ASSIGN);
-}
-
-- (void)swizzled_sendEvent:(UIEvent *)event
-{
-    if (self.eventInterceptDelegate == nil || (self.eventInterceptDelegate != nil && [self.eventInterceptDelegate interceptEvent:event] == NO))
+    UIView *touchView = [[touches anyObject] view];
+    
+    if (touchView == self || [touchView isDescendantOfView:self] == NO)
     {
-        [self swizzled_sendEvent:event];
+        if ([self.delegate respondsToSelector:@selector(popoverOverlayViewDidTouch:)])
+        {
+            [self.delegate popoverOverlayViewDidTouch:self];
+        }
     }
 }
 
-+ (void)load
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    Method original, swizzle;
-    original = class_getInstanceMethod(self, @selector(sendEvent:));
-    swizzle = class_getInstanceMethod(self, @selector(swizzled_sendEvent:));
-    method_exchangeImplementations(original, swizzle);
+    if (self.testHits)
+    {
+        return NO;
+    }
+    
+    UIView *view = [super hitTest:point withEvent:event];
+    
+    if (view == self)
+    {
+        self.testHits = YES;
+        UIView *superHitView = [self.superview hitTest:point withEvent:event];
+        self.testHits = NO;
+        
+        if ([self isPassthroughView:superHitView])
+        {
+            return superHitView;
+        }
+    }
+    
+    return view;
+}
+
+- (BOOL)isPassthroughView:(UIView *)view
+{
+	if (view == nil)
+    {
+		return NO;
+	}
+	
+	if ([self.passthroughViews containsObject:view])
+    {
+		return YES;
+	}
+	
+	return [self isPassthroughView:view.superview];
 }
 
 @end
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -364,11 +408,12 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
 
 - (BOOL)isTouchedAtPoint:(CGPoint)point;
 
-//- (UIEdgeInsets)innerInsetsForArrowDirection:(WYPopoverArrowDirection)aArrowDirection;
-
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#pragma mark
+#pragma mark - WYPopoverBackgroundView
 
 @implementation WYPopoverBackgroundView
 
@@ -400,6 +445,37 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
 @synthesize wantsDefaultContentAppearance;
 @synthesize outerShadowInsets;
 
++ (void)load
+{
+    @autoreleasepool {
+        [[self appearance] setTintColor:nil];
+        [[self appearance] setArrowBase:42];
+        [[self appearance] setArrowHeight:18];
+        
+        [[self appearance] setStrokeColor:nil];
+        [[self appearance] setFillTopColor:nil];
+        [[self appearance] setFillBottomColor:nil];
+        
+        [[self appearance] setGlossShadowColor:nil];
+        [[self appearance] setGlossShadowOffset:CGSizeMake(0, 1.5)];
+        [[self appearance] setGlossShadowBlurRadius:0];
+        
+        [[self appearance] setOuterShadowColor:[UIColor colorWithWhite:0 alpha:0.75]];
+        [[self appearance] setOuterShadowBlurRadius:8];
+        [[self appearance] setOuterShadowOffset:CGSizeMake(0, 2)];
+        [[self appearance] setOuterCornerRadius:8];
+        
+        [[self appearance] setInnerShadowColor:[UIColor colorWithWhite:0 alpha:0.75]];
+        [[self appearance] setInnerShadowBlurRadius:2];
+        [[self appearance] setInnerShadowOffset:CGSizeMake(0, 1)];
+        [[self appearance] setInnerCornerRadius:6];
+        
+        [[self appearance] setViewContentInsets:UIEdgeInsetsMake(3, 0, 0, 0)];
+        
+        [[self appearance] setBorderWidth:6];
+    }
+}
+
 - (id)initWithContentSize:(CGSize)aContentSize
 {
     self = [super initWithFrame:CGRectMake(0, 0, aContentSize.width, aContentSize.height)];
@@ -413,34 +489,8 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
         self.arrowDirection = WYPopoverArrowDirectionDown;
         self.arrowOffset = 0;
         self.navigationBarHeight = 0;
-        
-        tintColor = nil;
-        
-        arrowBase = 42;
-        arrowHeight = 18;
-        
-        strokeColor = nil;
-        fillTopColor = nil;
-        fillBottomColor = nil;
-        
-        glossShadowColor = nil;
-        glossShadowOffset = CGSizeMake(0, 1.5);
-        glossShadowBlurRadius = 0;
-        
-        outerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
-        outerShadowBlurRadius = 8;
-        outerShadowOffset = CGSizeMake(0, 2);
-        outerCornerRadius = 8;
-        
-        innerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
-        innerShadowBlurRadius = 2;
-        innerShadowOffset = CGSizeMake(0, 1);
-        innerCornerRadius = 6;
-        
-        viewContentInsets = UIEdgeInsetsMake(3, 0, 0, 0);
-        
-        borderWidth = 6;
     }
+    
     return self;
 }
 
@@ -455,14 +505,6 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     
     return result;
 }
-
-/*
-- (UIEdgeInsets)innerInsetsForArrowDirection:(WYPopoverArrowDirection)aArrowDirection
-{
-    UIEdgeInsets result = UIEdgeInsetsZero;
-    return result;
-}
-*/
 
 - (void)setArrowOffset:(CGFloat)value
 {
@@ -482,13 +524,13 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
         
         if (arrowDirection == WYPopoverArrowDirectionUp || arrowDirection == WYPopoverArrowDirectionDown)
         {
-            value += self.outerShadowOffset.width;
+            value += coef * self.outerShadowOffset.width;
             value = MIN(value, CGRectGetWidth(outerRect) / 2);
         }
         
         if (arrowDirection == WYPopoverArrowDirectionLeft || arrowDirection == WYPopoverArrowDirectionRight)
         {
-            value += self.outerShadowOffset.height;
+            value += coef * self.outerShadowOffset.height;
             value = MIN(value, CGRectGetHeight(outerRect) / 2);
         }
     }
@@ -552,8 +594,6 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
 {
     if (contentView == nil) return;
     
-    //NSLog(@"%@", NSStringFromCGRect(self.bounds));
-    
     CGRect innerRect = [self innerRect];
     
     contentView.frame = innerRect;
@@ -581,12 +621,15 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     innerView.wantsDefaultContentAppearance = wantsDefaultContentAppearance;
     
     [self bringSubviewToFront:innerView];
+    
     innerView.frame = innerRect;
+    
+    
     
     [innerView setNeedsDisplay];
 }
 
-#pragma mark - Overrides
+#pragma mark Overrides
 
 - (CGFloat)innerCornerRadius
 {
@@ -680,7 +723,7 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     return result;
 }
 
-#pragma mark - Drawing
+#pragma mark Drawing
 
 - (void)drawRect:(CGRect)rect
 {
@@ -809,7 +852,7 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     CGColorSpaceRelease(colorSpace);
 }
 
-#pragma mark - Private
+#pragma mark Private
 
 - (CGRect)outerRect
 {
@@ -940,7 +983,7 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     return result;
 }
 
-#pragma mark - Memory Management
+#pragma mark Memory Management
 
 - (void)dealloc
 {
@@ -958,21 +1001,24 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
 
 @end
 
+
 ////////////////////////////////////////////////////////////////////////////
 
-@interface WYPopoverController () <WYPopoverEventInterceptDelegate>
+@interface WYPopoverController () <WYPopoverOverlayViewDelegate>
 {
     UIViewController* viewController;
     CGRect rect;
     UIView* inView;
-    UIView* overlayView;
+    WYPopoverOverlayView* overlayView;
     WYPopoverBackgroundView* containerView;
     WYPopoverArrowDirection permittedArrowDirections;
     BOOL animated;
     BOOL generatingDeviceOrientationNotifications;
 }
 
-@property (nonatomic, assign) CGFloat navigationBarHeight;
+@property (nonatomic, assign) CGFloat           navigationBarHeight;
+@property (nonatomic, strong, readonly) UIView *rootView;
+@property (nonatomic, assign, readonly) CGRect  rootViewFrame;
 
 - (void)dismissPopoverAnimated:(BOOL)animated callDelegate:(BOOL)callDelegate;
 
@@ -990,6 +1036,9 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
 @end
 
 ////////////////////////////////////////////////////////////////////////////
+
+#pragma mark
+#pragma mark - WYPopoverController
 
 @implementation WYPopoverController
 
@@ -1018,62 +1067,82 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     return result;
 }
 
-- (void)presentPopoverFromRect:(CGRect)aRect inView:(UIView *)aView permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections animated:(BOOL)aAnimated
+- (UIView *)rootView
 {
-    NSAssert((arrowDirections != WYPopoverArrowDirectionUnknown), @"WYPopoverArrowDirection must not be UNKNOWN");
+    UIWindow *result = [[UIApplication sharedApplication] keyWindow];
     
-    rect = aRect;
-    inView = aView;
-    permittedArrowDirections = arrowDirections;
-    animated = aAnimated;
+    if (result.subviews.count > 0)
+    {
+        result = [result.subviews objectAtIndex:0];
+    }
+
+    return result;
+}
+
+- (CGRect)rootViewFrame
+{
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    UIInterfaceOrientation orienation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    CGRect result = screenBounds;
+    
+    CGFloat statusBarHeight = statusBarFrame.size.height;
+    
+    if (UIDeviceOrientationIsLandscape(orienation))
+    {
+        result.size.width = screenBounds.size.height;
+        result.size.height = screenBounds.size.width;
+        statusBarHeight = statusBarFrame.size.width;
+    }
+    
+    result.size.height -= statusBarHeight;
+    
+    
+    UIViewController* rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+    
+    if ([rootViewController isKindOfClass:[UINavigationController class]])
+    {
+        result.origin.y = statusBarHeight;
+    }
+    
+    return result;
+}
+
+- (void)presentPopover
+{    
+    CGRect rootViewFrame = self.rootViewFrame;
+    
+    NSLog(@"%@", NSStringFromCGRect(rootViewFrame));
+    
+    CGRect viewFrame = [overlayView convertRect:rect fromView:inView];
     
     UIView* contentView = viewController.view;
-    CGSize contentSize = viewController.contentSizeForViewInPopover;
-    UIView* rootView = aView.window.rootViewController.view;
-    CGRect viewFrame = [rootView convertRect:aRect fromView:aView];
-    CGFloat minX = popoverLayoutMargins.left;
-    CGFloat maxX = rootView.bounds.size.width - popoverLayoutMargins.right;
-    CGFloat minY = popoverLayoutMargins.top;
-    CGFloat maxY = rootView.bounds.size.height - popoverLayoutMargins.bottom;
-    
-    CGSize minContainerSize = WYPOPOVER_MIN_POPOVER_SIZE;
-    
-    BOOL containerOverflowing = NO;
+    CGSize contentViewSize = viewController.contentSizeForViewInPopover;
     
     CGRect containerFrame = CGRectZero;
-    
+    CGFloat minX, maxX, minY, maxY = 0;
+    CGSize minContainerSize = WYPOPOVER_MIN_POPOVER_SIZE;
     CGFloat offset = 0;
-    
-    CGSize containerViewSize;
-    
+    CGSize containerViewSize = CGSizeZero;
     WYPopoverArrowDirection arrowDirection = WYPopoverArrowDirectionUnknown;
     
-    // Instance of popover with overlay
-    //
-    if (overlayView == nil)
-    {
-        overlayView = [[UIView alloc] initWithFrame:rootView.bounds];
-        overlayView.backgroundColor = WYPOPOVER_DEFAULT_OVERLAY_COLOR;
-        overlayView.userInteractionEnabled = NO;
-        [rootView addSubview:overlayView];
-        
-        containerView = [[WYPopoverBackgroundView alloc] initWithContentSize:contentSize];
-        [rootView addSubview:containerView];
-    }
+    overlayView.frame = rootViewFrame;
+    containerView.navigationBarHeight = self.navigationBarHeight;
+    containerView.wantsDefaultContentAppearance = wantsDefaultContentAppearance;
+    contentView.bounds = CGRectMake(0, 0, contentViewSize.width, contentViewSize.height);
+    
+    minX = popoverLayoutMargins.left;
+    maxX = rootViewFrame.size.width - popoverLayoutMargins.right;
+    minY = popoverLayoutMargins.top;
+    maxY = rootViewFrame.size.height - popoverLayoutMargins.bottom;
     
     // Which direction ?
     //
-    arrowDirection = [self arrowDirectionForRect:aRect inView:aView contentSize:contentSize arrowHeight:containerView.arrowHeight permittedArrowDirections:arrowDirections];
-    
-    containerView.navigationBarHeight = self.navigationBarHeight;
-    containerView.wantsDefaultContentAppearance = wantsDefaultContentAppearance;
-    
-    overlayView.frame = rootView.bounds;
-    contentView.bounds = CGRectMake(0, 0, contentSize.width, contentSize.height);
+    arrowDirection = [self arrowDirectionForRect:rect inView:inView contentSize:contentViewSize arrowHeight:containerView.arrowHeight permittedArrowDirections:permittedArrowDirections];
     
     // Position of the popover
     //
-    
     minX -= containerView.outerShadowInsets.left;
     maxX += containerView.outerShadowInsets.right;
     minY -= containerView.outerShadowInsets.top;
@@ -1082,7 +1151,7 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     if (arrowDirection == WYPopoverArrowDirectionDown)
     {
         containerView.arrowDirection = WYPopoverArrowDirectionDown;
-        containerViewSize = [containerView sizeThatFits:contentSize];
+        containerViewSize = [containerView sizeThatFits:contentViewSize];
         
         containerFrame = CGRectZero;
         containerFrame.size = containerViewSize;
@@ -1121,9 +1190,9 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
             
             if (containerFrame.size.height < minContainerSize.height)
             {
+                // popover is overflowing
                 offset -= (minContainerSize.height - containerFrame.size.height);
                 containerFrame.size.height = minContainerSize.height;
-                containerOverflowing = YES;
             }
             
             containerFrame.origin.y += offset;
@@ -1133,7 +1202,7 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     if (arrowDirection == WYPopoverArrowDirectionUp)
     {
         containerView.arrowDirection = WYPopoverArrowDirectionUp;
-        containerViewSize = [containerView sizeThatFits:contentSize];
+        containerViewSize = [containerView sizeThatFits:contentViewSize];
         
         containerFrame = CGRectZero;
         containerFrame.size = containerViewSize;
@@ -1172,8 +1241,8 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
             
             if (containerFrame.size.height < minContainerSize.height)
             {
+                // popover is overflowing
                 containerFrame.size.height = minContainerSize.height;
-                containerOverflowing = YES;
             }
         }
     }
@@ -1181,7 +1250,7 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     if (arrowDirection == WYPopoverArrowDirectionRight)
     {
         containerView.arrowDirection = WYPopoverArrowDirectionRight;
-        containerViewSize = [containerView sizeThatFits:contentSize];
+        containerViewSize = [containerView sizeThatFits:contentViewSize];
         
         containerFrame = CGRectZero;
         containerFrame.size = containerViewSize;
@@ -1205,9 +1274,9 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
             
             if (containerFrame.size.width < minContainerSize.width)
             {
+                // popover is overflowing
                 offset -= (minContainerSize.width - containerFrame.size.width);
                 containerFrame.size.width = minContainerSize.width;
-                containerOverflowing = YES;
             }
             
             containerFrame.origin.x += offset;
@@ -1229,11 +1298,11 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
         
         containerView.arrowOffset = offset;
     }
-
+    
     if (arrowDirection == WYPopoverArrowDirectionLeft)
     {
         containerView.arrowDirection = WYPopoverArrowDirectionLeft;
-        containerViewSize = [containerView sizeThatFits:contentSize];
+        containerViewSize = [containerView sizeThatFits:contentViewSize];
         
         containerFrame = CGRectZero;
         containerFrame.size = containerViewSize;
@@ -1256,8 +1325,8 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
             
             if (containerFrame.size.width < minContainerSize.width)
             {
+                // popover is overflowing
                 containerFrame.size.width = minContainerSize.width;
-                containerOverflowing = YES;
             }
         }
         
@@ -1310,9 +1379,10 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
                                                    object:[UIDevice currentDevice]];
     }
     
-    if (aAnimated)
+    if (animated)
     {
         containerView.alpha = 0;
+        containerView.hidden = NO;
         
         [viewController viewWillAppear:YES];
         
@@ -1327,26 +1397,48 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
         [viewController viewWillAppear:NO];
         [viewController viewDidAppear:NO];
     }
+}
+
+- (void)presentPopoverFromRect:(CGRect)aRect inView:(UIView *)aView permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections animated:(BOOL)aAnimated
+{
+    NSAssert((arrowDirections != WYPopoverArrowDirectionUnknown), @"WYPopoverArrowDirection must not be UNKNOWN");
     
-    inView.window.eventInterceptDelegate = self;
+    rect = aRect;
+    inView = aView;
+    permittedArrowDirections = arrowDirections;
+    animated = aAnimated;
+    
+    if (overlayView == nil)
+    {
+        overlayView = [[WYPopoverOverlayView alloc] initWithFrame:self.rootViewFrame];
+        overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        overlayView.autoresizesSubviews = NO;
+        overlayView.userInteractionEnabled = YES;
+        overlayView.backgroundColor = WYPOPOVER_DEFAULT_OVERLAY_COLOR;
+        
+        overlayView.delegate = self;
+        
+        overlayView.passthroughViews = passthroughViews;
+        [self.rootView addSubview:overlayView];
+        
+        containerView = [[WYPopoverBackgroundView alloc] initWithContentSize:viewController.contentSizeForViewInPopover];
+        containerView.hidden = animated;
+        [overlayView addSubview:containerView];
+        
+        // Workaround => iOS (<6) => wait next run loop in order to get correct UIAPPEARANCE_SELECTOR values
+        [self performSelector:@selector(presentPopover) withObject:nil afterDelay:0.0];
+    }
+    else
+    {
+        [self presentPopover];
+    }
 }
 
 - (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections animated:(BOOL)aAnimated
 {
     UIView *itemView = [item valueForKey:@"view"];
-    
-    CGSize contentSize = viewController.contentSizeForViewInPopover;
-    UIView* rootView = itemView.window.rootViewController.view;
-    CGRect viewFrame = [rootView convertRect:itemView.bounds fromView:itemView];
-    
-    WYPopoverArrowDirection arrowDirection = WYPopoverArrowDirectionUp;
-    
-    if (viewFrame.origin.y + viewFrame.size.height / 2 - contentSize.height >= 0)
-    {
-        arrowDirection = WYPopoverArrowDirectionDown;
-    }
-    
-    [self presentPopoverFromRect:itemView.bounds inView:itemView permittedArrowDirections:arrowDirection animated:aAnimated];
+    arrowDirections = WYPopoverArrowDirectionDown | WYPopoverArrowDirectionUp;
+    [self presentPopoverFromRect:itemView.bounds inView:itemView permittedArrowDirections:arrowDirections animated:aAnimated];
 }
 
 - (void)dismissPopoverAnimated:(BOOL)aAnimated
@@ -1374,7 +1466,6 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
         [overlayView removeFromSuperview];
         containerView = nil;
         overlayView = nil;
-        inView.window.eventInterceptDelegate = nil;
         inView = nil;
         viewController = nil;
         passthroughViews = nil;
@@ -1420,71 +1511,22 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     return result;
 }
 
-#pragma mark - WYPopoverEventInterceptDelegate
+#pragma mark WYPopoverOverlayViewDelegate
 
-- (BOOL)interceptEvent:(UIEvent *)event
+- (void)popoverOverlayViewDidTouch:(WYPopoverOverlayView *)overlayView
 {
-    BOOL result = YES;
-    
-    NSSet *touches = [event allTouches];
-    UITouch *oneTouch = [touches anyObject];
-    UIView *touchView = [oneTouch view];
-    
-    UIView* rootView = inView.window.rootViewController.view;
-    
-    NSUInteger i = 0;
-    NSUInteger count = [self.passthroughViews count];
-    UIView* passthroughView;
-    
-    CGRect touchViewFrame;
-    CGRect passthroughViewFrame;
-    
-    if (oneTouch.phase == UITouchPhaseBegan)
-    {
-        touchViewFrame = [touchView convertRect:touchView.bounds toView:rootView];
-        
-        for (i = 0; i < count; i++)
-        {
-            passthroughView = [self.passthroughViews objectAtIndex:i];
-            passthroughViewFrame = [passthroughView convertRect:passthroughView.bounds toView:rootView];
-            
-            if (CGRectContainsRect(passthroughViewFrame, touchViewFrame))
-            {
-                result = NO;
-                break;
-            }
-        }
-        
-        if (result == YES)
-        {
-            passthroughViewFrame = [containerView convertRect:containerView.bounds toView:rootView];
-            
-            if (CGRectContainsRect(passthroughViewFrame, touchViewFrame))
-            {
-                result = ![containerView isTouchedAtPoint:[oneTouch locationInView:containerView]];
-            }
-        }
-    }
-    else
-    {
-        result = NO;
-    }
-    
-    if (result && delegate && [delegate respondsToSelector:@selector(popoverControllerShouldDismiss:)])
+    if (delegate && [delegate respondsToSelector:@selector(popoverControllerShouldDismiss:)])
     {
         BOOL shouldDismiss = [delegate popoverControllerShouldDismiss:self];
         
         if (shouldDismiss)
         {
-            inView.window.eventInterceptDelegate = nil;
             [self dismissPopoverAnimated:animated callDelegate:YES];
         }
     }
-    
-    return result;
 }
 
-#pragma mark - Private
+#pragma mark Private
 
 - (WYPopoverArrowDirection)arrowDirectionForRect:(CGRect)aRect
                                           inView:(UIView*)aView
@@ -1586,12 +1628,14 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
           arrowHeight:(CGFloat)arrowHeight
        arrowDirection:(WYPopoverArrowDirection)arrowDirection
 {
-    UIView* rootView = aView.window.rootViewController.view;
-    CGRect viewFrame = [rootView convertRect:aRect fromView:aView];
-    CGFloat minX = popoverLayoutMargins.left;
-    CGFloat maxX = rootView.bounds.size.width - popoverLayoutMargins.right;
-    CGFloat minY = popoverLayoutMargins.top;
-    CGFloat maxY = rootView.bounds.size.height - popoverLayoutMargins.bottom;
+    CGRect rootViewFrame = self.rootViewFrame;
+    CGRect viewFrame = [overlayView convertRect:rect fromView:inView];
+    CGFloat minX, maxX, minY, maxY = 0;
+    
+    minX = popoverLayoutMargins.left;
+    maxX = rootViewFrame.size.width - popoverLayoutMargins.right;
+    minY = popoverLayoutMargins.top;
+    maxY = rootViewFrame.size.height - popoverLayoutMargins.bottom;
     
     CGSize result = CGSizeZero;
     
@@ -1623,7 +1667,7 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     return result;
 }
 
-#pragma mark - Selectors
+#pragma mark Selectors
 
 - (void)orientationChanged:(NSNotification*)notification
 {
@@ -1643,13 +1687,13 @@ static char const * const WYPopoverEventInterceptDelegateTagKey = "WYPopoverEven
     [self presentPopoverFromRect:rect inView:inView permittedArrowDirections:permittedArrowDirections animated:animated];
 }
 
-#pragma mark - Memory management
+#pragma mark Memory management
 
 - (void)dealloc
 {
     containerView = nil;
+    overlayView.delegate = nil;
     overlayView = nil;
-    inView.window.eventInterceptDelegate = nil;
     inView = nil;
     viewController = nil;
     passthroughViews = nil;

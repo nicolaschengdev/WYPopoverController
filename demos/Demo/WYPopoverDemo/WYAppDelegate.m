@@ -7,59 +7,47 @@
 
 #import "WYAppDelegate.h"
 
-#import "WYViewController.h"
-
 #import "WYPopoverController.h"
+#import "WYSettingsViewController.h"
+#import "WYAllDirectionsViewController.h"
 
 @implementation WYAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    // Override point for customization after application launch.
-    //
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[WYViewController alloc] initWithNibName:@"WYViewController_iPhone" bundle:nil];
-    } else {
-        self.viewController = [[WYViewController alloc] initWithNibName:@"WYViewController_iPad" bundle:nil];
-    }
-    
     //UIPopoverController
-        
+    
     // Customize Appearance 1
     //
-    /*
     {
         WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
         [appearance setTintColor:[UIColor whiteColor]];
         
-        [appearance setOuterCornerRadius:6];
-        [appearance setOuterShadowBlurRadius:8];
-        [appearance setOuterShadowColor:[UIColor colorWithWhite:0 alpha:0.5]];
-        [appearance setOuterShadowOffset:CGSizeMake(0, 4)];
+        [appearance setOuterCornerRadius:5];
+        [appearance setOuterShadowBlurRadius:6];
+        [appearance setOuterShadowColor:[UIColor colorWithWhite:0 alpha:0.65]];
+        [appearance setOuterShadowOffset:CGSizeMake(0, 2)];
         
         [appearance setGlossShadowColor:[UIColor lightGrayColor]];
         [appearance setGlossShadowOffset:CGSizeMake(0, 1)];
         
-        [appearance setBorderWidth:6];
-        [appearance setArrowHeight:22];
-        [appearance setArrowBase:48];
+        [appearance setBorderWidth:5];
+        [appearance setArrowHeight:10];
+        [appearance setArrowBase:26];
         
         [appearance setInnerCornerRadius:4];
         [appearance setInnerShadowBlurRadius:3];
         [appearance setInnerShadowColor:[UIColor colorWithWhite:0 alpha:0.75]];
-        [appearance setInnerShadowOffset:CGSizeMake(0, 0)];
+        [appearance setInnerShadowOffset:CGSizeMake(0, 1)];
     }
     {
-        UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil];
+        UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
         [appearance setTitleTextAttributes:@{
                     UITextAttributeTextColor : [UIColor darkGrayColor],
                     UITextAttributeTextShadowColor: [UIColor whiteColor],
                     UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
          }];
     }
-    */
     
     // Appearance 2
     //
@@ -99,9 +87,6 @@
     }
     */
     
-    
-    self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
     return YES;
 }
 

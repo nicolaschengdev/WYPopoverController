@@ -9,7 +9,7 @@
 
 #import "WYPopoverController.h"
 
-@interface WYViewController : UIViewController <WYPopoverControllerDelegate>
+@interface WYAllDirectionsViewController : UIViewController <WYPopoverControllerDelegate>
 {
 }
 

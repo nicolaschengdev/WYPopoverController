@@ -7,12 +7,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class WYViewController;
+@class WYRootViewController;
 
 @interface WYAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) WYViewController *viewController;
+@property (strong, nonatomic) WYRootViewController *rootViewController;
 
 @end

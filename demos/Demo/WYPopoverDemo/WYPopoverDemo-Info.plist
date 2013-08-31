@@ -24,12 +24,26 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIMainStoryboardFile</key>
+	<string>WYStoryboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleBlackOpaque</string>
+	<key>UIStatusBarTintParameters</key>
+	<dict>
+		<key>UINavigationBar</key>
+		<dict>
+			<key>Style</key>
+			<string>UIBarStyleBlack</string>
+			<key>Translucent</key>
+			<true/>
+		</dict>
+	</dict>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

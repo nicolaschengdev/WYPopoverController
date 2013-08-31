@@ -46,8 +46,8 @@
 		97B3CB9917CF595E0005E1A1 /* WYPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB9817CF595E0005E1A1 /* WYPlayer.m */; };
 		97B3CB9C17CF8D700005E1A1 /* WYPlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB9B17CF8D700005E1A1 /* WYPlayerCell.m */; };
 		97B3CBA217CF936A0005E1A1 /* WYPlayerDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CBA117CF936A0005E1A1 /* WYPlayerDetailsViewController.m */; };
-		97B3CBAE17CFEEAC0005E1A1 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CBAB17CFEEAC0005E1A1 /* WYPopoverController.m */; };
-		97B3CBAF17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CBAD17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.m */; };
+		97FA5C3717D1A84900F611A0 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FA5C3417D1A84900F611A0 /* WYPopoverController.m */; };
+		97FA5C3817D1A84900F611A0 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FA5C3617D1A84900F611A0 /* WYStoryboardPopoverSegue.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,10 +99,10 @@
 		97B3CB9B17CF8D700005E1A1 /* WYPlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPlayerCell.m; sourceTree = "<group>"; };
 		97B3CBA017CF936A0005E1A1 /* WYPlayerDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPlayerDetailsViewController.h; sourceTree = "<group>"; };
 		97B3CBA117CF936A0005E1A1 /* WYPlayerDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPlayerDetailsViewController.m; sourceTree = "<group>"; };
-		97B3CBAA17CFEEAC0005E1A1 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
-		97B3CBAB17CFEEAC0005E1A1 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
-		97B3CBAC17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
-		97B3CBAD17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
+		97FA5C3317D1A84900F611A0 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
+		97FA5C3417D1A84900F611A0 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
+		97FA5C3517D1A84900F611A0 /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
+		97FA5C3617D1A84900F611A0 /* WYStoryboardPopoverSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYStoryboardPopoverSegue.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +149,7 @@
 		97B3CB4317CDE8E50005E1A1 /* WYPopoverDemoSegue */ = {
 			isa = PBXGroup;
 			children = (
-				97B3CBA917CFEEAC0005E1A1 /* WYPopoverController */,
+				97FA5C3217D1A84900F611A0 /* WYPopoverController */,
 				97B3CB4C17CDE8E50005E1A1 /* WYAppDelegate.h */,
 				97B3CB4D17CDE8E50005E1A1 /* WYAppDelegate.m */,
 				97B3CB5517CDE8E50005E1A1 /* MainStoryboard.storyboard */,
@@ -214,15 +214,16 @@
 			path = images;
 			sourceTree = "<group>";
 		};
-		97B3CBA917CFEEAC0005E1A1 /* WYPopoverController */ = {
+		97FA5C3217D1A84900F611A0 /* WYPopoverController */ = {
 			isa = PBXGroup;
 			children = (
-				97B3CBAA17CFEEAC0005E1A1 /* WYPopoverController.h */,
-				97B3CBAB17CFEEAC0005E1A1 /* WYPopoverController.m */,
-				97B3CBAC17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.h */,
-				97B3CBAD17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.m */,
+				97FA5C3317D1A84900F611A0 /* WYPopoverController.h */,
+				97FA5C3417D1A84900F611A0 /* WYPopoverController.m */,
+				97FA5C3517D1A84900F611A0 /* WYStoryboardPopoverSegue.h */,
+				97FA5C3617D1A84900F611A0 /* WYStoryboardPopoverSegue.m */,
 			);
-			path = WYPopoverController;
+			name = WYPopoverController;
+			path = ../../../WYPopoverController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,8 +324,8 @@
 				97B3CB9917CF595E0005E1A1 /* WYPlayer.m in Sources */,
 				97B3CB9C17CF8D700005E1A1 /* WYPlayerCell.m in Sources */,
 				97B3CBA217CF936A0005E1A1 /* WYPlayerDetailsViewController.m in Sources */,
-				97B3CBAE17CFEEAC0005E1A1 /* WYPopoverController.m in Sources */,
-				97B3CBAF17CFEEAC0005E1A1 /* WYStoryboardPopoverSegue.m in Sources */,
+				97FA5C3717D1A84900F611A0 /* WYPopoverController.m in Sources */,
+				97FA5C3817D1A84900F611A0 /* WYStoryboardPopoverSegue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +452,7 @@
 				97B3CB6217CDE8E50005E1A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
