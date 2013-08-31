@@ -311,7 +311,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @protocol WYPopoverOverlayViewDelegate <NSObject>
 
 @optional
-- (void)popoverOverlayViewDidTouch:(WYPopoverOverlayView*)overlayView;
+- (void)popoverOverlayView:(WYPopoverOverlayView*)overlayView didTouchAtPoint:(CGPoint)point;
 
 @end
 
@@ -324,13 +324,14 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    UIView *touchView = [[touches anyObject] view];
+    UITouch* oneTouch = [touches anyObject];
+    //UIView *touchView = [oneTouch view];
     
-    if (touchView == self || [touchView isDescendantOfView:self] == NO)
+    //if (touchView == self || [touchView isDescendantOfView:self] == NO)
     {
-        if ([self.delegate respondsToSelector:@selector(popoverOverlayViewDidTouch:)])
+        if ([self.delegate respondsToSelector:@selector(popoverOverlayView:didTouchAtPoint:)])
         {
-            [self.delegate popoverOverlayViewDidTouch:self];
+            [self.delegate popoverOverlayView:self didTouchAtPoint:[oneTouch locationInView:self]];
         }
     }
 }
@@ -1513,9 +1514,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 #pragma mark WYPopoverOverlayViewDelegate
 
-- (void)popoverOverlayViewDidTouch:(WYPopoverOverlayView *)overlayView
+- (void)popoverOverlayView:(WYPopoverOverlayView*)aOverlayView didTouchAtPoint:(CGPoint)aPoint
 {
-    if (delegate && [delegate respondsToSelector:@selector(popoverControllerShouldDismiss:)])
+    BOOL isTouched = [containerView isTouchedAtPoint:[containerView convertPoint:aPoint fromView:aOverlayView]];
+    
+    if (!isTouched && delegate && [delegate respondsToSelector:@selector(popoverControllerShouldDismiss:)])
     {
         BOOL shouldDismiss = [delegate popoverControllerShouldDismiss:self];
         

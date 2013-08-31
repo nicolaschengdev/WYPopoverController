@@ -32,7 +32,7 @@
         [appearance setGlossShadowOffset:CGSizeMake(0, 1)];
         
         [appearance setBorderWidth:5];
-        [appearance setArrowHeight:10];
+        [appearance setArrowHeight:52];
         [appearance setArrowBase:26];
         
         [appearance setInnerCornerRadius:4];
