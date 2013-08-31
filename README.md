@@ -18,24 +18,24 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 | Property              | Type           | Default value                                                                                         |
 | --------------------- | -------------- | ----------------------------------------------------------------------------------------------------: |
-| tintColor             | `UIColor`      |                                                                                                   nil |
+| tintColor             | `UIColor`      |                                                                                                 *nil* |
 | arrowBase             | `CGFloat`      |                                                                                                    42 |
 | arrowHeight           | `CGFloat`      |                                                                                                    18 |
-| strokeColor           | `UIColor`      | #262c31ff <span style="display:inline-block;width:30px;height:30px;background-color:#262c31;"></span> |
-| fillTopColor          | `UIColor`      | #373f47ff <span style="display:inline-block;width:30px;height:30px;background-color:#373f47;"></span> |
-| fillBottomColor       | `UIColor`      | #3b434cff <span style="display:inline-block;width:30px;height:30px;background-color:#3b434c;"></span> |
-| glossShadowColor      | `UIColor`      | #c3c5c77f <span style="display:inline-block;width:30px;height:30px;background-color:#c3c5c7;"></span> |
+| strokeColor           | `UIColor`      | #262c31ff <span style="display:inline-block;width:30px;height:30px;background-color:#262c31;">&nbsp;</span> |
+| fillTopColor          | `UIColor`      | #373f47ff <span style="display:inline-block;width:30px;height:30px;background-color:#373f47;">&nbsp;</span> |
+| fillBottomColor       | `UIColor`      | #3b434cff <span style="display:inline-block;width:30px;height:30px;background-color:#3b434c;">&nbsp;</span> |
+| glossShadowColor      | `UIColor`      | #c3c5c77f <span style="display:inline-block;width:30px;height:30px;background-color:#c3c5c7;">&nbsp;</span> |
 | glossShadowOffset     | `CGSize`       |                                                                                            { 0, 1.5 } |
 | glossShadowBlurRadius | `CGFloat`      |                                                                                                     0 |
-| outerShadowColor      | `UIColor`      | #000000bf <span style="display:inline-block;width:30px;height:30px;background-color:#000000;"></span> |
+| outerShadowColor      | `UIColor`      | #000000bf <span style="display:inline-block;width:30px;height:30px;background-color:#000000;">&nbsp;</span> |
 | outerShadowBlurRadius | `CGFloat`      |                                                                                                     8 |
 | outerShadowOffset     | `CGSize`       |                                                                                              { 0, 2 } |
 | outerCornerRadius     | `CGFloat`      |                                                                                                     8 |
-| innerShadowColor      | `UIColor`      | #000000bf <span style="display:inline-block;width:30px;height:30px;background-color:#000000;"></span> |
+| innerShadowColor      | `UIColor`      | #000000bf <span style="display:inline-block;width:30px;height:30px;background-color:#000000;">&nbsp;</span> |
 | innerShadowBlurRadius | `CGFloat`      |                                                                                                     2 |
 | innerShadowOffset     | `CGSize`       |                                                                                              { 0, 1 } |
 | innerCornerRadius     | `CGFloat`      |                                                                                                     6 |
-| viewContentInsets     | `UIEdgeInsets` |                                                                                          (3, 0, 0, 0) |
+| viewContentInsets     | `UIEdgeInsets` |                                                                                        { 3, 0, 0, 0 } |
 | borderWidth           | `CGFloat`      |                                                                                                     6 |
 
 ## Works like UIPopoverController 
