@@ -120,7 +120,9 @@ Storyboard
 	}
 }
 ```
+## Change logs
 
+A brief summary of each WYPopoverController release can be found on the [wiki](https://github.com/nicolaschengdev/WYPopoverController/wiki/Change-logs).
 
 ## Contact
 
@@ -129,8 +131,6 @@ Storyboard
 * <a href="mailTo:nicolas.cheng.dev@gmail.com">nicolas.cheng.dev [at] gmail [dot] com</a>
 
 ## License
-
-Version 0.1.0
 
 WYPopoverController is available under the MIT license.
 
