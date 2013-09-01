@@ -43,12 +43,14 @@
 	{
 		UINavigationController *navigationController = segue.destinationViewController;
 		WYPlayerDetailsViewController* playerDetailsViewController = [[navigationController viewControllers] objectAtIndex:0];
+        playerDetailsViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);
 		playerDetailsViewController.delegate = self;
-        //playerDetailsViewController.contentSizeForViewInPopover = CGSizeMake(280, 140);
         
         WYStoryboardPopoverSegue* popoverSegue = (WYStoryboardPopoverSegue*)segue;
         
-        popoverController = [popoverSegue popoverControllerWithSender:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+        popoverController = [popoverSegue popoverControllerWithSender:sender
+                                             permittedArrowDirections:WYPopoverArrowDirectionAny
+                                                             animated:YES];
         popoverController.delegate = self;
 	}
 }

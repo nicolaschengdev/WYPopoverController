@@ -59,6 +59,7 @@
 {
     sender = aSender;
     arrowDirections = aArrowDirections;
+    animated = aAnimated;
     
     popoverController = [[WYPopoverController alloc] initWithContentViewController:self.destinationViewController];
     
