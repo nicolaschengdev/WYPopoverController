@@ -27,17 +27,17 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 | tintColor             | `UIColor`      |                                                                                  *nil* |
 | arrowBase             | `CGFloat`      |                                                                                     42 |
 | arrowHeight           | `CGFloat`      |                                                                                     18 |
-| strokeColor           | `UIColor`      | #262c31ff [![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_strokecolor.png)] |
-| fillTopColor          | `UIColor`      | #373f47ff [![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_filltopcolor.png)] |
-| fillBottomColor       | `UIColor`      | #3b434cff [![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_fillbottomcolor.png)] |
-| glossShadowColor      | `UIColor`      | #c3c5c77f [![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_glossshadowcolor.png)] |
+| strokeColor           | `UIColor`      | #262c31ff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_strokecolor.png) |
+| fillTopColor          | `UIColor`      | #373f47ff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_filltopcolor.png) |
+| fillBottomColor       | `UIColor`      | #3b434cff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_fillbottomcolor.png) |
+| glossShadowColor      | `UIColor`      | #c3c5c77f ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_glossshadowcolor.png) |
 | glossShadowOffset     | `CGSize`       |                                                                             { 0, 1.5 } |
 | glossShadowBlurRadius | `CGFloat`      |                                                                                      0 |
-| outerShadowColor      | `UIColor`      | #000000bf [![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png)] |
+| outerShadowColor      | `UIColor`      | #000000bf ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png) |
 | outerShadowBlurRadius | `CGFloat`      |                                                                                      8 |
 | outerShadowOffset     | `CGSize`       |                                                                               { 0, 2 } |
 | outerCornerRadius     | `CGFloat`      |                                                                                      8 |
-| innerShadowColor      | `UIColor`      | #000000bf [![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png)] |
+| innerShadowColor      | `UIColor`      | #000000bf ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png) |
 | innerShadowBlurRadius | `CGFloat`      |                                                                                      2 |
 | innerShadowOffset     | `CGSize`       |                                                                               { 0, 1 } |
 | innerCornerRadius     | `CGFloat`      |                                                                                      6 |
