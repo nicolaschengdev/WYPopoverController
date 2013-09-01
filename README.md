@@ -27,17 +27,17 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 | tintColor             | `UIColor`      |                                                                                  *nil* |
 | arrowBase             | `CGFloat`      |                                                                                     42 |
 | arrowHeight           | `CGFloat`      |                                                                                     18 |
-| strokeColor           | `UIColor`      | #262c31ff <span style="width:30px;height:30px;background-color:#262c31;">&nbsp;</span> |
-| fillTopColor          | `UIColor`      | #373f47ff <span style="width:30px;height:30px;background-color:#373f47;">&nbsp;</span> |
-| fillBottomColor       | `UIColor`      | #3b434cff <span style="width:30px;height:30px;background-color:#3b434c;">&nbsp;</span> |
-| glossShadowColor      | `UIColor`      | #c3c5c77f <span style="width:30px;height:30px;background-color:#c3c5c7;">&nbsp;</span> |
+| strokeColor           | `UIColor`      | #262c31ff <img href="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_strokecolor.png"/> |
+| fillTopColor          | `UIColor`      | #373f47ff <img href="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_filltopcolor.png"/> |
+| fillBottomColor       | `UIColor`      | #3b434cff <img href="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_fillbottomcolor.png"/> |
+| glossShadowColor      | `UIColor`      | #c3c5c77f <img href="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_glossshadowcolor.png"/> |
 | glossShadowOffset     | `CGSize`       |                                                                             { 0, 1.5 } |
 | glossShadowBlurRadius | `CGFloat`      |                                                                                      0 |
-| outerShadowColor      | `UIColor`      | #000000bf <span style="width:30px;height:30px;background-color:#000000;">&nbsp;</span> |
+| outerShadowColor      | `UIColor`      | #000000bf <img href="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png"/> |
 | outerShadowBlurRadius | `CGFloat`      |                                                                                      8 |
 | outerShadowOffset     | `CGSize`       |                                                                               { 0, 2 } |
 | outerCornerRadius     | `CGFloat`      |                                                                                      8 |
-| innerShadowColor      | `UIColor`      | #000000bf <span style="width:30px;height:30px;background-color:#000000;">&nbsp;</span> |
+| innerShadowColor      | `UIColor`      | #000000bf <img href="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png"/> |
 | innerShadowBlurRadius | `CGFloat`      |                                                                                      2 |
 | innerShadowOffset     | `CGSize`       |                                                                               { 0, 1 } |
 | innerCornerRadius     | `CGFloat`      |                                                                                      6 |
@@ -62,7 +62,7 @@ WYPopoverController uses ARC.
 
 ---
 
-Add this line `pod 'WYPopoverController', '~> 0.1.1'` to your PodFile or add manually these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` to your project.
+Add this line `pod 'WYPopoverController', '~> 0.1.0'` to your PodFile or add manually these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` to your project.
 
 ### Examples
 
