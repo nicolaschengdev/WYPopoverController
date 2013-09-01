@@ -1,5 +1,5 @@
 /*
- Version 0.1.0
+ Version 0.1.1
  
  WYPopoverController is available under the MIT license.
  
@@ -1130,8 +1130,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {    
     CGRect rootViewFrame = self.rootViewFrame;
     
-    NSLog(@"%@", NSStringFromCGRect(rootViewFrame));
-    
     CGRect viewFrame = [overlayView convertRect:rect fromView:inView];
     
     UIView* contentView = viewController.view;
@@ -1620,8 +1618,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         return result;
     }];
-    
-    //NSLog(@"%@", areas);
     
     for (NSUInteger i = 0; i < [areas count]; i++)
     {

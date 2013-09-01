@@ -17,8 +17,9 @@
 {
     //UIPopoverController
     
-    // Customize Appearance 1
+    //Appearance 1 (white popover)
     //
+    /*
     {
         WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
         [appearance setTintColor:[UIColor whiteColor]];
@@ -48,8 +49,18 @@
                     UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
          }];
     }
+    */
     
-    // Appearance 2
+    //Appearance 2 (orange popover)
+    //
+    /*
+    {
+        WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
+        [appearance setTintColor:[UIColor orangeColor]];
+    }
+    */
+    
+    //Appearance 3 (flat green popover)
     //
     /*
     {
@@ -77,9 +88,10 @@
         [appearance setFillTopColor:greenColor];
         [appearance setFillBottomColor:greenColor];
         [appearance setStrokeColor:greenColor];
-        
-        UINavigationBar* appearance2 = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil];
-        [appearance2 setTitleTextAttributes:@{
+    }
+    {
+        UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
+        [appearance setTitleTextAttributes:@{
                   UITextAttributeTextColor : [UIColor whiteColor],
              UITextAttributeTextShadowColor: [UIColor clearColor],
             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]

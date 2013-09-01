@@ -1,5 +1,5 @@
 /*
- Version 0.1.0
+ Version 0.1.1
  
  WYPopoverController is available under the MIT license.
  
@@ -27,7 +27,7 @@
 
 #define WYPOPOVER_DEFAULT_TINT_COLOR            [UIColor colorWithRed:55.f/255.f green:63.f/255.f blue:71.f/255.f alpha:1.f]
 #define WYPOPOVER_DEFAULT_OVERLAY_COLOR         [UIColor clearColor]
-#define WYPOPOVER_DEFAULT_ANIMATION_DURATION    0.15f
+#define WYPOPOVER_DEFAULT_ANIMATION_DURATION    0.20f
 #define WYPOPOVER_MIN_POPOVER_SIZE              CGSizeMake(200, 200)
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
