@@ -26,13 +26,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"Another view";
+    //self.title = @"Another view";
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    NSLog(@"%@", NSStringFromCGRect(self.view.frame));
+    //NSLog(@"%@", NSStringFromCGRect(self.view.frame));
 }
 
 - (void)didReceiveMemoryWarning

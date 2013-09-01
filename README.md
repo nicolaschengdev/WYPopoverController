@@ -13,12 +13,12 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 ---
 
-* Works like UIPopoverController
 * UIAppearance support
+* Works like UIPopoverController
 * Automatic orientation
 * UIStoryboard support
 
-### Appearance
+### UIAppearance support
 
 ---
 
@@ -27,6 +27,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 | tintColor             | `UIColor`      |                                                                                  *nil* |
 | arrowBase             | `CGFloat`      |                                                                                     42 |
 | arrowHeight           | `CGFloat`      |                                                                                     18 |
+| borderWidth           | `CGFloat`      |                                                                                      6 |
 | strokeColor           | `UIColor`      | #262c31ff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_strokecolor.png) |
 | fillTopColor          | `UIColor`      | #373f47ff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_filltopcolor.png) |
 | fillBottomColor       | `UIColor`      | #3b434cff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_fillbottomcolor.png) |
@@ -34,15 +35,17 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 | glossShadowOffset     | `CGSize`       |                                                                             { 0, 1.5 } |
 | glossShadowBlurRadius | `CGFloat`      |                                                                                      0 |
 | outerShadowColor      | `UIColor`      | #000000bf ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png) |
-| outerShadowBlurRadius | `CGFloat`      |                                                                                      8 |
 | outerShadowOffset     | `CGSize`       |                                                                               { 0, 2 } |
+| outerShadowBlurRadius | `CGFloat`      |                                                                                      8 |
 | outerCornerRadius     | `CGFloat`      |                                                                                      8 |
 | innerShadowColor      | `UIColor`      | #000000bf ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png) |
-| innerShadowBlurRadius | `CGFloat`      |                                                                                      2 |
 | innerShadowOffset     | `CGSize`       |                                                                               { 0, 1 } |
+| innerShadowBlurRadius | `CGFloat`      |                                                                                      2 |
 | innerCornerRadius     | `CGFloat`      |                                                                                      6 |
 | viewContentInsets     | `UIEdgeInsets` |                                                                         { 3, 0, 0, 0 } |
-| borderWidth           | `CGFloat`      |                                                                                      6 |
+
+
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_arrowbase.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_arrowheight.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_borderwidth.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_strokecolor.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_filltopcolor.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_fillbottomcolor.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_glossshadowcolor.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_glossshadowoffset_0-3.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_glossshadowblurradius_2.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_outershadowcolor.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_outershadowoffset_0--2.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_outershadowblurradius_2.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_outercornerradius_0.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_innershadowcolor.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_innershadowoffset_0--1.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_innershadowblurradius_0.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_innercornerradius_14.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_viewcontentinsets_4-4-4-4.png)
 
 ### Works like UIPopoverController
 
@@ -62,7 +65,7 @@ WYPopoverController uses ARC.
 
 ---
 
-Add this line `pod 'WYPopoverController', '~> 0.1.0'` to your PodFile or add manually these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` to your project.
+Add this line `pod 'WYPopoverController', '~> 0.1.1'` to your PodFile or add manually these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` to your project.
 
 ### Examples
 
@@ -123,14 +126,9 @@ UINavigationBar* appearance2 = [UINavigationBar appearanceWhenContainedIn:[UINav
 ```objective-c
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([segue.identifier isEqualToString:@"AddPlayer"])
+	if ([segue.identifier isEqualToString:@"[YOUR_SEGUE_IDENTIFIER]"])
 	{
 		WYStoryboardPopoverSegue* popoverSegue = (WYStoryboardPopoverSegue*)segue;
-
-		UINavigationController *navigationController = popoverSegue.destinationViewController;
-		WYPlayerDetailsViewController* playerDetailsViewController = [[navigationController viewControllers] objectAtIndex:0];
-		playerDetailsViewController.delegate = self;
-
         popoverController = [popoverSegue popoverControllerWithSender:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
         popoverController.delegate = self;
 	}

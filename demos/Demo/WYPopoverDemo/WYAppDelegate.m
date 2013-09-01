@@ -16,87 +16,77 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //UIPopoverController
-    
+
     //Appearance 1 (white popover)
     //
-    /*
-    {
-        WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
-        [appearance setTintColor:[UIColor whiteColor]];
-        
-        [appearance setOuterCornerRadius:5];
-        [appearance setOuterShadowBlurRadius:6];
-        [appearance setOuterShadowColor:[UIColor colorWithWhite:0 alpha:0.65]];
-        [appearance setOuterShadowOffset:CGSizeMake(0, 2)];
-        
-        [appearance setGlossShadowColor:[UIColor lightGrayColor]];
-        [appearance setGlossShadowOffset:CGSizeMake(0, 1)];
-        
-        [appearance setBorderWidth:5];
-        [appearance setArrowHeight:20];
-        [appearance setArrowBase:42];
-        
-        [appearance setInnerCornerRadius:4];
-        [appearance setInnerShadowBlurRadius:3];
-        [appearance setInnerShadowColor:[UIColor colorWithWhite:0 alpha:0.75]];
-        [appearance setInnerShadowOffset:CGSizeMake(0, 1)];
-    }
-    {
-        UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
-        [appearance setTitleTextAttributes:@{
-                    UITextAttributeTextColor : [UIColor darkGrayColor],
-                    UITextAttributeTextShadowColor: [UIColor whiteColor],
-                    UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
-         }];
-    }
-    */
+    WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+    [popoverAppearance setTintColor:[UIColor whiteColor]];
+    
+    [popoverAppearance setOuterCornerRadius:5];
+    [popoverAppearance setOuterShadowBlurRadius:6];
+    [popoverAppearance setOuterShadowColor:[UIColor colorWithWhite:0 alpha:0.65]];
+    [popoverAppearance setOuterShadowOffset:CGSizeMake(0, 2)];
+    
+    [popoverAppearance setGlossShadowColor:[UIColor lightGrayColor]];
+    [popoverAppearance setGlossShadowOffset:CGSizeMake(0, 1)];
+    
+    [popoverAppearance setBorderWidth:5];
+    [popoverAppearance setArrowHeight:20];
+    [popoverAppearance setArrowBase:42];
+    
+    [popoverAppearance setInnerCornerRadius:4];
+    [popoverAppearance setInnerShadowBlurRadius:3];
+    [popoverAppearance setInnerShadowColor:[UIColor colorWithWhite:0 alpha:0.75]];
+    [popoverAppearance setInnerShadowOffset:CGSizeMake(0, 1)];
+    
+    UINavigationBar* navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
+    [navBarAppearance setTitleTextAttributes:@{
+                   UITextAttributeTextColor : [UIColor darkGrayColor],
+              UITextAttributeTextShadowColor: [UIColor whiteColor],
+             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+    }];
     
     //Appearance 2 (orange popover)
     //
     /*
-    {
-        WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
-        [appearance setTintColor:[UIColor orangeColor]];
-    }
+    WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+    [popoverAppearance setTintColor:[UIColor orangeColor]];
     */
     
     //Appearance 3 (flat green popover)
     //
     /*
-    {
-        WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
-        
-        [appearance setOuterCornerRadius:4];
-        [appearance setOuterShadowBlurRadius:0];
-        [appearance setOuterShadowColor:[UIColor clearColor]];
-        [appearance setOuterShadowOffset:CGSizeMake(0, 0)];
-        
-        [appearance setGlossShadowColor:[UIColor clearColor]];
-        [appearance setGlossShadowOffset:CGSizeMake(0, 0)];
-        
-        [appearance setBorderWidth:8];
-        [appearance setArrowHeight:10];
-        [appearance setArrowBase:20];
-        
-        [appearance setInnerCornerRadius:4];
-        [appearance setInnerShadowBlurRadius:0];
-        [appearance setInnerShadowColor:[UIColor clearColor]];
-        [appearance setInnerShadowOffset:CGSizeMake(0, 0)];
-        
-        UIColor* greenColor = [UIColor colorWithRed:26.f/255.f green:188.f/255.f blue:156.f/255.f alpha:1];
-        
-        [appearance setFillTopColor:greenColor];
-        [appearance setFillBottomColor:greenColor];
-        [appearance setStrokeColor:greenColor];
-    }
-    {
-        UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
-        [appearance setTitleTextAttributes:@{
-                  UITextAttributeTextColor : [UIColor whiteColor],
-             UITextAttributeTextShadowColor: [UIColor clearColor],
-            UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
-         }];
-    }
+    WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+    
+    [popoverAppearance setOuterCornerRadius:4];
+    [popoverAppearance setOuterShadowBlurRadius:0];
+    [popoverAppearance setOuterShadowColor:[UIColor clearColor]];
+    [popoverAppearance setOuterShadowOffset:CGSizeMake(0, 0)];
+    
+    [popoverAppearance setGlossShadowColor:[UIColor clearColor]];
+    [popoverAppearance setGlossShadowOffset:CGSizeMake(0, 0)];
+    
+    [popoverAppearance setBorderWidth:8];
+    [popoverAppearance setArrowHeight:10];
+    [popoverAppearance setArrowBase:20];
+    
+    [popoverAppearance setInnerCornerRadius:4];
+    [popoverAppearance setInnerShadowBlurRadius:0];
+    [popoverAppearance setInnerShadowColor:[UIColor clearColor]];
+    [popoverAppearance setInnerShadowOffset:CGSizeMake(0, 0)];
+    
+    UIColor* greenColor = [UIColor colorWithRed:26.f/255.f green:188.f/255.f blue:156.f/255.f alpha:1];
+    
+    [popoverAppearance setFillTopColor:greenColor];
+    [popoverAppearance setFillBottomColor:greenColor];
+    [popoverAppearance setStrokeColor:greenColor];
+    
+    UINavigationBar* navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
+    [navBarAppearance setTitleTextAttributes:@{
+             UITextAttributeTextColor : [UIColor whiteColor],
+        UITextAttributeTextShadowColor: [UIColor clearColor],
+       UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+    }];
     */
     
     return YES;

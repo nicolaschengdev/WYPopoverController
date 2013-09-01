@@ -7,6 +7,7 @@
 
 #import "WYAllDirectionsViewController.h"
 #import "WYSettingsViewController.h"
+#import "WYAnotherViewController.h"
 
 @interface WYAllDirectionsViewController ()
 {

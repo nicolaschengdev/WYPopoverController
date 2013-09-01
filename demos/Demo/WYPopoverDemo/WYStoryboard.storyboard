@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C2037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="CfQ-21-QrR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C2037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="KSs-by-RAI">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -15,9 +15,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xig-Kj-pbq">
                                 <rect key="frame" x="10" y="10" width="43" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="TL">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="0.30084425403225806" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -30,9 +30,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pvo-1L-Q9i">
                                 <rect key="frame" x="143" y="10" width="34" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="T">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="0.30084425403225806" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -45,9 +45,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oNH-nV-4Hz">
                                 <rect key="frame" x="266" y="10" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="TR">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="0.30084425403225806" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -58,11 +58,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wkW-SC-eQF">
-                                <rect key="frame" x="9" y="451" width="44" height="44"/>
+                                <rect key="frame" x="10" y="451" width="48" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="BL">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="0.30084425403225806" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -73,11 +73,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7kv-r3-yie">
-                                <rect key="frame" x="143" y="451" width="35" height="44"/>
+                                <rect key="frame" x="142" y="451" width="37" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="B">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="0.30084425403225806" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -88,11 +88,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TY8-Rs-h6w">
-                                <rect key="frame" x="264" y="451" width="46" height="44"/>
+                                <rect key="frame" x="260" y="451" width="50" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="BR">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="0.30084425403225806" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -103,11 +103,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pkn-ju-kvn">
-                                <rect key="frame" x="10" y="230" width="34" height="44"/>
+                                <rect key="frame" x="10" y="230" width="35" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="L">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="0.30084425403225806" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -118,11 +118,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wI8-mk-rgX">
-                                <rect key="frame" x="125" y="230" width="70" height="44"/>
+                                <rect key="frame" x="111" y="230" width="99" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="center">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                <state key="normal" title="CENTER">
+                                    <color key="titleColor" white="0.30084425403225806" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -133,11 +133,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o1z-4o-5bU">
-                                <rect key="frame" x="275" y="230" width="35" height="44"/>
+                                <rect key="frame" x="273" y="230" width="37" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="R">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="0.30084425403225806" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted">
@@ -148,42 +148,42 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.93907510080645173" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.93583039314516125" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="All directions" id="byn-bD-FGA"/>
                     <connections>
-                        <outlet property="bottomButton" destination="7kv-r3-yie" id="S69-Ts-15d"/>
-                        <outlet property="bottomLeftButton" destination="wkW-SC-eQF" id="SzC-cb-oYH"/>
-                        <outlet property="bottomRightButton" destination="TY8-Rs-h6w" id="hQo-4z-htW"/>
-                        <outlet property="centerButton" destination="wI8-mk-rgX" id="VyG-H7-7Dq"/>
-                        <outlet property="leftButton" destination="pkn-ju-kvn" id="z8y-3x-exN"/>
-                        <outlet property="rightButton" destination="o1z-4o-5bU" id="MR1-Ho-KPV"/>
-                        <outlet property="topButton" destination="Pvo-1L-Q9i" id="EXN-gA-DhX"/>
-                        <outlet property="topLeftButton" destination="Xig-Kj-pbq" id="Dpl-b6-kaq"/>
-                        <outlet property="topRightButton" destination="oNH-nV-4Hz" id="1Ep-2l-R7M"/>
+                        <outlet property="bottomButton" destination="7kv-r3-yie" id="VHk-eY-IW1"/>
+                        <outlet property="bottomLeftButton" destination="wkW-SC-eQF" id="6OT-Fp-o67"/>
+                        <outlet property="bottomRightButton" destination="TY8-Rs-h6w" id="wPB-Pe-qPE"/>
+                        <outlet property="centerButton" destination="wI8-mk-rgX" id="jW6-Kz-9uK"/>
+                        <outlet property="leftButton" destination="pkn-ju-kvn" id="TCp-c1-iyN"/>
+                        <outlet property="rightButton" destination="o1z-4o-5bU" id="g8Z-Xe-BjX"/>
+                        <outlet property="topButton" destination="Pvo-1L-Q9i" id="StH-e6-G7W"/>
+                        <outlet property="topLeftButton" destination="Xig-Kj-pbq" id="luJ-te-Fnq"/>
+                        <outlet property="topRightButton" destination="oNH-nV-4Hz" id="0eG-bM-kkn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dH0-gX-oc0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3995" y="-75"/>
+            <point key="canvasLocation" x="4521" y="-75"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="hxz-90-QMO">
+        <scene sceneID="Red-kl-wc3">
             <objects>
-                <navigationController id="CfQ-21-QrR" sceneMemberID="viewController">
+                <navigationController id="KSs-by-RAI" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jvd-q5-5vM">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="JsB-uJ-03V">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="SH8-yS-R5W" kind="relationship" relationship="rootViewController" id="aul-Q6-aUB"/>
+                        <segue destination="SH8-yS-R5W" kind="relationship" relationship="rootViewController" id="Cnn-N2-95j"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kBA-To-Nhz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Van-Cl-c7P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3469" y="-75"/>
+            <point key="canvasLocation" x="3995" y="-75"/>
         </scene>
     </scenes>
     <classes>
