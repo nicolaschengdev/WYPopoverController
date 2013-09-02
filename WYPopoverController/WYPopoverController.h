@@ -81,7 +81,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 {
 }
 
-@property (nonatomic, assign) id <WYPopoverControllerDelegate> delegate;
+@property (nonatomic, weak) id <WYPopoverControllerDelegate> delegate;
 
 @property (nonatomic, copy) NSArray *passthroughViews;
 
