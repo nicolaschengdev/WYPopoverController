@@ -7,7 +7,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 ---
 
-![Potrait Screenshot](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_screenshots.png)
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_screenshots.png)
 
 ### Features
 
@@ -28,33 +28,45 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 | arrowBase             | `CGFloat`      |                                                                                     42 |
 | arrowHeight           | `CGFloat`      |                                                                                     18 |
 | borderWidth           | `CGFloat`      |                                                                                      6 |
+| outerCornerRadius     | `CGFloat`      |                                                                                      8 |
+| innerCornerRadius     | `CGFloat`      |                                                                                      6 |
+| viewContentInsets     | `UIEdgeInsets` |                                                                         { 3, 0, 0, 0 } |
 | strokeColor           | `UIColor`      | #262c31ff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_strokecolor.png) |
 | fillTopColor          | `UIColor`      | #373f47ff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_filltopcolor.png) |
 | fillBottomColor       | `UIColor`      | #3b434cff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_fillbottomcolor.png) |
 | glossShadowColor      | `UIColor`      | #c3c5c77f ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_glossshadowcolor.png) |
-| glossShadowOffset     | `CGSize`       |                                                                             { 0, 1.5 } |
 | glossShadowBlurRadius | `CGFloat`      |                                                                                      0 |
+| glossShadowOffset     | `CGSize`       |                                                                             { 0, 1.5 } |
 | outerShadowColor      | `UIColor`      | #000000bf ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png) |
-| outerShadowOffset     | `CGSize`       |                                                                               { 0, 2 } |
 | outerShadowBlurRadius | `CGFloat`      |                                                                                      8 |
-| outerCornerRadius     | `CGFloat`      |                                                                                      8 |
+| outerShadowOffset     | `CGSize`       |                                                                               { 0, 2 } |
 | innerShadowColor      | `UIColor`      | #000000bf ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png) |
-| innerShadowOffset     | `CGSize`       |                                                                               { 0, 1 } |
 | innerShadowBlurRadius | `CGFloat`      |                                                                                      2 |
-| innerCornerRadius     | `CGFloat`      |                                                                                      6 |
-| viewContentInsets     | `UIEdgeInsets` |                                                                         { 3, 0, 0, 0 } |
+| innerShadowOffset     | `CGSize`       |                                                                               { 0, 1 } |
 
-<img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_arrowbase.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_arrowheight.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_borderwidth.png" width="200" height="180" hspace="10">
+##### Arrow & Border
 
-<img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_strokecolor.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_filltopcolor.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_fillbottomcolor.png" width="200" height="180" hspace="10">
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_arrowbase.png "arrowBase: 42") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_arrowheight.png "arrowHeight: 18") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_borderwidth.png "borderWidth: 6")
 
-<img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_glossshadowcolor.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_glossshadowoffset_0-3.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_glossshadowblurradius_2.png" width="200" height="180" hspace="10">
+##### Corner radius & View content insets
 
-<img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_outershadowcolor.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_outershadowoffset_0--2.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_outershadowblurradius_2.png" width="200" height="180" hspace="10">
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_outercornerradius_0.png "outerCornerRadius: 0") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_innercornerradius_14.png "innerCornerRadius: 14") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_viewcontentinsets_4-4-4-4.png "viewContentInsets: {4, 4, 4, 4}")
 
-<img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_outercornerradius_0.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_innershadowcolor.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_innershadowoffset_0--1.png" width="200" height="180" hspace="10">
+##### Stroke & Fill
 
-<img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_innershadowblurradius_0.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_innercornerradius_14.png" width="200" height="180" hspace="10"><img src="https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/wypopover_viewcontentinsets_4-4-4-4.png" width="200" height="180" hspace="10">
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_strokecolor.png "strokeColor: #c3045e") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_filltopcolor.png "fillTopColor: #c3045e") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_fillbottomcolor.png "fillBottomColor: #c3045e")
+
+##### Gloss
+
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_glossshadowcolor.png "glossShadowColor: #c3045e", glossShadowOffset: {0, 1.5}, glossShadowBlurRadius: 0") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_glossshadowblurradius_2.png "glossShadowColor: #c3045e, glossShadowOffset: {0, 1.5}, glossShadowBlurRadius: 2") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_glossshadowoffset_0-3.png "glossShadowColor: #c3045e, glossShadowOffset: {0, 3}, glossShadowBlurRadius: 0")
+
+##### Outer
+
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_outershadowcolor.png "outerShadowColor: #c3045e, outerShadowOffset: {0, 2}, outerShadowBlurRadius: 8") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_outershadowblurradius_2.png "outerShadowColor: #c3045e, outerShadowOffset: {0, 2}, outerShadowBlurRadius: 2") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_outershadowoffset_0--2.png "outerShadowColor: #c3045e, outerShadowOffset: {0, -2}, outerShadowBlurRadius: 2")
+
+##### Inner
+
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_innershadowcolor.png "innerShadowColor: #c3045e, innerShadowOffset: {0, 1}, innerShadowBlurRadius: 2") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_innershadowoffset_0--1.png "innerShadowColor: #c3045e, innerShadowOffset: {0, -1}, innerShadowBlurRadius: 2") ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_innershadowblurradius_0.png "innerShadowColor: #c3045e, innerShadowOffset: {0, 1}, innerShadowBlurRadius: 0")
 
 ### Works like UIPopoverController
 
@@ -80,7 +92,7 @@ Add this line `pod 'WYPopoverController', '~> 0.1.1'` to your PodFile or add man
 
 ---
 
-#### Simple
+##### Simple
 
 ```objective-c
 WYPopoverController* popoverController = [[WYPopoverController alloc] initWithContentViewController:controller];
@@ -88,14 +100,14 @@ popoverController.delegate = self;
 [popoverController presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
 ```
 
-#### Appearance (Tint Color)
+##### Appearance (Tint Color)
 
 ```objective-c
 WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
 [appearance setTintColor:[UIColor orangeColor]];
 ```
 
-#### Appearance (Flat Popover)
+##### Appearance (Flat Popover)
 
 ```objective-c
 WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
@@ -130,7 +142,7 @@ UINavigationBar* appearance2 = [UINavigationBar appearanceWhenContainedIn:[UINav
             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]}];
 ```
 
-#### Storyboard
+##### Storyboard
 
 ```objective-c
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
