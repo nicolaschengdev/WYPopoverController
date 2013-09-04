@@ -4,21 +4,29 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--View Controller - Gestures-->
+        <!--Gestures View Controller - Gestures-->
         <scene sceneID="z3D-ex-Vu7">
             <objects>
-                <viewController id="Whg-rR-vNs" sceneMemberID="viewController">
+                <viewController id="Whg-rR-vNs" customClass="WYGesturesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nMD-xg-4no">
                         <rect key="frame" x="0.0" y="20" width="320" height="499"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="empty view" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OJH-kj-5D2">
-                                <rect key="frame" x="20" y="239" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="IkW-kR-gBw">
+                                <rect key="frame" x="118" y="135" width="84" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="popover">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonTap:" destination="Whg-rR-vNs" eventType="touchUpInside" id="9ze-Cr-l1x"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -32,7 +40,7 @@
         <scene sceneID="p9h-m5-ce2">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="C7v-mZ-k5I" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="2Ou-xa-2Wo">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -97,6 +105,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Players" id="CvV-Qc-taS">
+                        <barButtonItem key="leftBarButtonItem" title="test" id="V8O-4E-8ns">
+                            <connections>
+                                <action selector="showTest:" destination="a5U-7N-WRR" id="ANZ-lA-aL3"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="oDx-kJ-5sd">
                             <connections>
                                 <segue destination="mTi-o0-06x" kind="custom" identifier="AddPlayer" customClass="WYStoryboardPopoverSegue" id="92K-az-70W"/>
@@ -264,6 +277,12 @@
         <image name="Players.png" width="30" height="30"/>
     </resources>
     <classes>
+        <class className="WYGesturesViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WYGesturesViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="buttonTap:"/>
+            </relationships>
+        </class>
         <class className="WYPlayerCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/WYPlayerCell.h"/>
             <relationships>
@@ -283,6 +302,9 @@
         </class>
         <class className="WYPlayersViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/WYPlayersViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="showTest:"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

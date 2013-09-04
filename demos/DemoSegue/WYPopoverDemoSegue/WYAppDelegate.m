@@ -9,33 +9,66 @@
 #import "WYAppDelegate.h"
 #import "WYPlayer.h"
 #import "WYPlayersViewController.h"
+#import "WYPopoverController.h"
 
 @implementation WYAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    players = [NSMutableArray arrayWithCapacity:20];
+    WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+    [popoverAppearance setTintColor:[UIColor lightGrayColor]];
     
-    WYPlayer *player = [[WYPlayer alloc] init];
-    player.name = @"Bill Evans";
-    player.game = @"Tic-Tac-Toe";
-    player.rating = 4;
-    [players addObject:player];
+    [popoverAppearance setOuterCornerRadius:8];
+    [popoverAppearance setInnerCornerRadius:6];
     
-    player = [[WYPlayer alloc] init];
-    player.name = @"Oscar Peterson";
-    player.game = @"Spin the Bottle";
-    player.rating = 5;
-    [players addObject:player];
+    /*
+    [popoverAppearance setBorderWidth:12];
+    [popoverAppearance setArrowBase:40];
+    [popoverAppearance setArrowHeight:20];
     
-    player = [[WYPlayer alloc] init];
-    player.name = @"Dave Brubeck";
-    player.game = @"Texas Hold’em Poker";
-    player.rating = 2;
-    [players addObject:player];
+    [popoverAppearance setGlossShadowColor:[UIColor lightGrayColor]];
+    [popoverAppearance setGlossShadowOffset:CGSizeMake(0, 1)];
     
-    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-    UINavigationController *navigationController = [[tabBarController viewControllers] objectAtIndex:0];
+    [popoverAppearance setOuterShadowColor:[UIColor colorWithWhite:0 alpha:0.75]];
+    [popoverAppearance setOuterShadowBlurRadius:10];
+    [popoverAppearance setOuterShadowOffset:CGSizeMake(0, 0)];
+    
+    [popoverAppearance setInnerShadowColor:[UIColor colorWithWhite:0 alpha:0.75]];
+    [popoverAppearance setInnerShadowBlurRadius:3];
+    [popoverAppearance setInnerShadowOffset:CGSizeMake(0, 1)];
+    */
+
+    UINavigationBar* navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
+    [navBarAppearance setTitleTextAttributes:@{
+                   UITextAttributeTextColor : [UIColor darkGrayColor],
+              UITextAttributeTextShadowColor: [UIColor whiteColor],
+             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+    }];
+    
+    NSArray *temp = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"players" ofType:@"plist"]];
+    
+    players = [NSMutableArray arrayWithCapacity:[temp count]];
+    
+    [temp enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        WYPlayer *player = [[WYPlayer alloc] init];
+        player.name = [obj objectForKey:@"name"];
+        player.game = [obj objectForKey:@"game"];
+        player.rating = [[obj objectForKey:@"rating"] intValue];
+        [players addObject:player];
+    }];
+    
+    UINavigationController *navigationController = nil;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+        navigationController = [[tabBarController viewControllers] objectAtIndex:0];
+    }
+    else
+    {
+        navigationController = (UINavigationController *)self.window.rootViewController;
+    }
+    
     WYPlayersViewController *playersViewController = [[navigationController viewControllers] objectAtIndex:0];
     playersViewController.players = players;
     

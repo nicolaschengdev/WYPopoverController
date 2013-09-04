@@ -11,13 +11,17 @@
 #import "WYPlayerCell.h"
 #import "WYPlayerDetailsViewController.h"
 #import "WYStoryboardPopoverSegue.h"
+#import "WYTestViewController.h"
+#import "WYTestView.h"
 
-@interface WYPlayersViewController () <WYPlayerDetailsViewControllerDelegate, WYPopoverControllerDelegate>
+@interface WYPlayersViewController () <WYPlayerDetailsViewControllerDelegate, WYPopoverControllerDelegate, UIPopoverControllerDelegate>
 {
-    WYPopoverController* popoverController;
+    id popoverController;
 }
 
 - (UIImage *)imageForRating:(int)rating;
+
+- (NSString*)colorToHexString:(UIColor*)color;
 
 @end
 
@@ -46,13 +50,29 @@
         playerDetailsViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);
 		playerDetailsViewController.delegate = self;
         
-        WYStoryboardPopoverSegue* popoverSegue = (WYStoryboardPopoverSegue*)segue;
-        
-        popoverController = [popoverSegue popoverControllerWithSender:sender
-                                             permittedArrowDirections:WYPopoverArrowDirectionAny
-                                                             animated:YES];
-        popoverController.delegate = self;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        {
+            WYStoryboardPopoverSegue* popoverSegue = (WYStoryboardPopoverSegue*)segue;
+            
+            popoverController = [popoverSegue popoverControllerWithSender:sender
+                                                 permittedArrowDirections:WYPopoverArrowDirectionAny
+                                                                 animated:YES];
+            ((WYPopoverController *)popoverController).delegate = self;
+        }
+        else
+        {
+            UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
+            popoverController = [popoverSegue popoverController];
+            ((UIPopoverController *)popoverController).delegate = self;
+        }
 	}
+}
+
+#pragma mark - WYPopoverControllerDelegate
+
+- (BOOL)popoverControllerShouldDismiss:(WYPopoverController *)aPopoverController
+{
+    return YES;
 }
 
 #pragma mark - private
@@ -70,11 +90,48 @@
     return nil;
 }
 
-#pragma mark - WYPopoverControllerDelegate
-
-- (BOOL)popoverControllerShouldDismiss:(WYPopoverController *)popoverController
+- (NSString*)colorToHexString:(UIColor*)color
 {
-    return NO;
+    CGFloat rFloat, gFloat, bFloat, aFloat;
+    int r, g, b, a;
+    [color getRed:&rFloat green:&gFloat blue:&bFloat alpha:&aFloat];
+    
+    r = (int)(255.0 * rFloat);
+    g = (int)(255.0 * gFloat);
+    b = (int)(255.0 * bFloat);
+    a = (int)(255.0 * aFloat);
+    
+    return [NSString stringWithFormat:@"%02x%02x%02x%02x",r,g,b,a];
+}
+
+#pragma mark - selectors
+
+- (IBAction)showTest:(id)sender
+{
+    WYTestViewController* contentViewController = [[WYTestViewController alloc] init];
+    contentViewController.contentSizeForViewInPopover = CGSizeMake(280, 280);
+    contentViewController.title = @"Test";
+    
+    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
+    
+    popoverController = [[WYPopoverController alloc] initWithContentViewController:navigationController];
+    ((WYPopoverController *)popoverController).delegate = self;
+    
+    [((WYPopoverController *)popoverController) presentPopoverFromBarButtonItem:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+    
+    /*
+    WYTestView* testView = [[WYTestView alloc] initWithFrame:CGRectMake(0, 20, 44, 44)];
+    testView.hidden = YES;
+    testView.alpha = 0;
+    [self.tableView.window.rootViewController.view addSubview:testView];
+    
+    testView.hidden = NO;
+    [UIView animateWithDuration:.2f animations:^{
+        testView.alpha = 1;
+    } completion:^(BOOL finished) {
+        
+    }];
+    */
 }
 
 #pragma mark - WYPlayerDetailsViewControllerDelegate
@@ -95,6 +152,7 @@
                           withRowAnimation:UITableViewRowAnimationAutomatic];
 
     [popoverController dismissPopoverAnimated:YES];
+    [popoverController setDelegate:nil];
     popoverController = nil;
 }
 

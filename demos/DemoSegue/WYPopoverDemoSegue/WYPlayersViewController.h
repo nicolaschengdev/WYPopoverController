@@ -15,4 +15,6 @@
 
 @property (nonatomic, strong) NSMutableArray *players;
 
+- (IBAction)showTest:(id)sender;
+
 @end
