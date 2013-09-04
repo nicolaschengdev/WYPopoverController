@@ -12,7 +12,6 @@
 #import "WYPlayerDetailsViewController.h"
 #import "WYStoryboardPopoverSegue.h"
 #import "WYTestViewController.h"
-#import "WYTestView.h"
 
 @interface WYPlayersViewController () <WYPlayerDetailsViewControllerDelegate, WYPopoverControllerDelegate, UIPopoverControllerDelegate>
 {

@@ -15,11 +15,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
-    [popoverAppearance setTintColor:[UIColor lightGrayColor]];
+    //WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+    //[popoverAppearance setTintColor:[UIColor lightGrayColor]];
     
-    [popoverAppearance setOuterCornerRadius:8];
-    [popoverAppearance setInnerCornerRadius:6];
+    //[popoverAppearance setOuterCornerRadius:8];
+    //[popoverAppearance setInnerCornerRadius:6];
     
     /*
     [popoverAppearance setBorderWidth:12];
@@ -37,13 +37,15 @@
     [popoverAppearance setInnerShadowBlurRadius:3];
     [popoverAppearance setInnerShadowOffset:CGSizeMake(0, 1)];
     */
-
+    
+    /*
     UINavigationBar* navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
     [navBarAppearance setTitleTextAttributes:@{
                    UITextAttributeTextColor : [UIColor darkGrayColor],
               UITextAttributeTextShadowColor: [UIColor whiteColor],
              UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
     }];
+    */
     
     NSArray *temp = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"players" ofType:@"plist"]];
     

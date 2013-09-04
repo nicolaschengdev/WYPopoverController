@@ -729,7 +729,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (result == nil)
     {
-        result = [self.fillTopColor colorByLighten:0.1];
+        result = [self.fillTopColor colorByLighten:0.2];
     }
     
     return result;
