@@ -16,7 +16,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
-    //[popoverAppearance setTintColor:[UIColor lightGrayColor]];
     
     //[popoverAppearance setOuterCornerRadius:8];
     //[popoverAppearance setInnerCornerRadius:6];

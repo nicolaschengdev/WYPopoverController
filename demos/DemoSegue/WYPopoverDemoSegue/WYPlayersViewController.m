@@ -13,9 +13,10 @@
 #import "WYStoryboardPopoverSegue.h"
 #import "WYTestViewController.h"
 
-@interface WYPlayersViewController () <WYPlayerDetailsViewControllerDelegate, WYPopoverControllerDelegate, UIPopoverControllerDelegate>
+@interface WYPlayersViewController () <WYPlayerDetailsViewControllerDelegate, WYPopoverControllerDelegate>
 {
-    id popoverController;
+    WYPopoverController* playerDetailsPopoverController;
+    WYPopoverController* testPopoverController;
 }
 
 - (UIImage *)imageForRating:(int)rating;
@@ -46,24 +47,15 @@
 	{
 		UINavigationController *navigationController = segue.destinationViewController;
 		WYPlayerDetailsViewController* playerDetailsViewController = [[navigationController viewControllers] objectAtIndex:0];
-        playerDetailsViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);
+        playerDetailsViewController.contentSizeForViewInPopover = CGSizeMake(280, 280);
 		playerDetailsViewController.delegate = self;
         
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        {
-            WYStoryboardPopoverSegue* popoverSegue = (WYStoryboardPopoverSegue*)segue;
+        WYStoryboardPopoverSegue* popoverSegue = (WYStoryboardPopoverSegue*)segue;
             
-            popoverController = [popoverSegue popoverControllerWithSender:sender
+        playerDetailsPopoverController = [popoverSegue popoverControllerWithSender:sender
                                                  permittedArrowDirections:WYPopoverArrowDirectionAny
                                                                  animated:YES];
-            ((WYPopoverController *)popoverController).delegate = self;
-        }
-        else
-        {
-            UIStoryboardPopoverSegue* popoverSegue = (UIStoryboardPopoverSegue*)segue;
-            popoverController = [popoverSegue popoverController];
-            ((UIPopoverController *)popoverController).delegate = self;
-        }
+        playerDetailsPopoverController.delegate = self;
 	}
 }
 
@@ -72,6 +64,25 @@
 - (BOOL)popoverControllerShouldDismiss:(WYPopoverController *)aPopoverController
 {
     return YES;
+}
+
+- (void)popoverControllerDidDismiss:(WYPopoverController *)aPopoverController
+{
+    if (aPopoverController == playerDetailsPopoverController)
+    {
+        UINavigationController *navigationController = (UINavigationController *)aPopoverController.contentViewController;
+        
+        WYPlayerDetailsViewController* playerDetailsViewController = [[navigationController viewControllers] objectAtIndex:0];
+        playerDetailsViewController.delegate = nil;
+        
+        playerDetailsPopoverController.delegate = nil;
+        playerDetailsPopoverController = nil;
+    }
+    else if (aPopoverController == testPopoverController)
+    {
+        testPopoverController.delegate = nil;
+        testPopoverController = nil;
+    }
 }
 
 #pragma mark - private
@@ -113,32 +124,20 @@
     
     UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
     
-    popoverController = [[WYPopoverController alloc] initWithContentViewController:navigationController];
-    ((WYPopoverController *)popoverController).delegate = self;
+    testPopoverController = [[WYPopoverController alloc] initWithContentViewController:navigationController];
+    testPopoverController.delegate = self;
     
-    [((WYPopoverController *)popoverController) presentPopoverFromBarButtonItem:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
-    
-    /*
-    WYTestView* testView = [[WYTestView alloc] initWithFrame:CGRectMake(0, 20, 44, 44)];
-    testView.hidden = YES;
-    testView.alpha = 0;
-    [self.tableView.window.rootViewController.view addSubview:testView];
-    
-    testView.hidden = NO;
-    [UIView animateWithDuration:.2f animations:^{
-        testView.alpha = 1;
-    } completion:^(BOOL finished) {
-        
-    }];
-    */
+    [testPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
 }
 
 #pragma mark - WYPlayerDetailsViewControllerDelegate
 
 - (void)playerDetailsViewControllerDidCancel:(WYPlayerDetailsViewController *)controller
 {
-    [popoverController dismissPopoverAnimated:YES];
-    popoverController = nil;
+    controller.delegate = nil;
+    [playerDetailsPopoverController dismissPopoverAnimated:YES];
+    playerDetailsPopoverController.delegate = nil;
+    playerDetailsPopoverController = nil;
 }
 
 - (void)playerDetailsViewController:(WYPlayerDetailsViewController *)controller
@@ -149,10 +148,11 @@
 	[NSIndexPath indexPathForRow:[self.players count] - 1 inSection:0];
 	[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                           withRowAnimation:UITableViewRowAnimationAutomatic];
-
-    [popoverController dismissPopoverAnimated:YES];
-    [popoverController setDelegate:nil];
-    popoverController = nil;
+    
+    controller.delegate = nil;
+    [playerDetailsPopoverController dismissPopoverAnimated:YES];
+    playerDetailsPopoverController.delegate = nil;
+    playerDetailsPopoverController = nil;
 }
 
 #pragma mark - UITableViewDataSource

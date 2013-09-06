@@ -58,7 +58,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 ##### Gloss
 
-![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_glossshadowcolor.png "glossShadowColor: #c3045e", glossShadowOffset: {0, 1.5}, glossShadowBlurRadius: 0") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_glossshadowblurradius_2.png "glossShadowColor: #c3045e, glossShadowOffset: {0, 1.5}, glossShadowBlurRadius: 2") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_glossshadowoffset_0-3.png "glossShadowColor: #c3045e, glossShadowOffset: {0, 3}, glossShadowBlurRadius: 0")
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_glossshadowcolor.png "glossShadowColor: #c3045e, glossShadowOffset: {0, 1.5}, glossShadowBlurRadius: 0") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_glossshadowblurradius_2.png "glossShadowColor: #c3045e, glossShadowOffset: {0, 1.5}, glossShadowBlurRadius: 2") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_glossshadowoffset_0-3.png "glossShadowColor: #c3045e, glossShadowOffset: {0, 3}, glossShadowBlurRadius: 0")
 
 ##### Outer
 
@@ -155,6 +155,15 @@ UINavigationBar* appearance2 = [UINavigationBar appearanceWhenContainedIn:[UINav
 	}
 }
 ```
+
+### Handling popover controllers during orientation changes
+
+When showing a popover controller, there are times when you will need to handle how the popover controller appears after a change in device orientation.
+
+Situations when handling is required:
+
+* If the popover controller is presented from a target rectangle using the `-presentPopoverFromRect:inView:permittedArrowDirections:animated` method of UIPopoverController.
+* If the popover controller is presented from a bar button item that is removed after the rotation has finished.
 
 ### Change logs
 

@@ -17,7 +17,6 @@
 
 @end
 
-
 @implementation WYGesturesViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -32,7 +31,7 @@
 - (IBAction)buttonTap:(id)sender
 {
     UIView* view = (UIView*)sender;
-    
+
     WYTestViewController* contentViewController = [[WYTestViewController alloc] init];
     contentViewController.contentSizeForViewInPopover = CGSizeMake(260, 200);
     
