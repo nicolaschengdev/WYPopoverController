@@ -158,11 +158,13 @@ UINavigationBar* appearance2 = [UINavigationBar appearanceWhenContainedIn:[UINav
 
 ### Handling popover controllers during orientation changes
 
+---
+
 When showing a popover controller, there are times when you will need to handle how the popover controller appears after a change in device orientation.
 
 Situations when handling is required:
 
-* If the popover controller is presented from a target rectangle using the `-presentPopoverFromRect:inView:permittedArrowDirections:animated` method of UIPopoverController.
+* If the popover controller is presented from a target rectangle using the `-presentPopoverFromRect:inView:permittedArrowDirections:animated` method of WYPopoverController.
 * If the popover controller is presented from a bar button item that is removed after the rotation has finished.
 
 ### Change logs
