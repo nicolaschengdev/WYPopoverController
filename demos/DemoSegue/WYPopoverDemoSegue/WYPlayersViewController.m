@@ -55,6 +55,9 @@
         playerDetailsPopoverController = [popoverSegue popoverControllerWithSender:sender
                                                  permittedArrowDirections:WYPopoverArrowDirectionAny
                                                                  animated:YES];
+        
+        playerDetailsPopoverController.popoverLayoutMargins = UIEdgeInsetsMake(4, 4, 4, 4);
+        
         playerDetailsPopoverController.delegate = self;
 	}
 }
@@ -119,7 +122,7 @@
 - (IBAction)showTest:(id)sender
 {
     WYTestViewController* contentViewController = [[WYTestViewController alloc] init];
-    contentViewController.contentSizeForViewInPopover = CGSizeMake(280, 280);
+    contentViewController.contentSizeForViewInPopover = CGSizeMake(240, 200);
     contentViewController.title = @"Test";
     
     UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];

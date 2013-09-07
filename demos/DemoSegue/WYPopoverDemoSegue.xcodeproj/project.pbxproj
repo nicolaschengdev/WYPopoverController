@@ -53,6 +53,7 @@
 		97D6944417D51E000035D292 /* WYTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D6944217D51E000035D292 /* WYTestViewController.m */; };
 		97D6944517D51E000035D292 /* WYTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97D6944317D51E000035D292 /* WYTestViewController.xib */; };
 		97D6945517D54BC00035D292 /* WYGesturesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D6945417D54BC00035D292 /* WYGesturesViewController.m */; };
+		97F27C8D17DA729000D5D4A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97F27C8C17DA729000D5D4A2 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +116,7 @@
 		97D6944317D51E000035D292 /* WYTestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYTestViewController.xib; sourceTree = "<group>"; };
 		97D6945317D54BC00035D292 /* WYGesturesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYGesturesViewController.h; sourceTree = "<group>"; };
 		97D6945417D54BC00035D292 /* WYGesturesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYGesturesViewController.m; sourceTree = "<group>"; };
+		97F27C8C17DA729000D5D4A2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97F27C8D17DA729000D5D4A2 /* QuartzCore.framework in Frameworks */,
 				97B3CB3E17CDE8E50005E1A1 /* UIKit.framework in Frameworks */,
 				97B3CB4017CDE8E50005E1A1 /* Foundation.framework in Frameworks */,
 				97B3CB4217CDE8E50005E1A1 /* CoreGraphics.framework in Frameworks */,
@@ -151,6 +154,7 @@
 		97B3CB3C17CDE8E50005E1A1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				97F27C8C17DA729000D5D4A2 /* QuartzCore.framework */,
 				97B3CB3D17CDE8E50005E1A1 /* UIKit.framework */,
 				97B3CB3F17CDE8E50005E1A1 /* Foundation.framework */,
 				97B3CB4117CDE8E50005E1A1 /* CoreGraphics.framework */,

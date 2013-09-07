@@ -1,5 +1,5 @@
 /*
- Version 0.1.1
+ Version 0.1.2
  
  WYPopoverController is available under the MIT license.
  
@@ -327,12 +327,12 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     UIBezierPath* rectPath = [UIBezierPath bezierPathWithRect:innerRect];
     
+    UIBezierPath* roundedRectPath = [UIBezierPath bezierPathWithRoundedRect:innerRect cornerRadius:cornerRadius + 1];
+    
     if (wantsDefaultContentAppearance == NO)
     {
         CGContextSaveGState(context);
         {
-            UIBezierPath* roundedRectPath = [UIBezierPath bezierPathWithRoundedRect:innerRect cornerRadius:cornerRadius + 1];
-            
             [rectPath appendPath:roundedRectPath];
             rectPath.usesEvenOddFillRule = YES;
             [rectPath addClip];
@@ -349,6 +349,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     {
         if (wantsDefaultContentAppearance == NO)
         {
+            [roundedRectPath addClip];
             CGContextSetShadowWithColor(context, innerShadowOffset, innerShadowBlurRadius, innerShadowColor.CGColor);
         }
         
@@ -489,6 +490,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (BOOL)isTouchedAtPoint:(CGPoint)point;
 
+- (void)redraw;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -513,6 +516,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @synthesize outerShadowBlurRadius;
 @synthesize outerShadowOffset;
 @synthesize outerCornerRadius;
+@synthesize minOuterCornerRadius;
 @synthesize innerShadowColor;
 @synthesize innerShadowBlurRadius;
 @synthesize innerShadowOffset;
@@ -543,6 +547,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     appearance.outerShadowBlurRadius = 8;
     appearance.outerShadowOffset = CGSizeMake(0, 2);
     appearance.outerCornerRadius = 8;
+    appearance.minOuterCornerRadius = 0;
     appearance.innerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
     appearance.innerShadowBlurRadius = 2;
     appearance.innerShadowOffset = CGSizeMake(0, 1);
@@ -563,6 +568,12 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         self.arrowDirection = WYPopoverArrowDirectionDown;
         self.arrowOffset = 0;
+        
+        self.layer.name = @"parent";
+        self.layer.drawsAsynchronously = YES;
+        self.layer.contentsScale = [UIScreen mainScreen].scale;
+        //self.layer.edgeAntialiasingMask = kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge;
+        self.layer.delegate = self;
     }
     
     return self;
@@ -592,7 +603,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         CGRect outerRect = [self outerRect];
         
-        CGFloat delta = self.outerCornerRadius + self.arrowBase / 2;
+        CGFloat delta = self.arrowBase / 2. + .5;
+        
+        delta  += MIN(minOuterCornerRadius, outerCornerRadius);
         
         outerRect = CGRectInset(outerRect, delta, delta);
         
@@ -642,19 +655,14 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     contentView.frame = [self innerRect];
     
-    UIView* testView = [[UIView alloc] initWithFrame:contentView.frame];
-    testView.backgroundColor = [UIColor redColor];
-    testView.alpha = 0.25;
-    //[self addSubview:testView];
-    
     if (innerView == nil)
     {
         innerView = [[WYPopoverInnerView alloc] initWithFrame:contentView.frame];
+        innerView.userInteractionEnabled = NO;
+        
         innerView.gradientTopColor = self.fillTopColor;
         innerView.gradientBottomColor = self.fillBottomColor;
-        
         innerView.strokeColor = self.strokeColor;
-        
         innerView.innerShadowColor = innerShadowColor;
         innerView.innerShadowOffset = innerShadowOffset;
         innerView.innerCornerRadius = self.innerCornerRadius;
@@ -669,6 +677,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     [self insertSubview:innerView aboveSubview:contentView];
     
     innerView.frame = contentView.frame;
+    
+    [self redraw];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
@@ -781,6 +791,12 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
+- (void)redraw
+{
+    [self.layer setNeedsDisplay];
+    //if (innerLayer) [innerLayer setNeedsDisplay];
+}
+
 #pragma mark Drawing
 
 - (void)setNeedsDisplay
@@ -797,133 +813,187 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     }
 }
 
-- (void)drawRect:(CGRect)rect
+#pragma mark CALayerDelegate
+
+- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)context
 {
-    NSLog(@"drawRect");
-    
-    //// General Declarations
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    //// Gradient Declarations
-    NSArray* fillGradientColors = [NSArray arrayWithObjects:
-                                   (id)self.fillTopColor.CGColor,
-                                   (id)self.fillBottomColor.CGColor, nil];
-    CGFloat fillGradientLocations[] = {0, 1};
-    CGGradientRef fillGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)fillGradientColors, fillGradientLocations);
-    
-    // Frames
-    CGRect outerRect = [self outerRect:rect arrowDirection:self.arrowDirection];
-    outerRect = CGRectInset(outerRect, 0.5, 0.5);
-    
-    // Inner Path
-    CGMutablePathRef outerPathRef = CGPathCreateMutable();
-    
-    CGPathMoveToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect) + outerCornerRadius, CGRectGetMinY(outerRect));
-    
-    if (arrowDirection == WYPopoverArrowDirectionUp)
+    if ([layer.name isEqualToString:@"parent"])
     {
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMidX(outerRect) + arrowOffset - arrowBase / 2, CGRectGetMinY(outerRect));
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMidX(outerRect) + arrowOffset, CGRectGetMinY(outerRect) - arrowHeight);
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMidX(outerRect) + arrowOffset + arrowBase / 2, CGRectGetMinY(outerRect));
+        UIGraphicsPushContext(context);
+        //CGContextSetShouldAntialias(context, YES);
+        //CGContextSetAllowsAntialiasing(context, YES);
         
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
+        //// General Declarations
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        
+        //// Gradient Declarations
+        NSArray* fillGradientColors = [NSArray arrayWithObjects:
+                                       (id)self.fillTopColor.CGColor,
+                                       (id)self.fillBottomColor.CGColor, nil];
+        CGFloat fillGradientLocations[] = {0, 1};
+        CGGradientRef fillGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)fillGradientColors, fillGradientLocations);
+        
+        // Frames
+        CGRect rect = self.bounds;
+        
+        CGRect outerRect = [self outerRect:rect arrowDirection:self.arrowDirection];
+        outerRect = CGRectInset(outerRect, 0.5, 0.5);
+        
+        // Inner Path
+        CGMutablePathRef outerPathRef = CGPathCreateMutable();
+        
+        CGPoint origin = CGPointZero;
+        
+        CGFloat reducedOuterCornerRadius = outerCornerRadius;
+        
+        if (arrowDirection == WYPopoverArrowDirectionUp || arrowDirection == WYPopoverArrowDirectionDown)
+        {
+            if (arrowOffset >= 0)
+            {
+                reducedOuterCornerRadius = CGRectGetMaxX(outerRect) - (CGRectGetMidX(outerRect) + arrowOffset + arrowBase / 2);
+            }
+            else
+            {
+                reducedOuterCornerRadius = (CGRectGetMidX(outerRect) + arrowOffset - arrowBase / 2) - CGRectGetMinX(outerRect);
+            }
+        }
+        else
+        {
+            if (arrowOffset >= 0)
+            {
+                reducedOuterCornerRadius = CGRectGetMaxY(outerRect) - (CGRectGetMidY(outerRect) + arrowOffset + arrowBase / 2);
+            }
+            else
+            {
+                reducedOuterCornerRadius = (CGRectGetMidY(outerRect) + arrowOffset - arrowBase / 2) - CGRectGetMinY(outerRect);
+            }
+        }
+        
+        reducedOuterCornerRadius = MIN(reducedOuterCornerRadius, outerCornerRadius);
+        
+        if (arrowDirection == WYPopoverArrowDirectionUp)
+        {
+            origin = CGPointMake(CGRectGetMidX(outerRect) + arrowOffset - arrowBase / 2, CGRectGetMinY(outerRect));
+            
+            CGPathMoveToPoint(outerPathRef, NULL, origin.x, origin.y);
+            
+            CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMidX(outerRect) + arrowOffset, CGRectGetMinY(outerRect) - arrowHeight);
+            CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMidX(outerRect) + arrowOffset + arrowBase / 2, CGRectGetMinY(outerRect));
+            
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), (arrowOffset >= 0) ? reducedOuterCornerRadius : outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), (arrowOffset < 0) ? reducedOuterCornerRadius : outerCornerRadius);
+            
+            CGPathAddLineToPoint(outerPathRef, NULL, origin.x, origin.y);
+        }
+        
+        if (arrowDirection == WYPopoverArrowDirectionDown)
+        {
+            origin = CGPointMake(CGRectGetMidX(outerRect) + arrowOffset + arrowBase / 2, CGRectGetMaxY(outerRect));
+            
+            CGPathMoveToPoint(outerPathRef, NULL, origin.x, origin.y);
+            
+            CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMidX(outerRect) + arrowOffset, CGRectGetMaxY(outerRect) + arrowHeight);
+            CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMidX(outerRect) + arrowOffset - arrowBase / 2, CGRectGetMaxY(outerRect));
+            
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), (arrowOffset < 0) ? reducedOuterCornerRadius : outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), (arrowOffset >= 0) ? reducedOuterCornerRadius : outerCornerRadius);
+            
+            CGPathAddLineToPoint(outerPathRef, NULL, origin.x, origin.y);
+        }
+        
+        if (arrowDirection == WYPopoverArrowDirectionLeft)
+        {
+            origin = CGPointMake(CGRectGetMinX(outerRect), CGRectGetMidY(outerRect) + arrowOffset + arrowBase / 2);
+            
+            CGPathMoveToPoint(outerPathRef, NULL, origin.x, origin.y);
+            
+            CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect) - arrowHeight, CGRectGetMidY(outerRect) + arrowOffset);
+            CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMidY(outerRect) + arrowOffset - arrowBase / 2);
+            
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), (arrowOffset < 0) ? reducedOuterCornerRadius : outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), (arrowOffset >= 0) ? reducedOuterCornerRadius : outerCornerRadius);
+            
+            CGPathAddLineToPoint(outerPathRef, NULL, origin.x, origin.y);
+        }
+        
+        if (arrowDirection == WYPopoverArrowDirectionRight)
+        {
+            origin = CGPointMake(CGRectGetMaxX(outerRect), CGRectGetMidY(outerRect) + arrowOffset - arrowBase / 2);
+            
+            CGPathMoveToPoint(outerPathRef, NULL, origin.x, origin.y);
+            
+            CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect) + arrowHeight, CGRectGetMidY(outerRect) + arrowOffset);
+            CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMidY(outerRect) + arrowOffset + arrowBase / 2);
+            
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), (arrowOffset >= 0) ? reducedOuterCornerRadius : outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), (arrowOffset < 0) ? reducedOuterCornerRadius : outerCornerRadius);
+            
+            CGPathAddLineToPoint(outerPathRef, NULL, origin.x, origin.y);
+        }
+        
+        CGPathCloseSubpath(outerPathRef);
+        
+        UIBezierPath* outerRectPath = [UIBezierPath bezierPathWithCGPath:outerPathRef];
+        
+        CGContextSaveGState(context);
+        {
+            CGContextSetShadowWithColor(context, self.outerShadowOffset, outerShadowBlurRadius, outerShadowColor.CGColor);
+            CGContextBeginTransparencyLayer(context, NULL);
+            [outerRectPath addClip];
+            CGRect outerRectBounds = CGPathGetPathBoundingBox(outerRectPath.CGPath);
+            CGContextDrawLinearGradient(context, fillGradient,
+                                        CGPointMake(CGRectGetMidX(outerRectBounds), CGRectGetMinY(outerRectBounds)),
+                                        CGPointMake(CGRectGetMidX(outerRectBounds), CGRectGetMaxY(outerRectBounds)),
+                                        0);
+            CGContextEndTransparencyLayer(context);
+        }
+        CGContextRestoreGState(context);
+        
+        ////// outerRect Inner Shadow
+        CGRect outerRectBorderRect = CGRectInset([outerRectPath bounds], -glossShadowBlurRadius, -glossShadowBlurRadius);
+        outerRectBorderRect = CGRectOffset(outerRectBorderRect, -glossShadowOffset.width, -glossShadowOffset.height);
+        outerRectBorderRect = CGRectInset(CGRectUnion(outerRectBorderRect, [outerRectPath bounds]), -1, -1);
+        
+        UIBezierPath* outerRectNegativePath = [UIBezierPath bezierPathWithRect: outerRectBorderRect];
+        [outerRectNegativePath appendPath: outerRectPath];
+        outerRectNegativePath.usesEvenOddFillRule = YES;
+        
+        CGContextSaveGState(context);
+        {
+            CGFloat xOffset = glossShadowOffset.width + round(outerRectBorderRect.size.width);
+            CGFloat yOffset = glossShadowOffset.height;
+            CGContextSetShadowWithColor(context,
+                                        CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)),
+                                        glossShadowBlurRadius,
+                                        self.glossShadowColor.CGColor);
+            
+            [outerRectPath addClip];
+            CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(outerRectBorderRect.size.width), 0);
+            [outerRectNegativePath applyTransform: transform];
+            [[UIColor grayColor] setFill];
+            [outerRectNegativePath fill];
+        }
+        CGContextRestoreGState(context);
+        
+        [self.strokeColor setStroke];
+        outerRectPath.lineWidth = 1;
+        [outerRectPath stroke];
+        
+        //// Cleanup
+        CFRelease(outerPathRef);
+        CGGradientRelease(fillGradient);
+        CGColorSpaceRelease(colorSpace);
+        
+        UIGraphicsPopContext();
     }
-    
-    if (arrowDirection == WYPopoverArrowDirectionDown)
-    {
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
-        
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMidX(outerRect) + arrowOffset + arrowBase / 2, CGRectGetMaxY(outerRect));
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMidX(outerRect) + arrowOffset, CGRectGetMaxY(outerRect) + arrowHeight);
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMidX(outerRect) + arrowOffset - arrowBase / 2, CGRectGetMaxY(outerRect));
-        
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
-    }
-    
-    if (arrowDirection == WYPopoverArrowDirectionLeft)
-    {
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
-        
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMidY(outerRect) + arrowOffset + arrowBase / 2);
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect) - arrowHeight, CGRectGetMidY(outerRect) + arrowOffset);
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMidY(outerRect) + arrowOffset - arrowBase / 2);
-        
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
-    }
-    
-    if (arrowDirection == WYPopoverArrowDirectionRight)
-    {
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
-        
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMidY(outerRect) + arrowOffset - arrowBase / 2);
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect) + arrowHeight, CGRectGetMidY(outerRect) + arrowOffset);
-        CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMidY(outerRect) + arrowOffset + arrowBase / 2);
-        
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
-        CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
-    }
-    
-    CGPathCloseSubpath(outerPathRef);
-    
-    UIBezierPath* outerRectPath = [UIBezierPath bezierPathWithCGPath:outerPathRef];
-    
-    CGContextSaveGState(context);
-    {
-        CGContextSetShadowWithColor(context, self.outerShadowOffset, outerShadowBlurRadius, outerShadowColor.CGColor);
-        CGContextBeginTransparencyLayer(context, NULL);
-        [outerRectPath addClip];
-        CGRect outerRectBounds = CGPathGetPathBoundingBox(outerRectPath.CGPath);
-        CGContextDrawLinearGradient(context, fillGradient,
-                                    CGPointMake(CGRectGetMidX(outerRectBounds), CGRectGetMinY(outerRectBounds)),
-                                    CGPointMake(CGRectGetMidX(outerRectBounds), CGRectGetMaxY(outerRectBounds)),
-                                    0);
-        CGContextEndTransparencyLayer(context);
-    }
-    CGContextRestoreGState(context);
-    
-    ////// outerRect Inner Shadow
-    CGRect outerRectBorderRect = CGRectInset([outerRectPath bounds], -glossShadowBlurRadius, -glossShadowBlurRadius);
-    outerRectBorderRect = CGRectOffset(outerRectBorderRect, -glossShadowOffset.width, -glossShadowOffset.height);
-    outerRectBorderRect = CGRectInset(CGRectUnion(outerRectBorderRect, [outerRectPath bounds]), -1, -1);
-    
-    UIBezierPath* outerRectNegativePath = [UIBezierPath bezierPathWithRect: outerRectBorderRect];
-    [outerRectNegativePath appendPath: outerRectPath];
-    outerRectNegativePath.usesEvenOddFillRule = YES;
-    
-    CGContextSaveGState(context);
-    {
-        CGFloat xOffset = glossShadowOffset.width + round(outerRectBorderRect.size.width);
-        CGFloat yOffset = glossShadowOffset.height;
-        CGContextSetShadowWithColor(context,
-                                    CGSizeMake(xOffset + copysign(0.1, xOffset), yOffset + copysign(0.1, yOffset)),
-                                    glossShadowBlurRadius,
-                                    self.glossShadowColor.CGColor);
-        
-        [outerRectPath addClip];
-        CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(outerRectBorderRect.size.width), 0);
-        [outerRectNegativePath applyTransform: transform];
-        [[UIColor grayColor] setFill];
-        [outerRectNegativePath fill];
-    }
-    CGContextRestoreGState(context);
-    
-    [self.strokeColor setStroke];
-    outerRectPath.lineWidth = 1;
-    [outerRectPath stroke];
-    
-    //// Cleanup
-    CFRelease(outerPathRef);
-    CGGradientRelease(fillGradient);
-    CGColorSpaceRelease(colorSpace);
 }
 
 #pragma mark Private
@@ -1063,7 +1133,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     contentView = nil;
     innerView = nil;
-    
     tintColor = nil;
     strokeColor = nil;
     fillTopColor = nil;
@@ -1645,15 +1714,18 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         [areas addObject:area];
     }
     
-    NSIndexSet* indexes = [areas indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-        WYPopoverArea* area = (WYPopoverArea*)obj;
+    if ([areas count] > 1)
+    {
+        NSIndexSet* indexes = [areas indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            WYPopoverArea* area = (WYPopoverArea*)obj;
+            
+            BOOL result = (area.areaSize.width > 0 && area.areaSize.height > 0);
+            
+            return result;
+        }];
         
-        BOOL result = (area.areaSize.width > 0 && area.areaSize.height > 0);
-        
-        return result;
-    }];
-    
-    areas = [NSMutableArray arrayWithArray:[areas objectsAtIndexes:indexes]];
+        areas = [NSMutableArray arrayWithArray:[areas objectsAtIndexes:indexes]];
+    }
     
     [areas sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         WYPopoverArea* area1 = (WYPopoverArea*)obj1;

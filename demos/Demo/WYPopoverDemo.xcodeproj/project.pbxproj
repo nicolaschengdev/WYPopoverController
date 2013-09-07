@@ -26,6 +26,7 @@
 		976A344B17BBAA4C0071BF21 /* WYSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 976A344917BBAA4C0071BF21 /* WYSettingsViewController.xib */; };
 		97B3CB2F17CD57910005E1A1 /* WYAnotherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB2D17CD57910005E1A1 /* WYAnotherViewController.m */; };
 		97C0779F17D3C2DF006A19CE /* WYAnotherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C0779E17D3C2DF006A19CE /* WYAnotherViewController.xib */; };
+		97F27C8E17DB4F8800D5D4A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA5C3917D1B11100F611A0 /* QuartzCore.framework */; };
 		97FA5C3017D1A82E00F611A0 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FA5C2D17D1A82E00F611A0 /* WYPopoverController.m */; };
 		97FA5C3117D1A82E00F611A0 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FA5C2F17D1A82E00F611A0 /* WYStoryboardPopoverSegue.m */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97F27C8E17DB4F8800D5D4A2 /* QuartzCore.framework in Frameworks */,
 				976A341F17BB9AEB0071BF21 /* UIKit.framework in Frameworks */,
 				976A342117BB9AEB0071BF21 /* Foundation.framework in Frameworks */,
 				976A342317BB9AEB0071BF21 /* CoreGraphics.framework in Frameworks */,

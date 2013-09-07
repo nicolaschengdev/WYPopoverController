@@ -15,36 +15,36 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+    WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+
+    [popoverAppearance setTintColor:[UIColor colorWithRed:63./255. green:92./255. blue:128./255. alpha:1]];
     
-    //[popoverAppearance setOuterCornerRadius:8];
-    //[popoverAppearance setInnerCornerRadius:6];
+    [popoverAppearance setOuterCornerRadius:6];
+    [popoverAppearance setMinOuterCornerRadius:2];
+    [popoverAppearance setInnerCornerRadius:4];
     
-    /*
-    [popoverAppearance setBorderWidth:12];
-    [popoverAppearance setArrowBase:40];
-    [popoverAppearance setArrowHeight:20];
+    [popoverAppearance setBorderWidth:6];
+    [popoverAppearance setArrowBase:32];
+    [popoverAppearance setArrowHeight:14];
     
-    [popoverAppearance setGlossShadowColor:[UIColor lightGrayColor]];
-    [popoverAppearance setGlossShadowOffset:CGSizeMake(0, 1)];
+    [popoverAppearance setGlossShadowColor:[UIColor colorWithWhite:1 alpha:0.5]];
+    [popoverAppearance setGlossShadowBlurRadius:1];
+    [popoverAppearance setGlossShadowOffset:CGSizeMake(0, 1.5)];
     
-    [popoverAppearance setOuterShadowColor:[UIColor colorWithWhite:0 alpha:0.75]];
-    [popoverAppearance setOuterShadowBlurRadius:10];
-    [popoverAppearance setOuterShadowOffset:CGSizeMake(0, 0)];
+    [popoverAppearance setOuterShadowColor:[UIColor colorWithRed:16./255. green:50./255. blue:82./255. alpha:1]];
+    [popoverAppearance setOuterShadowBlurRadius:8];
+    [popoverAppearance setOuterShadowOffset:CGSizeMake(0, 2)];
     
-    [popoverAppearance setInnerShadowColor:[UIColor colorWithWhite:0 alpha:0.75]];
+    [popoverAppearance setInnerShadowColor:[UIColor colorWithWhite:0 alpha:1]];
     [popoverAppearance setInnerShadowBlurRadius:3];
-    [popoverAppearance setInnerShadowOffset:CGSizeMake(0, 1)];
-    */
+    [popoverAppearance setInnerShadowOffset:CGSizeMake(0, 0.5)];
     
-    /*
-    UINavigationBar* navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
+    UINavigationBar* navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], [WYPopoverBackgroundView class], nil];
     [navBarAppearance setTitleTextAttributes:@{
-                   UITextAttributeTextColor : [UIColor darkGrayColor],
-              UITextAttributeTextShadowColor: [UIColor whiteColor],
+                   UITextAttributeTextColor : [UIColor whiteColor],
+              UITextAttributeTextShadowColor: [UIColor colorWithWhite:0 alpha:0.8],
              UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
     }];
-    */
     
     NSArray *temp = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"players" ofType:@"plist"]];
     

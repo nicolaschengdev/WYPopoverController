@@ -33,12 +33,12 @@
     UIView* view = (UIView*)sender;
 
     WYTestViewController* contentViewController = [[WYTestViewController alloc] init];
-    contentViewController.contentSizeForViewInPopover = CGSizeMake(260, 200);
+    contentViewController.contentSizeForViewInPopover = CGSizeMake(200, 200);
     
     popoverController = [[WYPopoverController alloc] initWithContentViewController:contentViewController];
     popoverController.delegate = self;
     
-    [((WYPopoverController *)popoverController) presentPopoverFromRect:view.bounds inView:view permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+    [((WYPopoverController *)popoverController) presentPopoverFromRect:view.bounds inView:view permittedArrowDirections:WYPopoverArrowDirectionRight animated:YES];
 }
 
 - (void)viewDidLoad

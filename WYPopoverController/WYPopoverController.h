@@ -1,5 +1,5 @@
 /*
- Version 0.1.1
+ Version 0.1.2
  
  WYPopoverController is available under the MIT license.
  
@@ -28,7 +28,7 @@
 #define WYPOPOVER_DEFAULT_TINT_COLOR            [UIColor colorWithRed:55.f/255.f green:63.f/255.f blue:71.f/255.f alpha:1.f]
 #define WYPOPOVER_DEFAULT_OVERLAY_COLOR         [UIColor clearColor]
 #define WYPOPOVER_DEFAULT_ANIMATION_DURATION    0.20f
-#define WYPOPOVER_MIN_POPOVER_SIZE              CGSizeMake(200, 200)
+#define WYPOPOVER_MIN_POPOVER_SIZE              CGSizeMake(200, 100)
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
     WYPopoverArrowDirectionUp = 1UL << 0,
@@ -63,6 +63,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 @property (nonatomic, assign) CGFloat  outerShadowBlurRadius UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGSize   outerShadowOffset UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGFloat  outerCornerRadius UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  minOuterCornerRadius UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic, strong) UIColor *innerShadowColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGFloat  innerShadowBlurRadius UI_APPEARANCE_SELECTOR;
