@@ -24,6 +24,8 @@
 */
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 #define WYPOPOVER_DEFAULT_TINT_COLOR            [UIColor colorWithRed:55.f/255.f green:63.f/255.f blue:71.f/255.f alpha:1.f]
 #define WYPOPOVER_DEFAULT_OVERLAY_COLOR         [UIColor clearColor]

@@ -24,7 +24,6 @@
 */
 
 #import "WYPopoverController.h"
-#import <objc/runtime.h>
 
 @interface WYPopoverArea : NSObject
 {

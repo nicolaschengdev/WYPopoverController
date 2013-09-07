@@ -15,8 +15,9 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 * UIAppearance support
 * Works like UIPopoverController
-* Automatic orientation
+* Rotation support
 * UIStoryboard support
+* Keyboard show / hide support
 
 ### UIAppearance support
 
