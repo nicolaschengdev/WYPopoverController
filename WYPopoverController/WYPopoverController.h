@@ -32,6 +32,12 @@
 #define WYPOPOVER_DEFAULT_ANIMATION_DURATION    0.20f
 #define WYPOPOVER_MIN_POPOVER_SIZE              CGSizeMake(200, 100)
 
+#define WYPOPOVER_IS_IOS_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define WYPOPOVER_IS_IOS_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define WYPOPOVER_IS_IOS_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define WYPOPOVER_IS_IOS_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define WYPOPOVER_IS_IOS_THAN_OR_EQUAL_TO(v)          ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
     WYPopoverArrowDirectionUp = 1UL << 0,
     WYPopoverArrowDirectionDown = 1UL << 1,

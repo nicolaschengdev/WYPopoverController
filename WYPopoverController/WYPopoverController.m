@@ -489,8 +489,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (BOOL)isTouchedAtPoint:(CGPoint)point;
 
-- (void)redraw;
-
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -531,27 +529,29 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 + (void)load
 {
-    WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
-    appearance.tintColor = nil;
-    appearance.strokeColor = nil;
-    appearance.fillTopColor = nil;
-    appearance.fillBottomColor = nil;
-    appearance.glossShadowColor = nil;
-    appearance.glossShadowOffset = CGSizeMake(0, 1.5);
-    appearance.glossShadowBlurRadius = 0;
-    appearance.borderWidth = 6;
-    appearance.arrowBase = 42;
-    appearance.arrowHeight = 18;
-    appearance.outerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
-    appearance.outerShadowBlurRadius = 8;
-    appearance.outerShadowOffset = CGSizeMake(0, 2);
-    appearance.outerCornerRadius = 8;
-    appearance.minOuterCornerRadius = 0;
-    appearance.innerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
-    appearance.innerShadowBlurRadius = 2;
-    appearance.innerShadowOffset = CGSizeMake(0, 1);
-    appearance.innerCornerRadius = 6;
-    appearance.viewContentInsets = UIEdgeInsetsMake(3, 0, 0, 0);
+    @autoreleasepool {
+        WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
+        appearance.tintColor = nil;
+        appearance.strokeColor = nil;
+        appearance.fillTopColor = nil;
+        appearance.fillBottomColor = nil;
+        appearance.glossShadowColor = nil;
+        appearance.glossShadowOffset = CGSizeMake(0, 1.5);
+        appearance.glossShadowBlurRadius = 0;
+        appearance.borderWidth = 6;
+        appearance.arrowBase = 42;
+        appearance.arrowHeight = 18;
+        appearance.outerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
+        appearance.outerShadowBlurRadius = 8;
+        appearance.outerShadowOffset = CGSizeMake(0, 2);
+        appearance.outerCornerRadius = 8;
+        appearance.minOuterCornerRadius = 0;
+        appearance.innerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
+        appearance.innerShadowBlurRadius = 2;
+        appearance.innerShadowOffset = CGSizeMake(0, 1);
+        appearance.innerCornerRadius = 6;
+        appearance.viewContentInsets = UIEdgeInsetsMake(3, 0, 0, 0);
+    }
 }
 
 - (id)initWithContentSize:(CGSize)aContentSize
@@ -569,7 +569,12 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         self.arrowOffset = 0;
         
         self.layer.name = @"parent";
-        self.layer.drawsAsynchronously = YES;
+        
+        if (WYPOPOVER_IS_IOS_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
+        {
+            self.layer.drawsAsynchronously = YES;
+        }
+        
         self.layer.contentsScale = [UIScreen mainScreen].scale;
         //self.layer.edgeAntialiasingMask = kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge;
         self.layer.delegate = self;
@@ -677,7 +682,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     innerView.frame = contentView.frame;
     
-    [self redraw];
+    [self.layer setNeedsDisplay];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
@@ -790,17 +795,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
-- (void)redraw
-{
-    [self.layer setNeedsDisplay];
-    //if (innerLayer) [innerLayer setNeedsDisplay];
-}
-
 #pragma mark Drawing
 
 - (void)setNeedsDisplay
 {
     [super setNeedsDisplay];
+    
+    [self.layer setNeedsDisplay];
     
     if (innerView)
     {
@@ -1158,6 +1159,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     BOOL isInterfaceOrientationChanging;
     __weak UIBarButtonItem* barButtonItem;
     CGRect keyboardRect;
+    BOOL hasAppearanceProxyAvailable;
 }
 
 @property (nonatomic, strong, readonly) UIView *rootView;
@@ -1281,6 +1283,34 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         containerView.hidden = YES;
         [self.rootView addSubview:overlayView];
+    }
+    
+    if (WYPOPOVER_IS_IOS_LESS_THAN(@"6.0") && hasAppearanceProxyAvailable == NO)
+    {
+        hasAppearanceProxyAvailable = YES;
+        
+        WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
+        
+        containerView.tintColor = appearance.tintColor;
+        containerView.strokeColor = appearance.strokeColor;
+        containerView.fillTopColor = appearance.fillTopColor;
+        containerView.fillBottomColor = appearance.fillBottomColor;
+        containerView.glossShadowColor = appearance.glossShadowColor;
+        containerView.glossShadowOffset = appearance.glossShadowOffset;
+        containerView.glossShadowBlurRadius = appearance.glossShadowBlurRadius;
+        containerView.borderWidth = appearance.borderWidth;
+        containerView.arrowBase = appearance.arrowBase;
+        containerView.arrowHeight = appearance.arrowHeight;
+        containerView.outerShadowColor = appearance.outerShadowColor;
+        containerView.outerShadowBlurRadius = appearance.outerShadowBlurRadius;
+        containerView.outerShadowOffset = appearance.outerShadowOffset;
+        containerView.outerCornerRadius = appearance.outerCornerRadius;
+        containerView.minOuterCornerRadius = appearance.minOuterCornerRadius;
+        containerView.innerShadowColor = appearance.innerShadowColor;
+        containerView.innerShadowBlurRadius = appearance.innerShadowBlurRadius;
+        containerView.innerShadowOffset = appearance.innerShadowOffset;
+        containerView.innerCornerRadius = appearance.innerCornerRadius;
+        containerView.viewContentInsets = appearance.viewContentInsets;
     }
     
     [self positionPopover];
