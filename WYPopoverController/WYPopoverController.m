@@ -1318,7 +1318,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         if ([viewController isKindOfClass:[UINavigationController class]] == NO)
         {
-            [viewController viewDidAppear:YES];
+            [viewController viewDidAppear:NO];
         }
     }
     
@@ -1644,13 +1644,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                                                       object:nil];
     }
     
+    if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+    {
+        [viewController viewWillDisappear:aAnimated];
+    }
+    
     if (aAnimated)
     {
-        if ([viewController isKindOfClass:[UINavigationController class]] == NO)
-        {
-            [viewController viewWillDisappear:aAnimated];
-        }
-        
         [UIView animateWithDuration:WYPOPOVER_DEFAULT_ANIMATION_DURATION animations:^{
             containerView.alpha = 0;
         } completion:^(BOOL finished) {
@@ -1659,10 +1659,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     }
     else
     {
-        if ([viewController isKindOfClass:[UINavigationController class]] == NO)
-        {
-            [viewController viewWillDisappear:NO];
-        }
         completionBlock(YES);
     }
 }
