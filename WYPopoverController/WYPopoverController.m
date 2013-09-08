@@ -1306,13 +1306,20 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         [UIView animateWithDuration:WYPOPOVER_DEFAULT_ANIMATION_DURATION animations:^{
             containerView.alpha = 1;
         } completion:^(BOOL finished) {
-            [viewController viewDidAppear:YES];
+            if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+            {
+                [viewController viewDidAppear:YES];
+            }
         }];
     }
     else
     {
         [viewController viewWillAppear:NO];
-        [viewController viewDidAppear:NO];
+        
+        if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+        {
+            [viewController viewDidAppear:YES];
+        }
     }
     
     if (isListeningNotifications == NO)
@@ -1603,7 +1610,10 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         [overlayView removeFromSuperview];
         
-        [viewController viewDidDisappear:aAnimated];
+        if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+        {
+            [viewController viewDidDisappear:aAnimated];
+        }
         
         if (callDelegate)
         {
@@ -1636,7 +1646,10 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (aAnimated)
     {
-        [viewController viewWillDisappear:YES];
+        if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+        {
+            [viewController viewWillDisappear:aAnimated];
+        }
         
         [UIView animateWithDuration:WYPOPOVER_DEFAULT_ANIMATION_DURATION animations:^{
             containerView.alpha = 0;
@@ -1646,7 +1659,10 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     }
     else
     {
-        [viewController viewWillDisappear:NO];
+        if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+        {
+            [viewController viewWillDisappear:NO];
+        }
         completionBlock(YES);
     }
 }

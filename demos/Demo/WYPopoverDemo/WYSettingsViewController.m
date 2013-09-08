@@ -26,6 +26,26 @@
     //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"WYSettingsTableViewCell"];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"view WILL appear");
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"view DID appear");
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"view WILL disappear");
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    NSLog(@"view DID disappear");
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

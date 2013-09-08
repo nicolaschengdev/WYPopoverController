@@ -8,7 +8,6 @@
 
 #import "WYGesturesViewController.h"
 #import "WYPopoverController.h"
-#import "WYTestViewController.h"
 
 @interface WYGesturesViewController () <WYPopoverControllerDelegate>
 {
@@ -19,46 +18,21 @@
 
 @implementation WYGesturesViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (IBAction)buttonTap:(id)sender
 {
-    UIView* view = (UIView*)sender;
+    UIView* view = (UIView *)sender;
 
-    WYTestViewController* contentViewController = [[WYTestViewController alloc] init];
-    contentViewController.contentSizeForViewInPopover = CGSizeMake(200, 200);
+    UINavigationController* contentViewController = [[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"StadiumList"]];
     
     popoverController = [[WYPopoverController alloc] initWithContentViewController:contentViewController];
     popoverController.delegate = self;
     
-    [((WYPopoverController *)popoverController) presentPopoverFromRect:view.bounds inView:view permittedArrowDirections:WYPopoverArrowDirectionRight animated:YES];
+    [popoverController presentPopoverFromRect:view.bounds inView:view permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
 }
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - WYPopoverControllerDelegate
 
 - (BOOL)popoverControllerShouldDismiss:(WYPopoverController *)aPopoverController
 {
     return YES;
 }
-
 
 @end

@@ -59,9 +59,7 @@
         settingsViewController.title = @"PDF Settings";
         [settingsViewController.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)]];
         
-        UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
-        
-        UIViewController* contentViewController = navigationController;
+        UINavigationController* contentViewController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
         
         popoverController = [[WYPopoverController alloc] initWithContentViewController:contentViewController];
         popoverController.delegate = self;

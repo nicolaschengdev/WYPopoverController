@@ -22,7 +22,7 @@
     WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
     [popoverAppearance setTintColor:[UIColor whiteColor]];
     
-    [popoverAppearance setOuterCornerRadius:20];
+    [popoverAppearance setOuterCornerRadius:8];
     [popoverAppearance setOuterShadowBlurRadius:6];
     [popoverAppearance setOuterShadowColor:[UIColor colorWithWhite:0 alpha:0.65]];
     [popoverAppearance setOuterShadowOffset:CGSizeMake(0, 2)];
