@@ -87,7 +87,7 @@ WYPopoverController uses ARC.
 
 ---
 
-Add this line `pod 'WYPopoverController', '~> 0.1.1'` to your PodFile or add manually these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` to your project.
+Add this line `pod 'WYPopoverController', '~> 0.1.2'` to your PodFile or add manually these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` and add `Quartzcore` library to your project.
 
 ### Examples
 
