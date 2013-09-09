@@ -7,7 +7,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 ---
 
-![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_screenshots.png)
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_portrait_2_screenshot.png)
 
 ### Features
 
@@ -30,6 +30,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 | arrowHeight           | `CGFloat`      |                                                                                     18 |
 | borderWidth           | `CGFloat`      |                                                                                      6 |
 | outerCornerRadius     | `CGFloat`      |                                                                                      8 |
+| minOuterCornerRadius ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_new_ico.png)    | `CGFloat`      |                                                                                      0 |
 | innerCornerRadius     | `CGFloat`      |                                                                                      6 |
 | viewContentInsets     | `UIEdgeInsets` |                                                                         { 3, 0, 0, 0 } |
 | strokeColor           | `UIColor`      | #262c31ff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_strokecolor.png) |

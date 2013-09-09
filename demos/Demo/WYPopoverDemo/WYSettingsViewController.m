@@ -24,6 +24,8 @@
 {
     [super viewDidLoad];
     //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"WYSettingsTableViewCell"];
+    
+    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor colorWithRed:195./255. green:4./255. blue:94./255. alpha:1.]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -55,7 +57,14 @@
 #pragma mark - UITableViewDataSource
 
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
-    return @"Size of pictures";
+    NSString* sectionTitle = @"";
+    
+    if (section == 0)
+    {
+        sectionTitle = @"Size of pictures";
+    }
+    
+    return sectionTitle;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
@@ -148,7 +157,7 @@
     }
     else
     {
-        cell.textLabel.text = @"Push another view";
+        cell.textLabel.text = @"Compression";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 }

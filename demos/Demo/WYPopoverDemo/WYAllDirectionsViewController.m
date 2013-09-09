@@ -56,7 +56,7 @@
         
         WYSettingsViewController* settingsViewController = [[WYSettingsViewController alloc] init];
         settingsViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);
-        settingsViewController.title = @"PDF Settings";
+        settingsViewController.title = @"Settings";
         [settingsViewController.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)]];
         
         UINavigationController* contentViewController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];

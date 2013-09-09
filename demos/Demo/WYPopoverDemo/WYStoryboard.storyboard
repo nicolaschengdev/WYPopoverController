@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--All Directions View Controller - All directions-->
+        <!--All Directions View Controller - POPOVER-->
         <scene sceneID="vQZ-Ib-4hA">
             <objects>
                 <viewController id="SH8-yS-R5W" customClass="WYAllDirectionsViewController" sceneMemberID="viewController">
@@ -148,9 +148,9 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.93583039314516125" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="All directions" id="byn-bD-FGA"/>
+                    <navigationItem key="navigationItem" title="POPOVER" id="byn-bD-FGA"/>
                     <connections>
                         <outlet property="bottomButton" destination="7kv-r3-yie" id="VHk-eY-IW1"/>
                         <outlet property="bottomLeftButton" destination="wkW-SC-eQF" id="6OT-Fp-o67"/>
@@ -175,6 +175,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JsB-uJ-03V">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.160242959856987" green="0.18130968511104584" blue="0.24362963438034058" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

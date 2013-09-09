@@ -16,9 +16,25 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //UIPopoverController
-
+    
+    WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+    [popoverAppearance setMinOuterCornerRadius:8];
+    
+    UIBarButtonItem* itemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], [WYPopoverBackgroundView class], nil];
+    
+    [itemAppearance setTintColor:[UIColor colorWithRed:56.f/255.f green:64.f/255.f blue:84.f/255.f alpha:1.f]];
+    
+    /*
+    [navBarAppearance setTitleTextAttributes:@{
+                   UITextAttributeTextColor : [UIColor darkGrayColor],
+              UITextAttributeTextShadowColor: [UIColor whiteColor],
+             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+    }];
+    */
+    
     //Appearance 1 (white popover)
     //
+    /*
     WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
     [popoverAppearance setTintColor:[UIColor whiteColor]];
     
@@ -45,6 +61,7 @@
               UITextAttributeTextShadowColor: [UIColor whiteColor],
              UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
     }];
+    */
     
     //Appearance 2 (orange popover)
     //
