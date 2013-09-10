@@ -7,7 +7,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 ---
 
-![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_portrait_2_screenshot.png)
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_screenshot_1.png) ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_screenshot_2.png) 
 
 ### Features
 
@@ -88,7 +88,7 @@ WYPopoverController uses ARC.
 
 ---
 
-Add this line `pod 'WYPopoverController', '~> 0.1.2'` to your PodFile or add manually these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` and add `Quartzcore` library to your project.
+Add this line `pod 'WYPopoverController', '~> 0.1.2'` to your PodFile or add manually these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` and add `Quartzcore` framework to your project.
 
 ### Examples
 

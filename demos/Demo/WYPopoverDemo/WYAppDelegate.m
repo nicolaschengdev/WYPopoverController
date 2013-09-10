@@ -17,21 +17,6 @@
 {
     //UIPopoverController
     
-    WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
-    [popoverAppearance setMinOuterCornerRadius:8];
-    
-    UIBarButtonItem* itemAppearance = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], [WYPopoverBackgroundView class], nil];
-    
-    [itemAppearance setTintColor:[UIColor colorWithRed:56.f/255.f green:64.f/255.f blue:84.f/255.f alpha:1.f]];
-    
-    /*
-    [navBarAppearance setTitleTextAttributes:@{
-                   UITextAttributeTextColor : [UIColor darkGrayColor],
-              UITextAttributeTextShadowColor: [UIColor whiteColor],
-             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
-    }];
-    */
-    
     //Appearance 1 (white popover)
     //
     /*
@@ -39,6 +24,7 @@
     [popoverAppearance setTintColor:[UIColor whiteColor]];
     
     [popoverAppearance setOuterCornerRadius:8];
+    [popoverAppearance setMinOuterCornerRadius:8];
     [popoverAppearance setOuterShadowBlurRadius:6];
     [popoverAppearance setOuterShadowColor:[UIColor colorWithWhite:0 alpha:0.65]];
     [popoverAppearance setOuterShadowOffset:CGSizeMake(0, 2)];
@@ -67,6 +53,7 @@
     //
     /*
     WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+    [popoverAppearance setMinOuterCornerRadius:8];
     [popoverAppearance setTintColor:[UIColor orangeColor]];
     */
     
@@ -76,6 +63,7 @@
     WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
     
     [popoverAppearance setOuterCornerRadius:4];
+    [popoverAppearance setMinOuterCornerRadius:4];
     [popoverAppearance setOuterShadowBlurRadius:0];
     [popoverAppearance setOuterShadowColor:[UIColor clearColor]];
     [popoverAppearance setOuterShadowOffset:CGSizeMake(0, 0)];
@@ -83,9 +71,9 @@
     [popoverAppearance setGlossShadowColor:[UIColor clearColor]];
     [popoverAppearance setGlossShadowOffset:CGSizeMake(0, 0)];
     
-    [popoverAppearance setBorderWidth:8];
-    [popoverAppearance setArrowHeight:10];
-    [popoverAppearance setArrowBase:20];
+    [popoverAppearance setBorderWidth:5];
+    [popoverAppearance setArrowHeight:20];
+    [popoverAppearance setArrowBase:42];
     
     [popoverAppearance setInnerCornerRadius:4];
     [popoverAppearance setInnerShadowBlurRadius:0];
