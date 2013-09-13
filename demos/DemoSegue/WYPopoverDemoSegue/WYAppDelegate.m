@@ -11,10 +11,25 @@
 #import "WYPlayersViewController.h"
 #import "WYPopoverController.h"
 
+@interface UITabBarController (WYPopoverDemo)
+@end
+
+@implementation UITabBarController (WYPopoverDemo)
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
+}
+
+@end
+
 @implementation WYAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    /*
+    UIColor* whyerColor = [UIColor colorWithRed:198./255. green:0./255. blue:94./255. alpha:1];
+
     WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
 
     [popoverAppearance setTintColor:[UIColor colorWithRed:63./255. green:92./255. blue:128./255. alpha:1]];
@@ -39,11 +54,15 @@
     [popoverAppearance setInnerShadowBlurRadius:3];
     [popoverAppearance setInnerShadowOffset:CGSizeMake(0, 0.5)];
     
+    [popoverAppearance setFillTopColor:[UIColor colorWithWhite:1 alpha:1]];
+    [popoverAppearance setFillBottomColor:whyerColor];
+    */
+    
     UINavigationBar* navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], [WYPopoverBackgroundView class], nil];
     [navBarAppearance setTitleTextAttributes:@{
-                   UITextAttributeTextColor : [UIColor whiteColor],
-              UITextAttributeTextShadowColor: [UIColor colorWithWhite:0 alpha:0.8],
-             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
+                   UITextAttributeTextColor : [UIColor blackColor],
+              UITextAttributeTextShadowColor: [UIColor clearColor],
+             UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetZero]
     }];
     
     NSArray *temp = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"players" ofType:@"plist"]];

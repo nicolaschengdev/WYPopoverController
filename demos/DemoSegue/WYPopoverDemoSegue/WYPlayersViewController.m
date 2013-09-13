@@ -17,6 +17,8 @@
 {
     WYPopoverController* playerDetailsPopoverController;
     WYPopoverController* testPopoverController;
+    
+    UIPopoverController* standardPopoverController;
 }
 
 - (UIImage *)imageForRating:(int)rating;
@@ -131,6 +133,11 @@
     testPopoverController.delegate = self;
     
     [testPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+    
+    /*
+    standardPopoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+    [standardPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    */
 }
 
 #pragma mark - WYPlayerDetailsViewControllerDelegate
@@ -189,6 +196,13 @@
 		[self.players removeObjectAtIndex:indexPath.row];
 		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 	}
+}
+
+#pragma mark - UIViewControllerRotation
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
 }
 
 @end
