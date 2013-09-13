@@ -51,10 +51,9 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 {
 }
 
+@property (nonatomic, strong) UIColor *strokeColor UI_APPEARANCE_SELECTOR DEPRECATED_MSG_ATTRIBUTE("In WYPopoverController [0.1.3]. Use outerStrokeColor instead.");
+
 @property (nonatomic, strong) UIColor *tintColor UI_APPEARANCE_SELECTOR;
-
-@property (nonatomic, strong) UIColor *strokeColor UI_APPEARANCE_SELECTOR DEPRECATED_MSG_ATTRIBUTE("BECAREFULL");
-
 @property (nonatomic, strong) UIColor *fillTopColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *fillBottomColor UI_APPEARANCE_SELECTOR;
 
@@ -67,6 +66,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 @property (nonatomic, assign) CGFloat  arrowHeight UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic, strong) UIColor *outerShadowColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *outerStrokeColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGFloat  outerShadowBlurRadius UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGSize   outerShadowOffset UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGFloat  outerCornerRadius UI_APPEARANCE_SELECTOR;

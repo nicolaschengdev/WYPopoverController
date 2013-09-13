@@ -15,36 +15,40 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 * UIAppearance support
 * Works like UIPopoverController
-* Rotation support
+* Automatic orientation support
 * UIStoryboard support
 * Keyboard show / hide support
+* iOS 6 & 7 support
+
 
 ### UIAppearance support
 
 ---
 
-| Property              | Type           | Default value                                                                          |
-| --------------------- | -------------- | -------------------------------------------------------------------------------------: |
-| tintColor             | `UIColor`      |                                                                                  *nil* |
-| arrowBase             | `CGFloat`      |                                                                                     42 |
-| arrowHeight           | `CGFloat`      |                                                                                     18 |
-| borderWidth           | `CGFloat`      |                                                                                      6 |
-| outerCornerRadius     | `CGFloat`      |                                                                                      8 |
-| minOuterCornerRadius ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_new_ico.png)    | `CGFloat`      |                                                                                      0 |
-| innerCornerRadius     | `CGFloat`      |                                                                                      6 |
-| viewContentInsets     | `UIEdgeInsets` |                                                                         { 3, 0, 0, 0 } |
-| strokeColor           | `UIColor`      | #262c31ff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_strokecolor.png) |
-| fillTopColor          | `UIColor`      | #373f47ff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_filltopcolor.png) |
-| fillBottomColor       | `UIColor`      | #3b434cff ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_fillbottomcolor.png) |
-| glossShadowColor      | `UIColor`      | #c3c5c77f ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_glossshadowcolor.png) |
-| glossShadowBlurRadius | `CGFloat`      |                                                                                      0 |
-| glossShadowOffset     | `CGSize`       |                                                                             { 0, 1.5 } |
-| outerShadowColor      | `UIColor`      | #000000bf ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png) |
-| outerShadowBlurRadius | `CGFloat`      |                                                                                      8 |
-| outerShadowOffset     | `CGSize`       |                                                                               { 0, 2 } |
-| innerShadowColor      | `UIColor`      | #000000bf ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_default_shadowcolor.png) |
-| innerShadowBlurRadius | `CGFloat`      |                                                                                      2 |
-| innerShadowOffset     | `CGSize`       |                                                                               { 0, 1 } |
+| Property                                                           | Type           | Default value (iOS 6)  | Default value (iOS 7)  |
+| ------------------------------------------------------------------ | -------------- | ---------------------: | ---------------------: |
+| tintColor                                                          | `UIColor`      |                  *nil* |                  *nil* |
+| arrowBase                                                          | `CGFloat`      |                     42 |                     25 |
+| arrowHeight                                                        | `CGFloat`      |                     18 |                     13 |
+| borderWidth                                                        | `CGFloat`      |                      6 |                      0 |
+| outerCornerRadius                                                  | `CGFloat`      |                      8 |                      5 |
+| innerCornerRadius                                                  | `CGFloat`      |                      6 |                      0 |
+| viewContentInsets                                                  | `UIEdgeInsets` |         { 3, 0, 0, 0 } |       UIEdgeInsetsZero |
+| fillTopColor                                                       | `UIColor`      | 	         #373f47ff | 	          #f4f4f4ff |
+| fillBottomColor                                                    | `UIColor`      |              #3b434cff |              #f4f4f4ff |
+| glossShadowColor                                                   | `UIColor`      |              #c3c5c77f |           #transparent |
+| glossShadowBlurRadius                                              | `CGFloat`      |                      0 |                      0 |
+| glossShadowOffset                                                  | `CGSize`       |             { 0, 1.5 } |             CGSizeZero |
+| outerShadowColor                                                   | `UIColor`      |              #000000bf |           #transparent |
+| outerShadowBlurRadius                                              | `CGFloat`      |                      8 |                      0 |
+| outerShadowOffset                                                  | `CGSize`       |               { 0, 2 } |             CGSizeZero |
+| innerShadowColor                                                   | `UIColor`      | 			 #000000bf | 		   #transparent |
+| innerShadowBlurRadius                                              | `CGFloat`      |                      2 |                      0 |
+| innerShadowOffset                                                  | `CGSize`       |               { 0, 1 } |             CGSizeZero |
+| strokeColor          ![](screenshots/wypopover_deprecated_ico.png) | `UIColor`      |              #262c31ff |                  *nil* |
+| minOuterCornerRadius ![](screenshots/wypopover_new_ico.png)        | `CGFloat`      |  		             0 |  		              0 |
+| innerStrokeColor     ![](screenshots/wypopover_new_ico.png) 		 | `UIColor`      |              #262c31ff |           #transparent |
+| outerStrokeColor     ![](screenshots/wypopover_new_ico.png) 		 | `UIColor`      |              #262c31ff |           #transparent |
 
 ##### Arrow & Border
 

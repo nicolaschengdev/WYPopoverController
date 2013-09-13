@@ -256,7 +256,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
 }
 
-@property (nonatomic, strong) UIColor *strokeColor;
+@property (nonatomic, strong) UIColor *innerStrokeColor;
 
 @property (nonatomic, strong) UIColor *gradientTopColor;
 @property (nonatomic, strong) UIColor *gradientBottomColor;
@@ -264,7 +264,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @property (nonatomic, assign) CGFloat  gradientTopPosition;
 
 @property (nonatomic, strong) UIColor *innerShadowColor;
-@property (nonatomic, strong) UIColor *innerStrokeColor;
 @property (nonatomic, assign) CGSize   innerShadowOffset;
 @property (nonatomic, assign) CGFloat  innerShadowBlurRadius;
 @property (nonatomic, assign) CGFloat  innerCornerRadius;
@@ -281,7 +280,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 @implementation WYPopoverInnerView
 
-@synthesize strokeColor;
+@synthesize innerStrokeColor;
 
 @synthesize gradientTopColor;
 @synthesize gradientBottomColor;
@@ -289,7 +288,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @synthesize gradientTopPosition;
 
 @synthesize innerShadowColor;
-@synthesize innerStrokeColor;
 @synthesize innerShadowOffset;
 @synthesize innerShadowBlurRadius;
 @synthesize innerCornerRadius;
@@ -369,7 +367,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)dealloc
 {
-    strokeColor = nil;
     innerShadowColor = nil;
     innerStrokeColor = nil;
     gradientTopColor = nil;
@@ -506,6 +503,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @synthesize tintColor;
 
 @synthesize strokeColor;
+
 @synthesize fillTopColor;
 @synthesize fillBottomColor;
 @synthesize glossShadowColor;
@@ -515,6 +513,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @synthesize arrowBase;
 @synthesize arrowHeight;
 @synthesize outerShadowColor;
+@synthesize outerStrokeColor;
 @synthesize outerShadowBlurRadius;
 @synthesize outerShadowOffset;
 @synthesize outerCornerRadius;
@@ -543,7 +542,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         if (WYPOPOVER_IS_IOS_LESS_THAN(@"7.0"))
         {
             appearance.tintColor = nil;
+            
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
             appearance.strokeColor = nil;
+#pragma clang diagnostic pop
+            
+            appearance.outerStrokeColor = nil;
             appearance.innerStrokeColor = nil;
             appearance.fillTopColor = nil;
             appearance.fillBottomColor = nil;
@@ -567,7 +572,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         else
         {
             appearance.tintColor = nil;
+            
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
             appearance.strokeColor = [UIColor clearColor];
+#pragma clang diagnostic pop
+            
+            appearance.outerStrokeColor = [UIColor clearColor];
             appearance.innerStrokeColor = [UIColor clearColor];
             appearance.fillTopColor = nil;
             appearance.fillBottomColor = nil;
@@ -580,13 +591,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             appearance.outerShadowColor = [UIColor clearColor];
             appearance.outerShadowBlurRadius = 0;
             appearance.outerShadowOffset = CGSizeZero;
-            appearance.outerCornerRadius = 8;
+            appearance.outerCornerRadius = 5;
             appearance.minOuterCornerRadius = 0;
             appearance.innerShadowColor = [UIColor clearColor];
             appearance.innerShadowBlurRadius = 0;
             appearance.innerShadowOffset = CGSizeZero;
             appearance.innerCornerRadius = 0;
-            appearance.viewContentInsets = UIEdgeInsetsMake(3, 0, 0, 0);
+            appearance.viewContentInsets = UIEdgeInsetsZero;
         }
     }
 }
@@ -703,9 +714,10 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         innerView.gradientTopColor = self.fillTopColor;
         innerView.gradientBottomColor = self.fillBottomColor;
-        innerView.strokeColor = self.strokeColor;
         innerView.innerShadowColor = innerShadowColor;
-        innerView.innerStrokeColor = innerStrokeColor;
+        
+        innerView.innerStrokeColor = self.innerStrokeColor;
+        
         innerView.innerShadowOffset = innerShadowOffset;
         innerView.innerCornerRadius = self.innerCornerRadius;
         innerView.innerShadowBlurRadius = innerShadowBlurRadius;
@@ -778,13 +790,35 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
-- (UIColor*)strokeColor
+- (UIColor*)innerStrokeColor
 {
-    UIColor* result = strokeColor;
+    UIColor* result = innerStrokeColor;
     
     if (result == nil)
     {
-        result = [self.fillTopColor colorByDarken:0.6];
+        result = strokeColor;
+        
+        if (result == nil)
+        {
+            result = [self.fillTopColor colorByDarken:0.6];
+        }
+    }
+    
+    return result;
+}
+
+- (UIColor*)outerStrokeColor
+{
+    UIColor* result = outerStrokeColor;
+    
+    if (result == nil)
+    {
+        result = strokeColor;
+        
+        if (result == nil)
+        {
+            result = [self.fillTopColor colorByDarken:0.6];
+        }
     }
     
     return result;
@@ -1033,7 +1067,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         }
         CGContextRestoreGState(context);
         
-        [self.strokeColor setStroke];
+        [self.outerStrokeColor setStroke];
         outerRectPath.lineWidth = 1;
         [outerRectPath stroke];
         
@@ -1185,12 +1219,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     innerView = nil;
     tintColor = nil;
     strokeColor = nil;
+    outerStrokeColor = nil;
+    innerStrokeColor = nil;
     fillTopColor = nil;
     fillBottomColor = nil;
     glossShadowColor = nil;
     outerShadowColor = nil;
     innerShadowColor = nil;
-    innerStrokeColor = nil;
 }
 
 @end
@@ -1355,7 +1390,14 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
         
         containerView.tintColor = appearance.tintColor;
+        
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
         containerView.strokeColor = appearance.strokeColor;
+#pragma clang diagnostic pop
+        
+        containerView.outerStrokeColor = appearance.outerStrokeColor;
+        containerView.innerStrokeColor = appearance.innerStrokeColor;
         containerView.fillTopColor = appearance.fillTopColor;
         containerView.fillBottomColor = appearance.fillBottomColor;
         containerView.glossShadowColor = appearance.glossShadowColor;
@@ -1370,7 +1412,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         containerView.outerCornerRadius = appearance.outerCornerRadius;
         containerView.minOuterCornerRadius = appearance.minOuterCornerRadius;
         containerView.innerShadowColor = appearance.innerShadowColor;
-        containerView.innerStrokeColor = appearance.innerStrokeColor;
         containerView.innerShadowBlurRadius = appearance.innerShadowBlurRadius;
         containerView.innerShadowOffset = appearance.innerShadowOffset;
         containerView.innerCornerRadius = appearance.innerCornerRadius;
@@ -1434,71 +1475,68 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)drawPopoverNavigationBar
 {
-    if (wantsDefaultContentAppearance == NO)
+    if (wantsDefaultContentAppearance == NO && [viewController isKindOfClass:[UINavigationController class]])
     {
-        if ([viewController isKindOfClass:[UINavigationController class]])
+        UINavigationController* navigationController = (UINavigationController *)viewController;
+        
+        CGFloat navigationBarHeight = navigationController.navigationBar.bounds.size.height;
+        
+        UIBezierPath *rectPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 10, navigationBarHeight)];
+        
+        UIGraphicsBeginImageContextWithOptions(rectPath.bounds.size, NO, 0.0f);
+        
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        
+        //// Gradient Declarations
+        NSArray* fillGradientColors = [NSArray arrayWithObjects:
+                                       (id)containerView.fillTopColor.CGColor,
+                                       (id)containerView.fillBottomColor.CGColor,
+                                       nil];
+        
+        CGFloat fillGradientLocations[] = {0, 1};
+        
+        CGGradientRef fillGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)fillGradientColors, fillGradientLocations);
+        
+        //// Drawing
+        CGContextSaveGState(context);
         {
-            UINavigationController* navigationController = (UINavigationController *)viewController;
+            //CGContextAddPath(context, [rectPath CGPath]);
+            //CGContextClip(context);
             
-            CGFloat navigationBarHeight = navigationController.navigationBar.bounds.size.height;
-
-            UIBezierPath *rectPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 10, navigationBarHeight)];
+            [rectPath addClip];
             
-            UIGraphicsBeginImageContextWithOptions(rectPath.bounds.size, NO, 0.0f);
+            CGFloat gradientTopPosition = [containerView innerRect].origin.y - navigationBarHeight + containerView.outerShadowInsets.top;
+            CGFloat gradientBottomPosition = gradientTopPosition + [containerView outerRect].size.height;
             
-            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-            CGContextRef context = UIGraphicsGetCurrentContext();
+            //NSLog(@"top = %f, bottom = %f", gradientTopPosition, gradientBottomPosition);
             
-            //// Gradient Declarations
-            NSArray* fillGradientColors = [NSArray arrayWithObjects:
-                                           (id)containerView.fillTopColor.CGColor,
-                                           (id)containerView.fillBottomColor.CGColor,
-                                           nil];
-            
-            CGFloat fillGradientLocations[] = {0, 1};
-            
-            CGGradientRef fillGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)fillGradientColors, fillGradientLocations);
-            
-            //// Drawing
-            CGContextSaveGState(context);
-            {
-                //CGContextAddPath(context, [rectPath CGPath]);
-                //CGContextClip(context);
-                
-                [rectPath addClip];
-                
-                CGFloat gradientTopPosition = [containerView innerRect].origin.y - navigationBarHeight + containerView.outerShadowInsets.top;
-                CGFloat gradientBottomPosition = gradientTopPosition + [containerView outerRect].size.height;
-                
-                //NSLog(@"top = %f, bottom = %f", gradientTopPosition, gradientBottomPosition);
-                
-                CGContextDrawLinearGradient(context, fillGradient,
-                                            CGPointMake(0, gradientTopPosition),
-                                            CGPointMake(0, gradientBottomPosition),
-                                            0);
-            }
-            CGContextRestoreGState(context);
-            
-            UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            
-            CGGradientRelease(fillGradient);
-            CGColorSpaceRelease(colorSpace);
-            
-            //NSLog(@"image.size = %@", NSStringFromCGSize(image.size));
-            
-            
-            //image = [image resizableImageWithCapInsets:UIEdgeInsetsZero];
-            
-            [navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-            [navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsLandscapePhone];
-            
-            if (containerView.borderWidth == 0)
-            {
-                viewController.view.clipsToBounds = YES;
-                viewController.view.layer.cornerRadius = containerView.outerCornerRadius;
-            }
+            CGContextDrawLinearGradient(context, fillGradient,
+                                        CGPointMake(0, gradientTopPosition),
+                                        CGPointMake(0, gradientBottomPosition),
+                                        0);
         }
+        CGContextRestoreGState(context);
+        
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        CGGradientRelease(fillGradient);
+        CGColorSpaceRelease(colorSpace);
+        
+        //NSLog(@"image.size = %@", NSStringFromCGSize(image.size));
+        
+        
+        //image = [image resizableImageWithCapInsets:UIEdgeInsetsZero];
+        
+        [navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+        [navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsLandscapePhone];
+    }
+    
+    if (containerView.borderWidth == 0)
+    {
+        viewController.view.clipsToBounds = YES;
+        viewController.view.layer.cornerRadius = containerView.outerCornerRadius;
     }
 }
 
