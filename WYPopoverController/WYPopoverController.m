@@ -264,6 +264,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @property (nonatomic, assign) CGFloat  gradientTopPosition;
 
 @property (nonatomic, strong) UIColor *innerShadowColor;
+@property (nonatomic, strong) UIColor *innerStrokeColor;
 @property (nonatomic, assign) CGSize   innerShadowOffset;
 @property (nonatomic, assign) CGFloat  innerShadowBlurRadius;
 @property (nonatomic, assign) CGFloat  innerCornerRadius;
@@ -288,6 +289,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @synthesize gradientTopPosition;
 
 @synthesize innerShadowColor;
+@synthesize innerStrokeColor;
 @synthesize innerShadowOffset;
 @synthesize innerShadowBlurRadius;
 @synthesize innerCornerRadius;
@@ -354,7 +356,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         UIBezierPath* inRoundedRectPath = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(innerRect, 0.5, 0.5) cornerRadius:cornerRadius];
         
-        [self.strokeColor setStroke];
+        [self.innerStrokeColor setStroke];
         inRoundedRectPath.lineWidth = 1;
         [inRoundedRectPath stroke];
     }
@@ -369,6 +371,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     strokeColor = nil;
     innerShadowColor = nil;
+    innerStrokeColor = nil;
     gradientTopColor = nil;
     gradientBottomColor = nil;
 }
@@ -515,6 +518,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @synthesize outerCornerRadius;
 @synthesize minOuterCornerRadius;
 @synthesize innerShadowColor;
+@synthesize innerStrokeColor;
 @synthesize innerShadowBlurRadius;
 @synthesize innerShadowOffset;
 @synthesize innerCornerRadius;
@@ -547,6 +551,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         appearance.outerCornerRadius = 8;
         appearance.minOuterCornerRadius = 0;
         appearance.innerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
+        appearance.innerStrokeColor = appearance.strokeColor;
         appearance.innerShadowBlurRadius = 2;
         appearance.innerShadowOffset = CGSizeMake(0, 1);
         appearance.innerCornerRadius = 6;
@@ -668,6 +673,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         innerView.gradientBottomColor = self.fillBottomColor;
         innerView.strokeColor = self.strokeColor;
         innerView.innerShadowColor = innerShadowColor;
+        innerView.innerStrokeColor = innerStrokeColor;
         innerView.innerShadowOffset = innerShadowOffset;
         innerView.innerCornerRadius = self.innerCornerRadius;
         innerView.innerShadowBlurRadius = innerShadowBlurRadius;
@@ -1140,6 +1146,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     glossShadowColor = nil;
     outerShadowColor = nil;
     innerShadowColor = nil;
+    innerStrokeColor = nil;
 }
 
 @end
@@ -1307,6 +1314,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         containerView.outerCornerRadius = appearance.outerCornerRadius;
         containerView.minOuterCornerRadius = appearance.minOuterCornerRadius;
         containerView.innerShadowColor = appearance.innerShadowColor;
+        containerView.innerStrokeColor = appearance.innerStrokeColor;
         containerView.innerShadowBlurRadius = appearance.innerShadowBlurRadius;
         containerView.innerShadowOffset = appearance.innerShadowOffset;
         containerView.innerCornerRadius = appearance.innerCornerRadius;

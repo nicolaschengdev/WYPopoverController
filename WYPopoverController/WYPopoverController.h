@@ -74,6 +74,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 @property (nonatomic, assign) CGFloat  minOuterCornerRadius UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic, strong) UIColor *innerShadowColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *innerStrokeColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGFloat  innerShadowBlurRadius UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGSize   innerShadowOffset UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGFloat  innerCornerRadius UI_APPEARANCE_SELECTOR;
