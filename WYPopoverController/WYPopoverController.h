@@ -53,7 +53,8 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 
 @property (nonatomic, strong) UIColor *tintColor UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic, strong) UIColor *strokeColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *strokeColor UI_APPEARANCE_SELECTOR DEPRECATED_MSG_ATTRIBUTE("BECAREFULL");
+
 @property (nonatomic, strong) UIColor *fillTopColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *fillBottomColor UI_APPEARANCE_SELECTOR;
 

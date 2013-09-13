@@ -127,17 +127,17 @@
     contentViewController.contentSizeForViewInPopover = CGSizeMake(240, 200);
     contentViewController.title = @"Test";
     
-    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
+    //UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:contentViewController];
     
+    /*
     testPopoverController = [[WYPopoverController alloc] initWithContentViewController:navigationController];
     testPopoverController.delegate = self;
     
     [testPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
-    
-    /*
-    standardPopoverController = [[UIPopoverController alloc] initWithContentViewController:navigationController];
-    [standardPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     */
+
+    standardPopoverController = [[UIPopoverController alloc] initWithContentViewController:contentViewController];
+    [standardPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
 #pragma mark - WYPlayerDetailsViewControllerDelegate

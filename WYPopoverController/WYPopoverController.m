@@ -1269,7 +1269,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (result.subviews.count > 0)
     {
-        result = [result.subviews objectAtIndex:0];
+        result = [result.subviews lastObject];
+        
+        NSLog(@"rootView.frame = %@", NSStringFromCGRect(result.frame));
     }
 
     return result;
@@ -1292,12 +1294,14 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         statusBarHeight = statusBarFrame.size.width;
     }
     
-    result.size.height -= statusBarHeight;
+    //result.size.height -= statusBarHeight;
     
+    /*
     if (statusBarHeight > 0)
     {
         result.origin.y = statusBarHeight;
     }
+    */
 
     return result;
 }
