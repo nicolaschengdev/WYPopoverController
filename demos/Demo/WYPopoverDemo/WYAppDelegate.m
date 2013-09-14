@@ -19,7 +19,6 @@
     
     //Appearance 1 (white popover)
     //
-    /*
     WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
     [popoverAppearance setTintColor:[UIColor whiteColor]];
     
@@ -47,7 +46,6 @@
               UITextAttributeTextShadowColor: [UIColor whiteColor],
              UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
     }];
-    */
     
     //Appearance 2 (orange popover)
     //

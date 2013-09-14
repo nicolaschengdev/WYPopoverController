@@ -27,14 +27,11 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-#define WYPOPOVER_DEFAULT_ANIMATION_DURATION    0.20f
-#define WYPOPOVER_MIN_POPOVER_SIZE              CGSizeMake(200, 100)
+@protocol WYPopoverControllerDelegate;
 
-#define WYPOPOVER_IS_IOS_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
-#define WYPOPOVER_IS_IOS_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
-#define WYPOPOVER_IS_IOS_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
-#define WYPOPOVER_IS_IOS_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
-#define WYPOPOVER_IS_IOS_THAN_OR_EQUAL_TO(v)          ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+#ifndef WY_POPOVER_DEFAULT_ANIMATION_DURATION
+    #define WY_POPOVER_DEFAULT_ANIMATION_DURATION    0.20f
+#endif
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
     WYPopoverArrowDirectionUp = 1UL << 0,
@@ -48,52 +45,46 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface WYPopoverBackgroundView : UIView
-{
-}
 
-@property (nonatomic, strong) UIColor *strokeColor UI_APPEARANCE_SELECTOR DEPRECATED_MSG_ATTRIBUTE("In WYPopoverController [0.1.3]. Use outerStrokeColor instead.");
+@property (nonatomic, strong) UIColor *strokeColor              UI_APPEARANCE_SELECTOR
+    DEPRECATED_MSG_ATTRIBUTE("WYPopoverController [0.1.3] : Use 'outerStrokeColor' instead.");
 
-@property (nonatomic, strong) UIColor *tintColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *fillTopColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *fillBottomColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *tintColor                UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *fillTopColor             UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *fillBottomColor          UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic, strong) UIColor *glossShadowColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGSize   glossShadowOffset UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGFloat  glossShadowBlurRadius UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *glossShadowColor         UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGSize   glossShadowOffset        UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  glossShadowBlurRadius    UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic, assign) CGFloat  borderWidth UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGFloat  arrowBase UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGFloat  arrowHeight UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  borderWidth              UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  arrowBase                UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  arrowHeight              UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic, strong) UIColor *outerShadowColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *outerStrokeColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGFloat  outerShadowBlurRadius UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGSize   outerShadowOffset UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGFloat  outerCornerRadius UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGFloat  minOuterCornerRadius UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *outerShadowColor         UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *outerStrokeColor         UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  outerShadowBlurRadius    UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGSize   outerShadowOffset        UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  outerCornerRadius        UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  minOuterCornerRadius     UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic, strong) UIColor *innerShadowColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, strong) UIColor *innerStrokeColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGFloat  innerShadowBlurRadius UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGSize   innerShadowOffset UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) CGFloat  innerCornerRadius UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *innerShadowColor         UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *innerStrokeColor         UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  innerShadowBlurRadius    UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGSize   innerShadowOffset        UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) CGFloat  innerCornerRadius        UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic, assign) UIEdgeInsets viewContentInsets UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) UIEdgeInsets viewContentInsets    UI_APPEARANCE_SELECTOR;
 
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@protocol WYPopoverControllerDelegate;
-
 @interface WYPopoverController : NSObject
-{
-}
 
 @property (nonatomic, weak) id <WYPopoverControllerDelegate> delegate;
 
 @property (nonatomic, copy) NSArray *passthroughViews;
-
 @property (nonatomic, assign) BOOL wantsDefaultContentAppearance;
 @property (nonatomic, assign) UIEdgeInsets popoverLayoutMargins;
 @property (nonatomic, assign, readonly) BOOL isPopoverVisible;
@@ -101,9 +92,14 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 
 - (id)initWithContentViewController:(UIViewController *)viewController;
 
-- (void)presentPopoverFromRect:(CGRect)rect inView:(UIView *)view permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections animated:(BOOL)animated;
+- (void)presentPopoverFromRect:(CGRect)rect
+                        inView:(UIView *)view
+      permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                      animated:(BOOL)animated;
 
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections animated:(BOOL)animated;
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
+               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                               animated:(BOOL)animated;
 
 - (void)dismissPopoverAnimated:(BOOL)animated;
 

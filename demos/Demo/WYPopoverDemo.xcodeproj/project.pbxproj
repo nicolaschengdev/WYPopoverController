@@ -26,6 +26,7 @@
 		976A344B17BBAA4C0071BF21 /* WYSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 976A344917BBAA4C0071BF21 /* WYSettingsViewController.xib */; };
 		97B3CB2F17CD57910005E1A1 /* WYAnotherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB2D17CD57910005E1A1 /* WYAnotherViewController.m */; };
 		97C0779F17D3C2DF006A19CE /* WYAnotherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C0779E17D3C2DF006A19CE /* WYAnotherViewController.xib */; };
+		97D5D8DD17E3AB7B00BD82C5 /* WYModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D5D8DB17E3AB7B00BD82C5 /* WYModalViewController.m */; };
 		97F27C8E17DB4F8800D5D4A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA5C3917D1B11100F611A0 /* QuartzCore.framework */; };
 		97FA5C3017D1A82E00F611A0 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FA5C2D17D1A82E00F611A0 /* WYPopoverController.m */; };
 		97FA5C3117D1A82E00F611A0 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FA5C2F17D1A82E00F611A0 /* WYStoryboardPopoverSegue.m */; };
@@ -58,6 +59,8 @@
 		97B3CB2C17CD57910005E1A1 /* WYAnotherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYAnotherViewController.h; sourceTree = "<group>"; };
 		97B3CB2D17CD57910005E1A1 /* WYAnotherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYAnotherViewController.m; sourceTree = "<group>"; };
 		97C0779E17D3C2DF006A19CE /* WYAnotherViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYAnotherViewController.xib; sourceTree = "<group>"; };
+		97D5D8DA17E3AB7B00BD82C5 /* WYModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYModalViewController.h; sourceTree = "<group>"; };
+		97D5D8DB17E3AB7B00BD82C5 /* WYModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYModalViewController.m; sourceTree = "<group>"; };
 		97FA5C2C17D1A82E00F611A0 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
 		97FA5C2D17D1A82E00F611A0 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
 		97FA5C2E17D1A82E00F611A0 /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
@@ -135,6 +138,8 @@
 				976A342D17BB9AEB0071BF21 /* WYAppDelegate.h */,
 				976A342E17BB9AEB0071BF21 /* WYAppDelegate.m */,
 				97635BC917D118A700B642AC /* WYStoryboard.storyboard */,
+				97D5D8DA17E3AB7B00BD82C5 /* WYModalViewController.h */,
+				97D5D8DB17E3AB7B00BD82C5 /* WYModalViewController.m */,
 			);
 			path = WYPopoverDemo;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				976A344A17BBAA4C0071BF21 /* WYSettingsViewController.m in Sources */,
 				97B3CB2F17CD57910005E1A1 /* WYAnotherViewController.m in Sources */,
 				97FA5C3017D1A82E00F611A0 /* WYPopoverController.m in Sources */,
+				97D5D8DD17E3AB7B00BD82C5 /* WYModalViewController.m in Sources */,
 				97FA5C3117D1A82E00F611A0 /* WYStoryboardPopoverSegue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
