@@ -14,6 +14,8 @@
     WYPopoverController* popoverController;
 }
 
+- (IBAction)showPopover:(id)sender;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////
@@ -48,7 +50,7 @@
     [bottomRightButton setBackgroundImage:normal forState:UIControlStateNormal]; [bottomRightButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
 }
 
-- (IBAction)tapOnButton:(id)sender
+- (IBAction)showPopover:(id)sender
 {
     if (popoverController == nil)
     {

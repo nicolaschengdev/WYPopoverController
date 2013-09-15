@@ -1265,6 +1265,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 @property (nonatomic, strong, readonly) UIView  *rootView;
 @property (nonatomic, strong, readonly) UIColor *overlayColor;
+@property (nonatomic, assign, readonly) CGSize   contentSizeForViewInPopover;
 
 - (void)dismissPopoverAnimated:(BOOL)animated callDelegate:(BOOL)callDelegate;
 
@@ -1337,6 +1338,31 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
+- (CGSize)contentSizeForViewInPopover
+{
+    CGSize result = CGSizeZero;
+    
+    if ([viewController respondsToSelector:@selector(preferredContentSize)])
+    {
+        result = viewController.preferredContentSize;
+    }
+    
+    if (CGSizeEqualToSize(result, CGSizeZero))
+    {
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+        result = viewController.contentSizeForViewInPopover;
+#pragma clang diagnostic pop
+    }
+    
+    if (CGSizeEqualToSize(result, CGSizeZero))
+    {
+        result = CGSizeMake(320, 1100);
+    }
+    
+    return result;
+}
+
 - (void)presentPopoverFromRect:(CGRect)aRect inView:(UIView *)aView permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections animated:(BOOL)aAnimated
 {
     NSAssert((arrowDirections != WYPopoverArrowDirectionUnknown), @"WYPopoverArrowDirection must not be UNKNOWN");
@@ -1346,7 +1372,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     permittedArrowDirections = arrowDirections;
     animated = aAnimated;
     
-    CGSize contentViewSize = viewController.contentSizeForViewInPopover;
+    CGSize contentViewSize = self.contentSizeForViewInPopover;
 
     if (overlayView == nil)
     {
@@ -1468,7 +1494,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         CGFloat navigationBarHeight = 44;
         
-        UIBezierPath *rectPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 20, navigationBarHeight)];
+        CGRect rectPathRect = CGRectMake(0, 0, 20, navigationBarHeight);
+        
+        CGFloat cornerRadius = containerView.innerCornerRadius;
+        
+        UIBezierPath *rectPath = [UIBezierPath bezierPathWithRoundedRect:rectPathRect byRoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight cornerRadii:CGSizeMake(cornerRadius, cornerRadius)];
         
         UIGraphicsBeginImageContextWithOptions(rectPath.bounds.size, NO, 0.0f);
         
@@ -1509,7 +1539,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         CGGradientRelease(fillGradient);
         CGColorSpaceRelease(colorSpace);
         
-        [navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+        [navigationController.navigationBar setBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(0, cornerRadius + 1, 0, cornerRadius + 1)] forBarMetrics:UIBarMetricsDefault];
         
         // UIBarMetricsLandscapePhone
         
@@ -1529,13 +1559,18 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         UIGraphicsEndImageContext();
         
-        [navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsLandscapePhone];
+        [navigationController.navigationBar setBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(0, cornerRadius + 1, 0, cornerRadius + 1)] forBarMetrics:UIBarMetricsLandscapePhone];
     }
+    
+    viewController.view.clipsToBounds = YES;
     
     if (containerView.borderWidth == 0)
     {
-        viewController.view.clipsToBounds = YES;
         viewController.view.layer.cornerRadius = containerView.outerCornerRadius;
+    }
+    else
+    {
+        viewController.view.layer.cornerRadius = containerView.innerCornerRadius;
     }
 }
 
@@ -1549,7 +1584,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)positionPopover
 {
-    CGSize contentViewSize = viewController.contentSizeForViewInPopover;
+    CGSize contentViewSize = self.contentSizeForViewInPopover;
     
     CGRect viewFrame;
     CGRect containerFrame = CGRectZero;

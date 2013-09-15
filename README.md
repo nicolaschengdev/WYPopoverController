@@ -100,10 +100,41 @@ Add this line `pod 'WYPopoverController', '~> 0.1.2'` to your PodFile or add man
 
 ##### Simple
 
+In the implementation of your view controller
+
 ```objective-c
-WYPopoverController* popoverController = [[WYPopoverController alloc] initWithContentViewController:controller];
-popoverController.delegate = self;
-[popoverController presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+// YourViewController.m
+
+@interface YourViewController () <WYPopoverControllerDelegate>
+{
+    WYPopoverController* popoverController;
+}
+
+- (IBAction)showPopover:(id)sender;
+
+@end
+
+@implementation YourViewController
+
+- (IBAction)showPopover:(id)sender
+{
+	popoverController = [[WYPopoverController alloc] initWithContentViewController:controller];
+    popoverController.delegate = self;
+    [popoverController presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+}
+
+- (BOOL)popoverControllerShouldDismiss:(WYPopoverController *)controller
+{
+    return YES;
+}
+
+- (void)popoverControllerDidDismiss:(WYPopoverController *)controller
+{
+    popoverController.delegate = nil;
+    popoverController = nil;
+}
+
+@end
 ```
 
 ##### Appearance (Tint Color)
@@ -116,36 +147,37 @@ WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
 ##### Appearance (Flat Popover)
 
 ```objective-c
-WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
-        
-[appearance setOuterCornerRadius:4];
-[appearance setOuterShadowBlurRadius:0];
-[appearance setOuterShadowColor:[UIColor clearColor]];
-[appearance setOuterShadowOffset:CGSizeMake(0, 0)];
-        
-[appearance setGlossShadowColor:[UIColor clearColor]];
-[appearance setGlossShadowOffset:CGSizeMake(0, 0)];
-        
-[appearance setBorderWidth:8];
-[appearance setArrowHeight:10];
-[appearance setArrowBase:20];
-        
-[appearance setInnerCornerRadius:4];
-[appearance setInnerShadowBlurRadius:0];
-[appearance setInnerShadowColor:[UIColor clearColor]];
-[appearance setInnerShadowOffset:CGSizeMake(0, 0)];
-        
 UIColor* greenColor = [UIColor colorWithRed:26.f/255.f green:188.f/255.f blue:156.f/255.f alpha:1];
+
+WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
         
-[appearance setFillTopColor:greenColor];
-[appearance setFillBottomColor:greenColor];
-[appearance setStrokeColor:greenColor];
+[popoverAppearance setOuterCornerRadius:4];
+[popoverAppearance setOuterShadowBlurRadius:0];
+[popoverAppearance setOuterShadowColor:[UIColor clearColor]];
+[popoverAppearance setOuterShadowOffset:CGSizeMake(0, 0)];
         
-UINavigationBar* appearance2 = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil];
-[appearance2 setTitleTextAttributes:@{
+[popoverAppearance setGlossShadowColor:[UIColor clearColor]];
+[popoverAppearance setGlossShadowOffset:CGSizeMake(0, 0)];
+        
+[popoverAppearance setBorderWidth:8];
+[popoverAppearance setArrowHeight:10];
+[popoverAppearance setArrowBase:20];
+        
+[popoverAppearance setInnerCornerRadius:4];
+[popoverAppearance setInnerShadowBlurRadius:0];
+[popoverAppearance setInnerShadowColor:[UIColor clearColor]];
+[popoverAppearance setInnerShadowOffset:CGSizeMake(0, 0)];
+        
+[popoverAppearance setFillTopColor:greenColor];
+[popoverAppearance setFillBottomColor:greenColor];
+[popoverAppearance setOuterStrokeColor:greenColor];
+[popoverAppearance setInnerStrokeColor:greenColor];
+        
+UINavigationBar* navBarInPopoverAppearance = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], [WYPopoverController class], nil];
+[navBarInPopoverAppearance setTitleTextAttributes: @{
                   UITextAttributeTextColor : [UIColor whiteColor],
-             UITextAttributeTextShadowColor: [UIColor clearColor],
-            UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]}];
+            UITextAttributeTextShadowColor : [UIColor clearColor],
+           UITextAttributeTextShadowOffset : [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]}];
 ```
 
 ##### Storyboard
@@ -156,6 +188,10 @@ UINavigationBar* appearance2 = [UINavigationBar appearanceWhenContainedIn:[UINav
 	if ([segue.identifier isEqualToString:@"[YOUR_SEGUE_IDENTIFIER]"])
 	{
 		WYStoryboardPopoverSegue* popoverSegue = (WYStoryboardPopoverSegue*)segue;
+
+		UIViewController* destinationViewController = (UIViewController *)segue.destinationViewController;
+        destinationViewController.contentSizeForViewInPopover = CGSizeMake(280, 280);		// Deprecated in iOS7. Use 'preferredContentSize' instead.
+
         popoverController = [popoverSegue popoverControllerWithSender:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
         popoverController.delegate = self;
 	}

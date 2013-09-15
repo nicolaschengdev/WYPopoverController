@@ -19,6 +19,7 @@
     
     //Appearance 1 (white popover)
     //
+    /*
     WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
     [popoverAppearance setTintColor:[UIColor whiteColor]];
     
@@ -40,12 +41,15 @@
     [popoverAppearance setInnerShadowColor:[UIColor colorWithWhite:0 alpha:0.75]];
     [popoverAppearance setInnerShadowOffset:CGSizeMake(0, 1)];
     
+    [popoverAppearance setViewContentInsets:UIEdgeInsetsMake(3, 0, 0, 0)];
+    
     UINavigationBar* navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
     [navBarAppearance setTitleTextAttributes:@{
                    UITextAttributeTextColor : [UIColor darkGrayColor],
               UITextAttributeTextShadowColor: [UIColor whiteColor],
              UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
     }];
+    */
     
     //Appearance 2 (orange popover)
     //

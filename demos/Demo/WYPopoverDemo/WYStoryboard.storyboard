@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xig-Kj-pbq">
-                                <rect key="frame" x="10" y="10" width="43" height="44"/>
+                                <rect key="frame" x="10" y="20" width="43" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="TL">
@@ -22,11 +22,11 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tapOnButton:" destination="SH8-yS-R5W" eventType="touchUpInside" id="Sha-dH-Lka"/>
+                                    <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="e1S-g4-Lnd"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pvo-1L-Q9i">
-                                <rect key="frame" x="143" y="10" width="34" height="44"/>
+                                <rect key="frame" x="143" y="20" width="34" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="T">
@@ -34,11 +34,11 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tapOnButton:" destination="SH8-yS-R5W" eventType="touchUpInside" id="cyA-Ra-DbI"/>
+                                    <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="e1J-Uq-fON"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oNH-nV-4Hz">
-                                <rect key="frame" x="266" y="10" width="44" height="44"/>
+                                <rect key="frame" x="266" y="20" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="TR">
@@ -46,7 +46,7 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tapOnButton:" destination="SH8-yS-R5W" eventType="touchUpInside" id="mHs-7D-4uk"/>
+                                    <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="7QC-gB-bZH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wkW-SC-eQF">
@@ -58,7 +58,7 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tapOnButton:" destination="SH8-yS-R5W" eventType="touchUpInside" id="7Vu-wj-Obc"/>
+                                    <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="3zK-02-ggv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7kv-r3-yie">
@@ -70,7 +70,7 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tapOnButton:" destination="SH8-yS-R5W" eventType="touchUpInside" id="fcg-GS-Q79"/>
+                                    <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="DRO-35-J0A"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TY8-Rs-h6w">
@@ -82,7 +82,7 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tapOnButton:" destination="SH8-yS-R5W" eventType="touchUpInside" id="Oqt-pg-xxw"/>
+                                    <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="kuz-H5-VY8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pkn-ju-kvn">
@@ -94,7 +94,7 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tapOnButton:" destination="SH8-yS-R5W" eventType="touchUpInside" id="FMN-5z-QKQ"/>
+                                    <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="yHi-eb-od0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wI8-mk-rgX">
@@ -106,7 +106,7 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tapOnButton:" destination="SH8-yS-R5W" eventType="touchUpInside" id="tMl-1P-vy9"/>
+                                    <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="O1u-J8-t6F"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o1z-4o-5bU">
@@ -118,7 +118,7 @@
                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="tapOnButton:" destination="SH8-yS-R5W" eventType="touchUpInside" id="5bC-QD-aB0"/>
+                                    <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="eMa-cg-nEd"/>
                                 </connections>
                             </button>
                         </subviews>

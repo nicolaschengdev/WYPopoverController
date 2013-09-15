@@ -37,6 +37,10 @@
     {
         WYStoryboardPopoverSegue* popoverSegue = (WYStoryboardPopoverSegue*)segue;
         
+        UIViewController* destinationViewController = (UIViewController *)segue.destinationViewController;
+        
+        destinationViewController.contentSizeForViewInPopover = CGSizeMake(280, 280);
+        
         popoverController = [popoverSegue popoverControllerWithSender:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
         
         popoverController.delegate = self;

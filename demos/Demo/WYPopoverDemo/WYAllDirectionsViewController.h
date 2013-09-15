@@ -23,6 +23,5 @@
 @property (nonatomic, weak) IBOutlet UIButton* bottomButton;
 @property (nonatomic, weak) IBOutlet UIButton* bottomRightButton;
 
-- (IBAction)tapOnButton:(id)sender;
 
 @end
