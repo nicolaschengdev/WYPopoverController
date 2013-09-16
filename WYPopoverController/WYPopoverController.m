@@ -1919,7 +1919,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                                      arrowHeight:(CGFloat)arrowHeight
                         permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
 {
-    WYPopoverArrowDirection result = WYPopoverArrowDirectionUnknown;
+    WYPopoverArrowDirection arrowDirection = WYPopoverArrowDirectionUnknown;
     
     NSMutableArray* areas = [NSMutableArray arrayWithCapacity:0];
     WYPopoverArea* area;
@@ -1959,9 +1959,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     if ([areas count] > 1)
     {
         NSIndexSet* indexes = [areas indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
-            WYPopoverArea* area = (WYPopoverArea*)obj;
+            WYPopoverArea* popoverArea = (WYPopoverArea*)obj;
             
-            BOOL result = (area.areaSize.width > 0 && area.areaSize.height > 0);
+            BOOL result = (popoverArea.areaSize.width > 0 && popoverArea.areaSize.height > 0);
             
             return result;
         }];
@@ -1992,21 +1992,21 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     for (NSUInteger i = 0; i < [areas count]; i++)
     {
-        WYPopoverArea* area = (WYPopoverArea*)[areas objectAtIndex:i];
+        WYPopoverArea* popoverArea = (WYPopoverArea*)[areas objectAtIndex:i];
         
-        if (area.areaSize.width >= contentSize.width)
+        if (popoverArea.areaSize.width >= contentSize.width)
         {
-            result = area.arrowDirection;
+            arrowDirection = popoverArea.arrowDirection;
             break;
         }
     }
     
-    if (result == WYPopoverArrowDirectionUnknown)
+    if (arrowDirection == WYPopoverArrowDirectionUnknown)
     {
-        result = ((WYPopoverArea*)[areas objectAtIndex:0]).arrowDirection;
+        arrowDirection = ((WYPopoverArea*)[areas objectAtIndex:0]).arrowDirection;
     }
     
-    return result;
+    return arrowDirection;
 }
 
 - (CGSize)sizeForRect:(CGRect)aRect
