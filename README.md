@@ -60,7 +60,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 ##### Stroke & Fill
 
-![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_strokecolor.png "strokeColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_filltopcolor.png "fillTopColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_fillbottomcolor.png "fillBottomColor: #c3045e")
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_strokecolor.png "strokeColor: #c3045e DEPRECATED in [0.1.3]. Use 'outerStrokeColor' instead.") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_innerstrokecolor.png "innerStrokeColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_outerstrokecolor.png "outerStrokeColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_filltopcolor.png "fillTopColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_fillbottomcolor.png "fillBottomColor: #c3045e")
 
 ##### Gloss
 
@@ -92,7 +92,13 @@ WYPopoverController uses ARC.
 
 ---
 
-Add this line `pod 'WYPopoverController', '~> 0.1.2'` to your PodFile or add manually these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` and add `Quartzcore` framework to your project.
+#### Cocoapods
+
+Add this line `pod 'WYPopoverController', '~> 0.1.3'` to your PodFile.
+
+#### Manually
+
+Add these 4 files `WYPopoverController.h`, `WYPopoverController.m`, `WYStoryboardPopoverSegue.h`, `WYStoryboardPopoverSegue.m` and add `Quartzcore` framework to your project.
 
 ### Examples
 
