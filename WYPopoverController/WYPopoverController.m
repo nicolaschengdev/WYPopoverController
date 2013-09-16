@@ -1,5 +1,5 @@
 /*
- Version 0.1.3
+ Version 0.1.4-beta
  
  WYPopoverController is available under the MIT license.
  
@@ -1895,9 +1895,14 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     BOOL isTouched = [containerView isTouchedAtPoint:[containerView convertPoint:aPoint fromView:aOverlayView]];
     
-    if (!isTouched && delegate && [delegate respondsToSelector:@selector(popoverControllerShouldDismiss:)])
+    if (!isTouched)
     {
-        BOOL shouldDismiss = [delegate popoverControllerShouldDismiss:self];
+        BOOL shouldDismiss = !viewController.modalInPopover;
+        
+        if (shouldDismiss && delegate && [delegate respondsToSelector:@selector(popoverControllerShouldDismiss:)])
+        {
+            shouldDismiss = [delegate popoverControllerShouldDismiss:self];
+        }
         
         if (shouldDismiss)
         {

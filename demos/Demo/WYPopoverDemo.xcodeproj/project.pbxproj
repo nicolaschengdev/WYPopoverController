@@ -125,6 +125,7 @@
 		976A342417BB9AEB0071BF21 /* WYPopoverDemo */ = {
 			isa = PBXGroup;
 			children = (
+				E0F0630617E7297D004330A2 /* iPad */,
 				97FA5C2B17D1A82E00F611A0 /* WYPopoverController */,
 				976A344717BBAA4C0071BF21 /* WYSettingsViewController.h */,
 				976A344817BBAA4C0071BF21 /* WYSettingsViewController.m */,
@@ -169,6 +170,13 @@
 			);
 			name = WYPopoverController;
 			path = ../../../WYPopoverController;
+			sourceTree = "<group>";
+		};
+		E0F0630617E7297D004330A2 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,9 +341,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WYPopoverDemo/WYPopoverDemo-Prefix.pch";
 				INFOPLIST_FILE = "WYPopoverDemo/WYPopoverDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -346,9 +354,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WYPopoverDemo/WYPopoverDemo-Prefix.pch";
 				INFOPLIST_FILE = "WYPopoverDemo/WYPopoverDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -9,9 +9,10 @@
 #import "WYSettingsViewController.h"
 #import "WYAnotherViewController.h"
 
-@interface WYAllDirectionsViewController ()
+@interface WYAllDirectionsViewController () <WYPopoverControllerDelegate, UIPopoverControllerDelegate>
 {
     WYPopoverController* popoverController;
+    UIPopoverController* standardPopoverController;
 }
 
 - (IBAction)showPopover:(id)sender;
@@ -57,9 +58,11 @@
         UIView* btn = (UIView*)sender;
         
         WYSettingsViewController* settingsViewController = [[WYSettingsViewController alloc] init];
-        settingsViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);
+        settingsViewController.preferredContentSize = CGSizeMake(280, 200);
         settingsViewController.title = @"Settings";
         [settingsViewController.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)]];
+        
+        settingsViewController.modalInPopover = NO;
         
         UINavigationController* contentViewController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
         
@@ -69,6 +72,12 @@
         popoverController.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
         popoverController.wantsDefaultContentAppearance = NO;
         [popoverController presentPopoverFromRect:btn.bounds inView:btn permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+        
+        /*
+        standardPopoverController = [[UIPopoverController alloc] initWithContentViewController:contentViewController];
+        standardPopoverController.delegate = self;
+        [standardPopoverController presentPopoverFromRect:btn.bounds inView:btn permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        */
     }
     else
     {
@@ -96,6 +105,19 @@
 {
     popoverController.delegate = nil;
     popoverController = nil;
+}
+
+#pragma mark - UIPopoverControllerDelegate
+
+- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)aPopoverController
+{
+    return YES;
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)aPopoverController
+{
+    standardPopoverController.delegate = nil;
+    standardPopoverController = nil;
 }
 
 #pragma mark - UIViewControllerRotation
