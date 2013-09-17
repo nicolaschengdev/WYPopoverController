@@ -46,7 +46,6 @@
 
 @property (nonatomic, assign) WYPopoverArrowDirection arrowDirection;
 @property (nonatomic, assign) CGSize areaSize;
-@property (nonatomic, assign, readonly) NSUInteger priority;
 @property (nonatomic, assign, readonly) CGFloat value;
 
 @end
@@ -60,7 +59,6 @@
 
 @synthesize arrowDirection;
 @synthesize areaSize;
-@synthesize priority;
 @synthesize value;
 
 - (NSString*)description
@@ -85,30 +83,6 @@
     }
     
     return [NSString stringWithFormat:@"%@ [ %f x %f ]", direction, areaSize.width, areaSize.height];
-}
-
-- (NSUInteger)priority
-{
-    NSUInteger result = 0;
-    
-    if (arrowDirection == WYPopoverArrowDirectionRight)
-    {
-        result = 1;
-    }
-    else if (arrowDirection == WYPopoverArrowDirectionLeft)
-    {
-        result = 2;
-    }
-    else if (arrowDirection == WYPopoverArrowDirectionUp)
-    {
-        result = 3;
-    }
-    else if (arrowDirection == WYPopoverArrowDirectionDown)
-    {
-        result = 4;
-    }
-    
-    return result;
 }
 
 - (CGFloat)value
@@ -943,7 +917,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         CGPoint origin = CGPointZero;
         
-        CGFloat reducedOuterCornerRadius = outerCornerRadius;
+        CGFloat reducedOuterCornerRadius = 0;
         
         if (arrowDirection == WYPopoverArrowDirectionUp || arrowDirection == WYPopoverArrowDirectionDown)
         {
@@ -1340,19 +1314,21 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (CGSize)popoverContentSize
 {
+    CGSize result = CGSizeZero;
+    
     if ([viewController respondsToSelector:@selector(preferredContentSize)])
     {
-        return [viewController preferredContentSize];
+        result = [viewController preferredContentSize];
     }
-    else if ([viewController respondsToSelector:@selector(contentSizeForViewInPopover:)])
+    else
     {
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated"
-        return [viewController contentSizeForViewInPopover];
+        result = [viewController contentSizeForViewInPopover];
 #pragma clang diagnostic pop
     }
 
-    return CGSizeZero;
+    return result;
 }
 
 - (void)setPopoverContentSize:(CGSize)size
@@ -1361,7 +1337,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     {
         [viewController setPreferredContentSize:size];
     }
-    else if ([viewController respondsToSelector:@selector(setContentSizeForViewInPopover:)])
+    else
     {
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated"
@@ -2037,7 +2013,29 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (arrowDirection == WYPopoverArrowDirectionUnknown)
     {
-        arrowDirection = ((WYPopoverArea*)[areas objectAtIndex:0]).arrowDirection;
+        if ([areas count] > 0)
+        {
+            arrowDirection = ((WYPopoverArea*)[areas objectAtIndex:0]).arrowDirection;
+        }
+        else
+        {
+            if ((arrowDirections & WYPopoverArrowDirectionDown) == WYPopoverArrowDirectionDown)
+            {
+                arrowDirection = WYPopoverArrowDirectionDown;
+            }
+            else if ((arrowDirections & WYPopoverArrowDirectionUp) == WYPopoverArrowDirectionUp)
+            {
+                arrowDirection = WYPopoverArrowDirectionUp;
+            }
+            else if ((arrowDirections & WYPopoverArrowDirectionLeft) == WYPopoverArrowDirectionLeft)
+            {
+                arrowDirection = WYPopoverArrowDirectionLeft;
+            }
+            else
+            {
+                arrowDirection = WYPopoverArrowDirectionRight;
+            }
+        }
     }
     
     return arrowDirection;
