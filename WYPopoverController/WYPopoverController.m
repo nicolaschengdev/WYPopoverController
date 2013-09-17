@@ -1338,6 +1338,40 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
+- (CGSize)popoverContentSize
+{
+    if ([viewController respondsToSelector:@selector(preferredContentSize)])
+    {
+        return [viewController preferredContentSize];
+    }
+    else if ([viewController respondsToSelector:@selector(contentSizeForViewInPopover:)])
+    {
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+        return [viewController contentSizeForViewInPopover];
+#pragma clang diagnostic pop
+    }
+
+    return CGSizeZero;
+}
+
+- (void)setPopoverContentSize:(CGSize)size
+{
+    if ([viewController respondsToSelector:@selector(setPreferredContentSize:)])
+    {
+        [viewController setPreferredContentSize:size];
+    }
+    else if ([viewController respondsToSelector:@selector(setContentSizeForViewInPopover:)])
+    {
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+        [viewController setContentSizeForViewInPopover:size];
+#pragma clang diagnostic pop
+    }
+    
+    [self positionPopover];
+}
+
 - (CGSize)contentSizeForViewInPopover
 {
     CGSize result = CGSizeZero;

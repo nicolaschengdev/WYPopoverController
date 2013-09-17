@@ -88,6 +88,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 @property (nonatomic, assign) UIEdgeInsets popoverLayoutMargins;
 @property (nonatomic, assign, readonly) BOOL isPopoverVisible;
 @property (nonatomic, strong, readonly) UIViewController* contentViewController;
+@property (nonatomic, assign) CGSize popoverContentSize;
 
 - (id)initWithContentViewController:(UIViewController *)viewController;
 
