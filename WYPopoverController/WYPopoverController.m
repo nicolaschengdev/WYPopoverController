@@ -25,8 +25,9 @@
 
 #import "WYPopoverController.h"
 
-// TODO: Enable when ios 7 base sdk is enabled
-//#define COMPILE_WITH_IOS7_SUPPORT
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+    #define WY_BASE_SDK_7_ENABLED
+#endif
 
 #ifdef DEBUG
     #define WY_LOG(fmt, ...)		NSLog((@"%s (%d) : " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
@@ -1319,7 +1320,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     CGSize result = CGSizeZero;
     
-#ifdef COMPILE_WITH_IOS7_SUPPORT
+#ifdef WY_BASE_SDK_7_ENABLED
     if ([viewController respondsToSelector:@selector(preferredContentSize)])
     {
         result = [viewController preferredContentSize];
@@ -1338,7 +1339,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)setPopoverContentSize:(CGSize)size
 {
-#ifdef COMPILE_WITH_IOS7_SUPPORT
+#ifdef WY_BASE_SDK_7_ENABLED
     if ([viewController respondsToSelector:@selector(setPreferredContentSize:)])
     {
         [viewController setPreferredContentSize:size];
@@ -1359,7 +1360,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     CGSize result = CGSizeZero;
     
-#ifdef COMPILE_WITH_IOS7_SUPPORT
+#ifdef WY_BASE_SDK_7_ENABLED
     if ([viewController respondsToSelector:@selector(preferredContentSize)])
     {
         result = viewController.preferredContentSize;
