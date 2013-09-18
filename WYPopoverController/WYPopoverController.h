@@ -46,7 +46,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 
 @interface WYPopoverBackgroundView : UIView
 
-@property (nonatomic, strong) UIColor *strokeColor              UI_APPEARANCE_SELECTOR DEPRECATED_MSG_ATTRIBUTE("WYPopoverController [0.1.3] : Use 'outerStrokeColor' instead.");
+@property (nonatomic, strong) UIColor *strokeColor              UI_APPEARANCE_SELECTOR __attribute((deprecated("WYPopoverController [0.1.3] : Use 'outerStrokeColor' instead.")));
 
 @property (nonatomic, strong) UIColor *tintColor                UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *fillTopColor             UI_APPEARANCE_SELECTOR;

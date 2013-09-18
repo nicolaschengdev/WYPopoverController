@@ -25,6 +25,10 @@
 
 #import "WYPopoverController.h"
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+    #define WY_BASE_SDK_7_ENABLED
+#endif
+
 #ifdef DEBUG
     #define WY_LOG(fmt, ...)		NSLog((@"%s (%d) : " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 #else
@@ -1316,11 +1320,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     CGSize result = CGSizeZero;
     
+#ifdef WY_BASE_SDK_7_ENABLED
     if ([viewController respondsToSelector:@selector(preferredContentSize)])
     {
         result = [viewController preferredContentSize];
     }
     else
+#endif
     {
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated"
@@ -1333,11 +1339,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)setPopoverContentSize:(CGSize)size
 {
+#ifdef WY_BASE_SDK_7_ENABLED
     if ([viewController respondsToSelector:@selector(setPreferredContentSize:)])
     {
         [viewController setPreferredContentSize:size];
     }
     else
+#endif
     {
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated"
@@ -1352,11 +1360,12 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     CGSize result = CGSizeZero;
     
+#ifdef WY_BASE_SDK_7_ENABLED
     if ([viewController respondsToSelector:@selector(preferredContentSize)])
     {
         result = viewController.preferredContentSize;
     }
-    
+#endif
     if (CGSizeEqualToSize(result, CGSizeZero))
     {
 #pragma clang diagnostic push
