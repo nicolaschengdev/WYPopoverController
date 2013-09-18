@@ -78,9 +78,21 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 ---
 
-* passthroughViews
-* wantsDefaultContentAppearance
-* popoverLayoutMargins
+#### passthroughViews
+
+An array of views that the user can interact with while the popover is visible.
+
+#### wantsDefaultContentAppearance
+
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_wantsdefaultcontentappearance.png "")
+
+Determines whether the default content appearance should be used for the popover.
+
+#### popoverLayoutMargins
+
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/wypopover_popoverlayoutmargins.png "")
+
+The margins that define the portion of the screen in which it is permissible to display the popover.
 
 ### ARC
 

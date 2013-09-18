@@ -122,7 +122,7 @@
     }
     else
     {
-        WYAnotherViewController *anotherViewController = [[WYAnotherViewController alloc] init];
+        WYAnotherViewController *anotherViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYAnotherViewController"];
         [self.navigationController pushViewController:anotherViewController animated:YES];
     }
 }

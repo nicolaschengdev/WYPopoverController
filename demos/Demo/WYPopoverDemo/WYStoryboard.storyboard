@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="KSs-by-RAI">
     <dependencies>
-        <deployment defaultVersion="1280" identifier="iOS"/>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
@@ -13,7 +13,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xig-Kj-pbq">
+                            <button opaque="NO" alpha="0.75000000000000011" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Xig-Kj-pbq">
                                 <rect key="frame" x="10" y="20" width="43" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -25,7 +25,7 @@
                                     <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="e1S-g4-Lnd"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pvo-1L-Q9i">
+                            <button opaque="NO" alpha="0.75000000000000011" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pvo-1L-Q9i">
                                 <rect key="frame" x="143" y="20" width="34" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -37,7 +37,7 @@
                                     <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="e1J-Uq-fON"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oNH-nV-4Hz">
+                            <button opaque="NO" alpha="0.75000000000000011" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oNH-nV-4Hz">
                                 <rect key="frame" x="266" y="20" width="44" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -49,7 +49,7 @@
                                     <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="7QC-gB-bZH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wkW-SC-eQF">
+                            <button opaque="NO" alpha="0.75000000000000011" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wkW-SC-eQF">
                                 <rect key="frame" x="10" y="515" width="48" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -61,7 +61,7 @@
                                     <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="3zK-02-ggv"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7kv-r3-yie">
+                            <button opaque="NO" alpha="0.75000000000000011" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7kv-r3-yie">
                                 <rect key="frame" x="142" y="515" width="37" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -73,7 +73,7 @@
                                     <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="DRO-35-J0A"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TY8-Rs-h6w">
+                            <button opaque="NO" alpha="0.75000000000000011" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TY8-Rs-h6w">
                                 <rect key="frame" x="260" y="515" width="50" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -85,7 +85,7 @@
                                     <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="kuz-H5-VY8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pkn-ju-kvn">
+                            <button opaque="NO" alpha="0.75000000000000011" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pkn-ju-kvn">
                                 <rect key="frame" x="10" y="262" width="35" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -97,7 +97,7 @@
                                     <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="yHi-eb-od0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wI8-mk-rgX">
+                            <button opaque="NO" alpha="0.75000000000000011" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wI8-mk-rgX">
                                 <rect key="frame" x="111" y="262" width="99" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -109,7 +109,7 @@
                                     <action selector="showPopover:" destination="SH8-yS-R5W" eventType="touchUpInside" id="O1u-J8-t6F"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o1z-4o-5bU">
+                            <button opaque="NO" alpha="0.75000000000000011" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o1z-4o-5bU">
                                 <rect key="frame" x="273" y="262" width="37" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -127,7 +127,7 @@
                     <navigationItem key="navigationItem" title="POPOVER" id="byn-bD-FGA">
                         <barButtonItem key="rightBarButtonItem" title="show" id="BPj-bm-hiQ">
                             <connections>
-                                <segue destination="WNP-0w-kVx" kind="modal" identifier="ShowModalSegue" modalTransitionStyle="coverVertical" id="jCk-L8-HjS"/>
+                                <segue destination="jZu-Qq-NBM" kind="custom" identifier="AnotherPopoverSegue" customClass="WYStoryboardPopoverSegue" id="dhM-87-uhU"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -147,55 +147,6 @@
             </objects>
             <point key="canvasLocation" x="4457" y="-75"/>
         </scene>
-        <!--Modal View Controller-->
-        <scene sceneID="IRz-AS-Ubk">
-            <objects>
-                <viewController id="WNP-0w-kVx" customClass="WYModalViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="XB1-Li-uLI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="noW-tj-25N">
-                                <rect key="frame" x="20" y="391" width="280" height="58"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Tap Me !">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="qfb-Gt-e8z" kind="custom" identifier="PopoverSegue" customClass="WYStoryboardPopoverSegue" id="PPK-kc-ZA8"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jYo-m3-HGS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4926" y="-75"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="wDe-qk-oO0">
-            <objects>
-                <viewController id="qfb-Gt-e8z" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="hRD-Ae-4cl">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PARIS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hPs-9f-A9U">
-                                <rect key="frame" x="95" y="61" width="130" height="21"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1vj-lS-R4b" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5409" y="-75"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Red-kl-wc3">
             <objects>
@@ -214,6 +165,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Van-Cl-c7P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3995" y="-75"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="R0E-8E-8Lj">
+            <objects>
+                <viewController storyboardIdentifier="WYSettingsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="6o7-X0-lZV" customClass="WYSettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qw0-So-jMG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="eKl-MD-jMX">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" cyan="0.0261781754" magenta="0.0" yellow="0.0" black="0.079133064520000004" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="6o7-X0-lZV" id="vsT-Df-AhQ"/>
+                                    <outlet property="delegate" destination="6o7-X0-lZV" id="Rph-u1-cAR"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="eKl-MD-jMX" id="VJB-PO-NPs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GdM-8H-lmy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3995" y="644"/>
+        </scene>
+        <!--Another View Controller-->
+        <scene sceneID="U2c-ZD-Lhg">
+            <objects>
+                <viewController storyboardIdentifier="WYAnotherViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jZu-Qq-NBM" customClass="WYAnotherViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="D9L-To-Wfp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="content view" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="b5a-DZ-4CQ">
+                                <rect key="frame" x="20" y="261" width="280" height="45"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.47414970397949219" green="0.47413551807403564" blue="0.47414353489875793" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dnb-Vb-em3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5058" y="-75"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

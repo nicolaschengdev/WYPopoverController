@@ -11,7 +11,8 @@
 
 @interface WYAllDirectionsViewController () <WYPopoverControllerDelegate>
 {
-    WYPopoverController* popoverController;
+    WYPopoverController* settingsPopoverController;
+    WYPopoverController* anotherPopoverController;
 }
 
 - (IBAction)showPopover:(id)sender;
@@ -52,21 +53,17 @@
 
 - (IBAction)showPopover:(id)sender
 {
-    if (popoverController == nil)
+    if (settingsPopoverController == nil)
     {
         UIView* btn = (UIView*)sender;
         
-        WYSettingsViewController* settingsViewController = [[WYSettingsViewController alloc] init];
+        WYSettingsViewController *settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYSettingsViewController"];
         
-        if ([settingsViewController respondsToSelector:@selector(setPreferredContentSize:)])
-        {
-            // iOS 7
-            settingsViewController.preferredContentSize = CGSizeMake(280, 200);
+        if ([settingsViewController respondsToSelector:@selector(setPreferredContentSize:)]) {
+            settingsViewController.preferredContentSize = CGSizeMake(280, 200);             // iOS 7
         }
-        else
-        {
-            // iOS < 7
-            settingsViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);
+        else {
+            settingsViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);      // iOS < 7
         }
         
         settingsViewController.title = @"Settings";
@@ -76,13 +73,12 @@
         
         UINavigationController* contentViewController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
         
-        popoverController = [[WYPopoverController alloc] initWithContentViewController:contentViewController];
-        popoverController.delegate = self;
-        popoverController.passthroughViews = @[btn];
-        popoverController.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
-        popoverController.wantsDefaultContentAppearance = NO;
-        [popoverController presentPopoverFromRect:btn.bounds inView:btn permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
-        
+        settingsPopoverController = [[WYPopoverController alloc] initWithContentViewController:contentViewController];
+        settingsPopoverController.delegate = self;
+        settingsPopoverController.passthroughViews = @[btn];
+        settingsPopoverController.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
+        settingsPopoverController.wantsDefaultContentAppearance = YES;
+        [settingsPopoverController presentPopoverFromRect:btn.bounds inView:btn permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
     }
     else
     {
@@ -90,13 +86,23 @@
     }
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"AnotherPopoverSegue"])
+    {
+        WYStoryboardPopoverSegue *popoverSegue = (WYStoryboardPopoverSegue *)segue;
+        anotherPopoverController = [popoverSegue popoverControllerWithSender:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+        anotherPopoverController.delegate = self;
+    }
+}
+
 #pragma mark - Selectors
 
 - (void)done:(id)sender
 {
-    [popoverController dismissPopoverAnimated:YES];
-    popoverController.delegate = nil;
-    popoverController = nil;
+    [settingsPopoverController dismissPopoverAnimated:YES];
+    settingsPopoverController.delegate = nil;
+    settingsPopoverController = nil;
 }
 
 #pragma mark - WYPopoverControllerDelegate
@@ -108,8 +114,16 @@
 
 - (void)popoverControllerDidDismiss:(WYPopoverController *)controller
 {
-    popoverController.delegate = nil;
-    popoverController = nil;
+    if (controller == settingsPopoverController)
+    {
+        settingsPopoverController.delegate = nil;
+        settingsPopoverController = nil;
+    }
+    else if (controller == anotherPopoverController)
+    {
+        anotherPopoverController.delegate = nil;
+        anotherPopoverController = nil;
+    }
 }
 
 #pragma mark - UIViewControllerRotation

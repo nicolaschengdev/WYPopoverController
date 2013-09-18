@@ -23,10 +23,7 @@
 		976A343517BB9AEB0071BF21 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 976A343417BB9AEB0071BF21 /* Default-568h@2x.png */; };
 		976A343817BB9AEB0071BF21 /* WYAllDirectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976A343717BB9AEB0071BF21 /* WYAllDirectionsViewController.m */; };
 		976A344A17BBAA4C0071BF21 /* WYSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976A344817BBAA4C0071BF21 /* WYSettingsViewController.m */; };
-		976A344B17BBAA4C0071BF21 /* WYSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 976A344917BBAA4C0071BF21 /* WYSettingsViewController.xib */; };
 		97B3CB2F17CD57910005E1A1 /* WYAnotherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B3CB2D17CD57910005E1A1 /* WYAnotherViewController.m */; };
-		97C0779F17D3C2DF006A19CE /* WYAnotherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C0779E17D3C2DF006A19CE /* WYAnotherViewController.xib */; };
-		97D5D8DD17E3AB7B00BD82C5 /* WYModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D5D8DB17E3AB7B00BD82C5 /* WYModalViewController.m */; };
 		97F27C8E17DB4F8800D5D4A2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FA5C3917D1B11100F611A0 /* QuartzCore.framework */; };
 		97FA5C3017D1A82E00F611A0 /* WYPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FA5C2D17D1A82E00F611A0 /* WYPopoverController.m */; };
 		97FA5C3117D1A82E00F611A0 /* WYStoryboardPopoverSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FA5C2F17D1A82E00F611A0 /* WYStoryboardPopoverSegue.m */; };
@@ -55,12 +52,8 @@
 		976A343717BB9AEB0071BF21 /* WYAllDirectionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WYAllDirectionsViewController.m; sourceTree = "<group>"; };
 		976A344717BBAA4C0071BF21 /* WYSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYSettingsViewController.h; sourceTree = "<group>"; };
 		976A344817BBAA4C0071BF21 /* WYSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYSettingsViewController.m; sourceTree = "<group>"; };
-		976A344917BBAA4C0071BF21 /* WYSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYSettingsViewController.xib; sourceTree = "<group>"; };
 		97B3CB2C17CD57910005E1A1 /* WYAnotherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYAnotherViewController.h; sourceTree = "<group>"; };
 		97B3CB2D17CD57910005E1A1 /* WYAnotherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYAnotherViewController.m; sourceTree = "<group>"; };
-		97C0779E17D3C2DF006A19CE /* WYAnotherViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WYAnotherViewController.xib; sourceTree = "<group>"; };
-		97D5D8DA17E3AB7B00BD82C5 /* WYModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYModalViewController.h; sourceTree = "<group>"; };
-		97D5D8DB17E3AB7B00BD82C5 /* WYModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYModalViewController.m; sourceTree = "<group>"; };
 		97FA5C2C17D1A82E00F611A0 /* WYPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYPopoverController.h; sourceTree = "<group>"; };
 		97FA5C2D17D1A82E00F611A0 /* WYPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYPopoverController.m; sourceTree = "<group>"; };
 		97FA5C2E17D1A82E00F611A0 /* WYStoryboardPopoverSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYStoryboardPopoverSegue.h; sourceTree = "<group>"; };
@@ -129,18 +122,14 @@
 				97FA5C2B17D1A82E00F611A0 /* WYPopoverController */,
 				976A344717BBAA4C0071BF21 /* WYSettingsViewController.h */,
 				976A344817BBAA4C0071BF21 /* WYSettingsViewController.m */,
-				976A344917BBAA4C0071BF21 /* WYSettingsViewController.xib */,
 				976A343617BB9AEB0071BF21 /* WYAllDirectionsViewController.h */,
 				976A343717BB9AEB0071BF21 /* WYAllDirectionsViewController.m */,
 				97B3CB2C17CD57910005E1A1 /* WYAnotherViewController.h */,
 				97B3CB2D17CD57910005E1A1 /* WYAnotherViewController.m */,
-				97C0779E17D3C2DF006A19CE /* WYAnotherViewController.xib */,
 				976A342517BB9AEB0071BF21 /* Supporting Files */,
 				976A342D17BB9AEB0071BF21 /* WYAppDelegate.h */,
 				976A342E17BB9AEB0071BF21 /* WYAppDelegate.m */,
 				97635BC917D118A700B642AC /* WYStoryboard.storyboard */,
-				97D5D8DA17E3AB7B00BD82C5 /* WYModalViewController.h */,
-				97D5D8DB17E3AB7B00BD82C5 /* WYModalViewController.m */,
 			);
 			path = WYPopoverDemo;
 			sourceTree = "<group>";
@@ -235,13 +224,11 @@
 				976A343117BB9AEB0071BF21 /* Default.png in Resources */,
 				976A343317BB9AEB0071BF21 /* Default@2x.png in Resources */,
 				976A343517BB9AEB0071BF21 /* Default-568h@2x.png in Resources */,
-				976A344B17BBAA4C0071BF21 /* WYSettingsViewController.xib in Resources */,
 				9722D80417C1667E000D922B /* button-highlighted.png in Resources */,
 				9722D80517C1667E000D922B /* button-highlighted@2x.png in Resources */,
 				9722D80617C1667E000D922B /* button-normal.png in Resources */,
 				9722D80717C1667E000D922B /* button-normal@2x.png in Resources */,
 				97635BCA17D118A700B642AC /* WYStoryboard.storyboard in Resources */,
-				97C0779F17D3C2DF006A19CE /* WYAnotherViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +245,6 @@
 				976A344A17BBAA4C0071BF21 /* WYSettingsViewController.m in Sources */,
 				97B3CB2F17CD57910005E1A1 /* WYAnotherViewController.m in Sources */,
 				97FA5C3017D1A82E00F611A0 /* WYPopoverController.m in Sources */,
-				97D5D8DD17E3AB7B00BD82C5 /* WYModalViewController.m in Sources */,
 				97FA5C3117D1A82E00F611A0 /* WYStoryboardPopoverSegue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
