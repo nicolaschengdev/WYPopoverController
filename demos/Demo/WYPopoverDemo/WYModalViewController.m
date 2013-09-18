@@ -39,7 +39,16 @@
         
         UIViewController* destinationViewController = (UIViewController *)segue.destinationViewController;
         
-        destinationViewController.contentSizeForViewInPopover = CGSizeMake(280, 280);
+        if ([destinationViewController respondsToSelector:@selector(setPreferredContentSize:)])
+        {
+            // iOS 7
+            destinationViewController.preferredContentSize = CGSizeMake(280, 200);
+        }
+        else
+        {
+            // iOS < 7
+            destinationViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);
+        }
         
         popoverController = [popoverSegue popoverControllerWithSender:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
         
