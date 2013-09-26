@@ -2095,7 +2095,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 #pragma mark Inline functions
 
-NSString* NSStringFromOrientation(NSInteger orientation) {
+static NSString* NSStringFromOrientation(NSInteger orientation) {
     NSString* result = @"Unknown";
     
     switch (orientation) {
@@ -2118,7 +2118,7 @@ NSString* NSStringFromOrientation(NSInteger orientation) {
     return result;
 }
 
-CGFloat GetStatusBarHeight() {
+static CGFloat GetStatusBarHeight() {
     UIInterfaceOrientation orienation = [[UIApplication sharedApplication] statusBarOrientation];
     
     CGFloat statusBarHeight = 0;
