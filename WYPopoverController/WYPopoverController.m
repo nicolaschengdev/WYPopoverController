@@ -1853,6 +1853,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     completionBlock = ^(BOOL finished) {
         
         [overlayView removeFromSuperview];
+        overlayView = nil;
         
         if ([viewController isKindOfClass:[UINavigationController class]] == NO)
         {
