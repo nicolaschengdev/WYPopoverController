@@ -561,6 +561,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             appearance.innerShadowOffset = CGSizeMake(0, 1);
             appearance.innerCornerRadius = 6;
             appearance.viewContentInsets = UIEdgeInsetsMake(3, 0, 0, 0);
+            appearance.overlayColor = [UIColor clearColor];
         }
         else
         {
@@ -591,6 +592,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             appearance.innerShadowOffset = CGSizeZero;
             appearance.innerCornerRadius = 0;
             appearance.viewContentInsets = UIEdgeInsetsZero;
+            appearance.overlayColor = [UIColor colorWithWhite:0 alpha:0.15];
         }
     }
 }
@@ -1242,7 +1244,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 }
 
 @property (nonatomic, strong, readonly) UIView  *rootView;
-@property (nonatomic, strong, readonly) UIColor *overlayColor;
 @property (nonatomic, assign, readonly) CGSize   contentSizeForViewInPopover;
 
 - (void)dismissPopoverAnimated:(BOOL)animated callDelegate:(BOOL)callDelegate;
@@ -1307,12 +1308,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         result = [result.subviews lastObject];
     }
 
-    return result;
-}
-
-- (UIColor *)overlayColor
-{
-    UIColor* result = (WY_IS_IOS_LESS_THAN(@"7.0")) ? [UIColor clearColor] : [UIColor colorWithWhite:0 alpha:0.15];
     return result;
 }
 
@@ -1399,11 +1394,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         overlayView.autoresizesSubviews = NO;
         overlayView.userInteractionEnabled = YES;
-        overlayView.backgroundColor = self.overlayColor;
         overlayView.delegate = self;
         overlayView.passthroughViews = passthroughViews;
         
         containerView = [[WYPopoverBackgroundView alloc] initWithContentSize:contentViewSize];
+
         [overlayView addSubview:containerView];
         
         containerView.hidden = YES;
@@ -1443,6 +1438,10 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         containerView.innerShadowOffset = appearance.innerShadowOffset;
         containerView.innerCornerRadius = appearance.innerCornerRadius;
         containerView.viewContentInsets = appearance.viewContentInsets;
+
+        overlayView.backgroundColor = appearance.overlayColor;
+    } else {
+        overlayView.backgroundColor = containerView.overlayColor;
     }
     
     [self positionPopover];
@@ -1854,6 +1853,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     completionBlock = ^(BOOL finished) {
         
         [overlayView removeFromSuperview];
+        overlayView = nil;
         
         if ([viewController isKindOfClass:[UINavigationController class]] == NO)
         {

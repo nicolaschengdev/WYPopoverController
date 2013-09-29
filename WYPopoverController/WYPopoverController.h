@@ -75,6 +75,8 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 
 @property (nonatomic, assign) UIEdgeInsets viewContentInsets    UI_APPEARANCE_SELECTOR;
 
+@property (nonatomic, strong) UIColor *overlayColor             UI_APPEARANCE_SELECTOR;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
