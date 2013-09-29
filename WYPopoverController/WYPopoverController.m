@@ -2188,6 +2188,8 @@ static CGFloat GetStatusBarHeight() {
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     barButtonItem = nil;
     passthroughViews = nil;
     viewController = nil;
