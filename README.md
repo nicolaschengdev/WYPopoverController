@@ -108,13 +108,13 @@ WYPopoverController uses ARC.
 
 #### Cocoapods
 
-Add this line `pod 'WYPopoverController', '~> 0.1.4'` to your PodFile.
+Add this line `pod 'WYPopoverController', '~> 0.1.5'` to your PodFile.
 
 Your PodFile should look like :
 
 ```Ruby
 platform :ios, '6.0'
-pod 'WYPopoverController', '~> 0.1.4'
+pod 'WYPopoverController', '~> 0.1.5'
 ```
 
 To use the `master` branch of the repo :
