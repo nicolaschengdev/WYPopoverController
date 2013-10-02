@@ -1,5 +1,5 @@
 /*
- Version 0.1.5
+ Version 0.1.6-beta
  
  WYPopoverController is available under the MIT license.
  
@@ -1862,9 +1862,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         if (callDelegate)
         {
-            if (delegate && [delegate respondsToSelector:@selector(popoverControllerDidDismiss:)])
+            if (delegate && [delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
             {
-                [delegate popoverControllerDidDismiss:self];
+                [delegate popoverControllerDidDismissPopover:self];
             }
         }
     };
@@ -1918,9 +1918,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     {
         BOOL shouldDismiss = !viewController.modalInPopover;
         
-        if (shouldDismiss && delegate && [delegate respondsToSelector:@selector(popoverControllerShouldDismiss:)])
+        if (shouldDismiss && delegate && [delegate respondsToSelector:@selector(popoverControllerShouldDismissPopover:)])
         {
-            shouldDismiss = [delegate popoverControllerShouldDismiss:self];
+            shouldDismiss = [delegate popoverControllerShouldDismissPopover:self];
         }
         
         if (shouldDismiss)
@@ -2163,6 +2163,23 @@ static CGFloat GetStatusBarHeight() {
     {
         inView = [barButtonItem valueForKey:@"view"];
         rect = inView.bounds;
+    }
+    else if ([delegate respondsToSelector:@selector(popoverController:willRepositionPopoverToRect:inView:)])
+    {
+        CGRect anotherRect;
+        UIView *anotherInView;
+        
+        [delegate popoverController:self willRepositionPopoverToRect:&anotherRect inView:&anotherInView];
+        
+        if (&anotherRect != NULL)
+        {
+            rect = anotherRect;
+        }
+        
+        if (&anotherInView != NULL)
+        {
+            inView = anotherInView;
+        }
     }
     
     [self positionPopover];

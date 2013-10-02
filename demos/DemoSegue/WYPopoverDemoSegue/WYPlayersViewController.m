@@ -66,12 +66,12 @@
 
 #pragma mark - WYPopoverControllerDelegate
 
-- (BOOL)popoverControllerShouldDismiss:(WYPopoverController *)aPopoverController
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)aPopoverController
 {
     return YES;
 }
 
-- (void)popoverControllerDidDismiss:(WYPopoverController *)aPopoverController
+- (void)popoverControllerDidDismissPopover:(WYPopoverController *)aPopoverController
 {
     if (aPopoverController == playerDetailsPopoverController)
     {

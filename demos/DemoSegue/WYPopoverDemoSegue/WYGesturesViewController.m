@@ -30,7 +30,7 @@
     [popoverController presentPopoverFromRect:view.bounds inView:view permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
 }
 
-- (BOOL)popoverControllerShouldDismiss:(WYPopoverController *)aPopoverController
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)aPopoverController
 {
     return YES;
 }

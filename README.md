@@ -161,12 +161,12 @@ In the implementation of your view controller
     [popoverController presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
 }
 
-- (BOOL)popoverControllerShouldDismiss:(WYPopoverController *)controller
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
 {
     return YES;
 }
 
-- (void)popoverControllerDidDismiss:(WYPopoverController *)controller
+- (void)popoverControllerDidDismissPopover:(WYPopoverController *)controller
 {
     popoverController.delegate = nil;
     popoverController = nil;
@@ -244,8 +244,8 @@ When showing a popover controller, there are times when you will need to handle 
 
 Situations when handling is required:
 
-* If the popover controller is presented from a target rectangle using the `-presentPopoverFromRect:inView:permittedArrowDirections:animated` method of WYPopoverController.
-* If the popover controller is presented from a bar button item that is removed after the rotation has finished.
+* If the popover controller is presented from a target rectangle using the `-presentPopoverFromRect:inView:permittedArrowDirections:animated` method of WYPopoverController. You can use `-popoverController:willRepositionPopoverToRect:inView:` method introduced in the **0.1.6 release** .
+* If the popover controller is presented from a bar button item that is removed after the rotation has finished .
 
 ### Change logs
 

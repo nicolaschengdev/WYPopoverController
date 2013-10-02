@@ -1,5 +1,5 @@
 /*
- Version 0.1.5
+ Version 0.1.6-beta
  
  WYPopoverController is available under the MIT license.
  
@@ -112,8 +112,9 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 @protocol WYPopoverControllerDelegate <NSObject>
 @optional
 
-- (BOOL)popoverControllerShouldDismiss:(WYPopoverController *)popoverController;
-- (void)popoverControllerDidDismiss:(WYPopoverController *)popoverController;
+- (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)popoverController;
+- (void)popoverControllerDidDismissPopover:(WYPopoverController *)popoverController;
+- (void)popoverController:(WYPopoverController *)popoverController willRepositionPopoverToRect:(inout CGRect *)rect inView:(inout UIView **)view;
 
 @end
 
