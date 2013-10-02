@@ -1,5 +1,5 @@
 /*
- Version 0.1.5-beta
+ Version 0.1.5
  
  WYPopoverController is available under the MIT license.
  
