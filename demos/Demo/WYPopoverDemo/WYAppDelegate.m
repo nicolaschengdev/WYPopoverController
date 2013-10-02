@@ -25,10 +25,9 @@
     [popoverAppearance setFillBottomColor:[UIColor colorWithWhite:0.75 alpha:1]];
     [popoverAppearance setOuterStrokeColor:[UIColor colorWithWhite:0.5 alpha:1]];
     [popoverAppearance setInnerStrokeColor:[UIColor colorWithWhite:0.5 alpha:1]];
-    
-    /*
     [popoverAppearance setOuterCornerRadius:8];
     [popoverAppearance setMinOuterCornerRadius:8];
+    
     [popoverAppearance setOuterShadowBlurRadius:6];
     [popoverAppearance setOuterShadowColor:[UIColor colorWithWhite:0 alpha:0.65]];
     [popoverAppearance setOuterShadowOffset:CGSizeMake(0, 2)];
@@ -46,16 +45,13 @@
     [popoverAppearance setInnerShadowOffset:CGSizeMake(0, 1)];
     
     [popoverAppearance setViewContentInsets:UIEdgeInsetsMake(3, 0, 0, 0)];
-    */
     
-    /*
     UINavigationBar* navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
     [navBarAppearance setTitleTextAttributes:@{
                    UITextAttributeTextColor : [UIColor darkGrayColor],
               UITextAttributeTextShadowColor: [UIColor whiteColor],
              UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, -1)]
     }];
-    */
     
     //Appearance 2 (orange popover)
     //
