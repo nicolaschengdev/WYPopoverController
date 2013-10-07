@@ -113,8 +113,9 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 @optional
 
 - (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)popoverController;
+
 - (void)popoverControllerDidDismissPopover:(WYPopoverController *)popoverController;
+
 - (void)popoverController:(WYPopoverController *)popoverController willRepositionPopoverToRect:(inout CGRect *)rect inView:(inout UIView **)view;
 
 @end
-

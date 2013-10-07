@@ -13,7 +13,6 @@
 {
     WYPopoverController* settingsPopoverController;
     WYPopoverController* anotherPopoverController;
-    WYPopoverController* datePopoverController;
 }
 
 - (IBAction)showPopover:(id)sender;
@@ -63,7 +62,6 @@
     {
         UIView* btn = (UIView*)sender;
         
-        /*
         WYSettingsViewController *settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYSettingsViewController"];
         
         if ([settingsViewController respondsToSelector:@selector(setPreferredContentSize:)]) {
@@ -86,31 +84,6 @@
         settingsPopoverController.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
         settingsPopoverController.wantsDefaultContentAppearance = NO;
         [settingsPopoverController presentPopoverFromRect:btn.bounds inView:btn permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
-        */
-        
-        UIViewController *vc = [[UIViewController alloc] init];
-        
-        vc.view = [[UIDatePicker alloc] init];
-        vc.title = @"Data";
-        
-        datePopoverController = [[WYPopoverController alloc] initWithContentViewController:[[UINavigationController alloc] initWithRootViewController:vc]];
-        
-        CGSize viewSize = vc.view.bounds.size;
-        
-        NSLog(@"viewSize = %@", NSStringFromCGSize(viewSize)); // ---> height is 216 instead of 162
-        
-        if ([vc respondsToSelector:@selector(setPreferredContentSize:)])
-        {
-            viewSize.height = 162;
-            vc.edgesForExtendedLayout = UIRectEdgeNone;
-            vc.preferredContentSize = viewSize;
-        }
-        else
-        {
-            vc.contentSizeForViewInPopover = viewSize;
-        }
-        
-        [datePopoverController presentPopoverFromRect:btn.bounds inView:btn permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
     }
     else
     {

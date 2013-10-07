@@ -25,6 +25,8 @@
 
 #import "WYPopoverController.h"
 
+#import <objc/runtime.h>
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     #define WY_BASE_SDK_7_ENABLED
 #endif
@@ -43,6 +45,63 @@
 
 #define WY_IS_IOS_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
+
+@interface UINavigationController (WYPopover)
+
+@property(nonatomic, assign, getter = isEmbedInPopover) BOOL embedInPopover;
+
+@end
+
+@implementation UINavigationController (WYPopover)
+
+static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINavigationControllerEmbedInPopoverTagKey";
+
+@dynamic embedInPopover;
+
++ (void)load
+{
+    Method original, swizzle;
+    
+    original = class_getInstanceMethod(self, @selector(pushViewController:animated:));
+    
+    swizzle = class_getInstanceMethod(self, @selector(sizzled_pushViewController:animated:));
+    
+    method_exchangeImplementations(original, swizzle);
+}
+
+- (BOOL)isEmbedInPopover
+{
+    BOOL result = NO;
+    
+    NSNumber *value = objc_getAssociatedObject(self, UINavigationControllerEmbedInPopoverTagKey);
+    
+    if (value)
+    {
+        result = [value boolValue];
+    }
+    
+    return result;
+}
+
+- (void)setEmbedInPopover:(BOOL)value
+{
+    objc_setAssociatedObject(self, UINavigationControllerEmbedInPopoverTagKey, [NSNumber numberWithBool:value], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)sizzled_pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (self.isEmbedInPopover && WY_IS_IOS_GREATER_THAN_OR_EQUAL_TO(@"7.0"))
+    {
+        viewController.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
+    [self sizzled_pushViewController:viewController animated:animated];
+}
+
+@end
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @interface WYPopoverArea : NSObject
 {
@@ -1446,7 +1505,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     [self positionPopover];
     
-    [self drawPopoverNavigationBar];
+    [self setPopoverNavigationBarBackgroundImage];
     
     containerView.hidden = NO;
     
@@ -1499,85 +1558,19 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     }
 }
 
-- (void)drawPopoverNavigationBar
+- (void)setPopoverNavigationBarBackgroundImage
 {
     if (wantsDefaultContentAppearance == NO && [viewController isKindOfClass:[UINavigationController class]])
     {
-        // UIBarMetricsDefault > navigationBarHeight = 44
-        // UIBarMetricsLandscapePhone > navigationBarHeight = 32
-        
         UINavigationController *navigationController = (UINavigationController *)viewController;
+        navigationController.embedInPopover = YES;
         
-        // UIBarMetricsDefault
-        
-        CGFloat navigationBarHeight = 44;
-        
-        CGRect rectPathRect = CGRectMake(0, 0, 20, navigationBarHeight);
-        
-        CGFloat cornerRadius = containerView.innerCornerRadius;
-        
-        UIBezierPath *rectPath = [UIBezierPath bezierPathWithRoundedRect:rectPathRect byRoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight cornerRadii:CGSizeMake(cornerRadius, cornerRadius)];
-        
-        UIGraphicsBeginImageContextWithOptions(rectPath.bounds.size, NO, 0.0f);
-        
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        
-        //// Gradient Declarations
-        NSArray* fillGradientColors = [NSArray arrayWithObjects:
-                                       (id)containerView.fillTopColor.CGColor,
-                                       (id)containerView.fillBottomColor.CGColor,
-                                       nil];
-        
-        CGFloat fillGradientLocations[] = {0, 1};
-        
-        CGGradientRef fillGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)fillGradientColors, fillGradientLocations);
-        
-        //// Drawing
-        CGContextSaveGState(context);
+        if (WY_IS_IOS_GREATER_THAN_OR_EQUAL_TO(@"7.0") && [navigationController viewControllers] && [[navigationController viewControllers] count] > 0)
         {
-            //CGContextAddPath(context, [rectPath CGPath]);
-            //CGContextClip(context);
-            
-            [rectPath addClip];
-            
-            CGFloat gradientTopPosition = [containerView innerRect].origin.y - navigationBarHeight + containerView.outerShadowInsets.top;
-            CGFloat gradientBottomPosition = gradientTopPosition + [containerView outerRect].size.height;
-            
-            CGContextDrawLinearGradient(context, fillGradient,
-                                        CGPointMake(0, gradientTopPosition),
-                                        CGPointMake(0, gradientBottomPosition),
-                                        0);
+            [(UIViewController *)[[navigationController viewControllers] objectAtIndex:0] setEdgesForExtendedLayout:UIRectEdgeNone];
         }
-        CGContextRestoreGState(context);
         
-        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        CGGradientRelease(fillGradient);
-        CGColorSpaceRelease(colorSpace);
-        
-        [navigationController.navigationBar setBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(0, cornerRadius + 1, 0, cornerRadius + 1)] forBarMetrics:UIBarMetricsDefault];
-        
-        // UIBarMetricsLandscapePhone
-        
-        navigationBarHeight = 32;
-        
-        rectPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 20, navigationBarHeight)];
-        
-        UIGraphicsBeginImageContextWithOptions(rectPath.bounds.size, NO, 0.0f);
-        
-        context = UIGraphicsGetCurrentContext();
-        
-        CGContextClipToRect(context, CGRectMake(0, 0, rectPath.bounds.size.width, rectPath.bounds.size.height));
-        
-        [image drawInRect:rectPath.bounds];
-        
-        image = UIGraphicsGetImageFromCurrentImageContext();
-        
-        UIGraphicsEndImageContext();
-        
-        [navigationController.navigationBar setBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(0, cornerRadius + 1, 0, cornerRadius + 1)] forBarMetrics:UIBarMetricsLandscapePhone];
+        [navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
     }
     
     viewController.view.clipsToBounds = YES;
@@ -1585,10 +1578,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     if (containerView.borderWidth == 0)
     {
         viewController.view.layer.cornerRadius = containerView.outerCornerRadius;
-    }
-    else
-    {
-        viewController.view.layer.cornerRadius = containerView.innerCornerRadius;
     }
 }
 
@@ -1878,7 +1867,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                                                       object:nil];
         
         [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UIDeviceOrientationDidChangeNotification
+                                                      object:nil];
         
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:UIKeyboardWillShowNotification
