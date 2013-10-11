@@ -144,6 +144,10 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
     {
         direction = @"RIGHT";
     }
+    else if (arrowDirection == WYPopoverArrowDirectionNone)
+    {
+        direction = @"NONE";
+    }
     
     return [NSString stringWithFormat:@"%@ [ %f x %f ]", direction, areaSize.width, areaSize.height];
 }
@@ -995,7 +999,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                 reducedOuterCornerRadius = (CGRectGetMidX(outerRect) + arrowOffset - arrowBase / 2) - CGRectGetMinX(outerRect);
             }
         }
-        else
+        else if (arrowDirection == WYPopoverArrowDirectionLeft || arrowDirection == WYPopoverArrowDirectionRight)
         {
             if (arrowOffset >= 0)
             {
@@ -1073,6 +1077,23 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
             CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
             CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), (arrowOffset < 0) ? reducedOuterCornerRadius : outerCornerRadius);
+            
+            CGPathAddLineToPoint(outerPathRef, NULL, origin.x, origin.y);
+        }
+        
+        if (arrowDirection == WYPopoverArrowDirectionNone)
+        {
+            origin = CGPointMake(CGRectGetMaxX(outerRect), CGRectGetMidY(outerRect));
+            
+            CGPathMoveToPoint(outerPathRef, NULL, origin.x, origin.y);
+            
+            CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMidY(outerRect));
+            CGPathAddLineToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMidY(outerRect));
+            
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMaxY(outerRect), CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMinX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), outerCornerRadius);
+            CGPathAddArcToPoint(outerPathRef, NULL, CGRectGetMaxX(outerRect), CGRectGetMinY(outerRect), CGRectGetMaxX(outerRect), CGRectGetMaxY(outerRect), outerCornerRadius);
             
             CGPathAddLineToPoint(outerPathRef, NULL, origin.x, origin.y);
         }
@@ -1821,6 +1842,24 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         containerView.arrowOffset = offset;
     }
     
+    if (arrowDirection == WYPopoverArrowDirectionNone)
+    {
+        containerView.arrowDirection = WYPopoverArrowDirectionNone;
+        containerViewSize = [containerView sizeThatFits:contentViewSize];
+        
+        containerFrame = CGRectZero;
+        containerFrame.size = containerViewSize;
+        containerFrame.size.width = MIN(maxX - minX, containerFrame.size.width);
+        containerFrame.size.height = MIN(maxY - minY, containerFrame.size.height);
+        containerView.frame = containerFrame;
+        
+        containerView.center = CGPointMake(minX + (maxX - minX) / 2, minY + (maxY - minY) / 2);
+        
+        containerFrame = containerView.frame;
+        
+        containerView.arrowOffset = offset;
+    }
+    
     containerView.frame = containerFrame;
     
     containerView.wantsDefaultContentAppearance = wantsDefaultContentAppearance;
@@ -1965,6 +2004,14 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         area.arrowDirection = WYPopoverArrowDirectionRight;
         [areas addObject:area];
     }
+
+    if ((arrowDirections & WYPopoverArrowDirectionNone) == WYPopoverArrowDirectionNone)
+    {
+        area = [[WYPopoverArea alloc] init];
+        area.areaSize = [self sizeForRect:aRect inView:aView arrowHeight:arrowHeight arrowDirection:WYPopoverArrowDirectionNone];
+        area.arrowDirection = WYPopoverArrowDirectionNone;
+        [areas addObject:area];
+    }
     
     if ([areas count] > 1)
     {
@@ -2079,6 +2126,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         result.width = maxX - minX;
         result.height = maxY - (viewFrame.origin.y + viewFrame.size.height);
         result.height -= arrowHeight;
+    }
+    else if (arrowDirection == WYPopoverArrowDirectionNone)
+    {
+        result.width = maxX - minX;
+        result.height = maxY - minY;
     }
     
     return result;

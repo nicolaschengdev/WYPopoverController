@@ -38,6 +38,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
     WYPopoverArrowDirectionDown = 1UL << 1,
     WYPopoverArrowDirectionLeft = 1UL << 2,
     WYPopoverArrowDirectionRight = 1UL << 3,
+    WYPopoverArrowDirectionNone = 1UL << 4,
     WYPopoverArrowDirectionAny = WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown | WYPopoverArrowDirectionLeft | WYPopoverArrowDirectionRight,
     WYPopoverArrowDirectionUnknown = NSUIntegerMax
 };
