@@ -90,9 +90,11 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
 
 - (void)sizzled_pushViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
-    if (self.isEmbedInPopover && WY_IS_IOS_GREATER_THAN_OR_EQUAL_TO(@"7.0"))
+    if (self.isEmbedInPopover)
     {
+#ifdef WY_BASE_SDK_7_ENABLED
         viewController.edgesForExtendedLayout = UIRectEdgeNone;
+#endif
     }
     
     [self sizzled_pushViewController:viewController animated:animated];
@@ -1598,9 +1600,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         UINavigationController *navigationController = (UINavigationController *)viewController;
         navigationController.embedInPopover = YES;
         
-        if (WY_IS_IOS_GREATER_THAN_OR_EQUAL_TO(@"7.0") && [navigationController viewControllers] && [[navigationController viewControllers] count] > 0)
+        if ([navigationController viewControllers] && [[navigationController viewControllers] count] > 0)
         {
+#ifdef WY_BASE_SDK_7_ENABLED
             [(UIViewController *)[[navigationController viewControllers] objectAtIndex:0] setEdgesForExtendedLayout:UIRectEdgeNone];
+#endif
         }
         
         [navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
