@@ -29,7 +29,7 @@
     
     //[popoverController presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
     
-    [popoverController presentPopoverFromRect:CGRectZero inView:self.view permittedArrowDirections:WYPopoverArrowDirectionNone animated:YES];
+    [popoverController presentPopoverFromRect:CGRectZero inView:nil permittedArrowDirections:WYPopoverArrowDirectionNone animated:YES];
 }
 
 - (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)aPopoverController

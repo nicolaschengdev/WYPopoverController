@@ -34,11 +34,11 @@
 #endif
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
-    WYPopoverArrowDirectionNone = 0,
     WYPopoverArrowDirectionUp = 1UL << 0,
     WYPopoverArrowDirectionDown = 1UL << 1,
     WYPopoverArrowDirectionLeft = 1UL << 2,
     WYPopoverArrowDirectionRight = 1UL << 3,
+    WYPopoverArrowDirectionNone = 1UL << 4,
     WYPopoverArrowDirectionAny = WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown | WYPopoverArrowDirectionLeft | WYPopoverArrowDirectionRight,
     WYPopoverArrowDirectionUnknown = NSUIntegerMax
 };
@@ -103,6 +103,8 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
 - (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
                permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
                                animated:(BOOL)animated;
+
+- (void)presentPopoverAsDialogAnimated:(BOOL)animated;
 
 - (void)dismissPopoverAnimated:(BOOL)animated;
 
