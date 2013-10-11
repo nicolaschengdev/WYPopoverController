@@ -1610,6 +1610,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     [self presentPopoverFromRect:itemView.bounds inView:itemView permittedArrowDirections:arrowDirections animated:aAnimated];
 }
 
+- (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated
+{
+    [self presentPopoverFromRect:CGRectZero inView:nil permittedArrowDirections:WYPopoverArrowDirectionNone animated:aAnimated];
+}
+
 - (void)positionPopover
 {
     CGSize contentViewSize = self.contentSizeForViewInPopover;

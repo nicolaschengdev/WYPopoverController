@@ -104,6 +104,8 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
                permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
                                animated:(BOOL)animated;
 
+- (void)presentPopoverAsDialogAnimated:(BOOL)animated;
+
 - (void)dismissPopoverAnimated:(BOOL)animated;
 
 @end
