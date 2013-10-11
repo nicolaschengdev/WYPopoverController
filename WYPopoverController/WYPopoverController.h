@@ -34,6 +34,7 @@
 #endif
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
+    WYPopoverArrowDirectionNone = 0,
     WYPopoverArrowDirectionUp = 1UL << 0,
     WYPopoverArrowDirectionDown = 1UL << 1,
     WYPopoverArrowDirectionLeft = 1UL << 2,
