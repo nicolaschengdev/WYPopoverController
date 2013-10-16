@@ -93,7 +93,10 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
     if (self.isEmbedInPopover)
     {
 #ifdef WY_BASE_SDK_7_ENABLED
-        viewController.edgesForExtendedLayout = UIRectEdgeNone;
+        if ([viewController respondsToSelector:@selector(setEdgesForExtendedLayout:)])
+        {
+            viewController.edgesForExtendedLayout = UIRectEdgeNone;
+        }
 #endif
     }
     
@@ -328,6 +331,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 @property (nonatomic, assign) CGFloat  navigationBarHeight;
 @property (nonatomic, assign) BOOL     wantsDefaultContentAppearance;
+@property (nonatomic, assign) CGFloat  borderWidth;
 
 @end
 
@@ -352,6 +356,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 @synthesize navigationBarHeight;
 @synthesize wantsDefaultContentAppearance;
+@synthesize borderWidth;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -386,7 +391,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     UIBezierPath* roundedRectPath = [UIBezierPath bezierPathWithRoundedRect:innerRect cornerRadius:cornerRadius + 1];
     
-    if (wantsDefaultContentAppearance == NO)
+    if (wantsDefaultContentAppearance == NO && borderWidth > 0)
     {
         CGContextSaveGState(context);
         {
@@ -404,13 +409,18 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     CGContextSaveGState(context);
     {
-        if (wantsDefaultContentAppearance == NO)
+        if (wantsDefaultContentAppearance == NO && borderWidth > 0)
         {
             [roundedRectPath addClip];
             CGContextSetShadowWithColor(context, innerShadowOffset, innerShadowBlurRadius, innerShadowColor.CGColor);
         }
         
         UIBezierPath* inRoundedRectPath = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(innerRect, 0.5, 0.5) cornerRadius:cornerRadius];
+        
+        if (borderWidth == 0)
+        {
+            inRoundedRectPath = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(innerRect, 0.5, 0.5) byRoundingCorners:UIRectCornerBottomLeft|UIRectCornerBottomRight cornerRadii:CGSizeMake(cornerRadius, cornerRadius)];
+        }
         
         [self.innerStrokeColor setStroke];
         inRoundedRectPath.lineWidth = 1;
@@ -781,6 +791,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         innerView.innerShadowOffset = innerShadowOffset;
         innerView.innerCornerRadius = self.innerCornerRadius;
         innerView.innerShadowBlurRadius = innerShadowBlurRadius;
+        innerView.borderWidth = self.borderWidth;
     }
     
     innerView.navigationBarHeight = navigationBarHeight;
@@ -835,6 +846,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     if (borderWidth == 0)
     {
         result = 0;
+        
+        if (outerCornerRadius > 0)
+        {
+            result = outerCornerRadius;
+        }
     }
     
     return result;
@@ -1014,6 +1030,18 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         }
         
         reducedOuterCornerRadius = MIN(reducedOuterCornerRadius, outerCornerRadius);
+        
+        /*
+        if (borderWidth == 0 && outerCornerRadius > 0)
+        {
+            if ()
+            {
+                result = outerCornerRadius;
+            }
+        }
+        */
+        
+        NSLog(@"outerCornerRadius = %f", outerCornerRadius);
         
         if (arrowDirection == WYPopoverArrowDirectionUp)
         {
@@ -1603,7 +1631,12 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         if ([navigationController viewControllers] && [[navigationController viewControllers] count] > 0)
         {
 #ifdef WY_BASE_SDK_7_ENABLED
-            [(UIViewController *)[[navigationController viewControllers] objectAtIndex:0] setEdgesForExtendedLayout:UIRectEdgeNone];
+            UIViewController *firstViewController = (UIViewController *)[[navigationController viewControllers] objectAtIndex:0];
+            
+            if ([firstViewController respondsToSelector:@selector(setEdgesForExtendedLayout:)])
+            {
+                [firstViewController setEdgesForExtendedLayout:UIRectEdgeNone];
+            }
 #endif
         }
         
