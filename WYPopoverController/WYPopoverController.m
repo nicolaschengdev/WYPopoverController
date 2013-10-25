@@ -1415,7 +1415,12 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (result.subviews.count > 0)
     {
-        result = [result.subviews lastObject];
+	for (UIView *view in result.subviews) {
+		if(!view.isHidden){
+			return view;
+		}
+	}
+//        result = [result.subviews lastObject];
     }
 
     return result;
