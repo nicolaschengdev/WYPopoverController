@@ -763,7 +763,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     contentView = viewController.view;
     
-    contentView.frame = CGRectMake(0, 0, self.bounds.size.width, 100);
+    contentView.frame = CGRectIntegral(CGRectMake(0, 0, self.bounds.size.width, 100));
     
     [self addSubview:contentView];
     
@@ -775,7 +775,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         navigationBarHeight = navigationController.navigationBar.bounds.size.height;
     }
     
-    contentView.frame = [self innerRect];
+    contentView.frame = CGRectIntegral([self innerRect]);
     
     if (innerView == nil)
     {
@@ -801,7 +801,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
     [self insertSubview:innerView aboveSubview:contentView];
     
-    innerView.frame = contentView.frame;
+    innerView.frame = CGRectIntegral(contentView.frame);
     
     [self.layer setNeedsDisplay];
 }
@@ -1403,7 +1403,12 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (result.subviews.count > 0)
     {
-        result = [result.subviews lastObject];
+	for (UIView *view in result.subviews) {
+		if(!view.isHidden){
+			return view;
+		}
+	}
+//        result = [result.subviews lastObject];
     }
 
     return result;
@@ -1695,7 +1700,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         containerFrame.size.width = MIN(maxX - minX, containerFrame.size.width);
         containerFrame.size.height = MIN(maxY - minY, containerFrame.size.height);
         
-        containerView.frame = containerFrame;
+        containerView.frame = CGRectIntegral(containerFrame);
         
         containerView.center = CGPointMake(viewFrame.origin.x + viewFrame.size.width / 2, viewFrame.origin.y + viewFrame.size.height / 2);
         
@@ -1794,7 +1799,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         containerFrame.size.width = MIN(maxX - minX, containerFrame.size.width);
         containerFrame.size.height = MIN(maxY - minY, containerFrame.size.height);
         
-        containerView.frame = containerFrame;
+        containerView.frame = CGRectIntegral(containerFrame);
         
         containerView.center = CGPointMake(viewFrame.origin.x + viewFrame.size.width / 2, viewFrame.origin.y + viewFrame.size.height / 2);
         
@@ -1849,7 +1854,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         containerView.center = CGPointMake(viewFrame.origin.x + viewFrame.size.width / 2, viewFrame.origin.y + viewFrame.size.height / 2);
         
-        containerFrame = containerView.frame;
+        containerFrame = CGRectIntegral(containerView.frame);
         
         offset = containerView.frame.size.width / 2 + viewFrame.size.width / 2 - containerView.outerShadowInsets.left;
         
@@ -1893,7 +1898,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         containerFrame.size = containerViewSize;
         containerFrame.size.width = MIN(maxX - minX, containerFrame.size.width);
         containerFrame.size.height = MIN(maxY - minY, containerFrame.size.height);
-        containerView.frame = containerFrame;
+        containerView.frame = CGRectIntegral(containerFrame);
         
         containerView.center = CGPointMake(minX + (maxX - minX) / 2, minY + (maxY - minY) / 2);
         
@@ -1902,7 +1907,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         containerView.arrowOffset = offset;
     }
     
-    containerView.frame = containerFrame;
+    containerView.frame = CGRectIntegral(containerFrame);
     
     containerView.wantsDefaultContentAppearance = wantsDefaultContentAppearance;
     
