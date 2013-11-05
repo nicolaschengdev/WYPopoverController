@@ -1031,18 +1031,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         reducedOuterCornerRadius = MIN(reducedOuterCornerRadius, outerCornerRadius);
         
-        /*
-        if (borderWidth == 0 && outerCornerRadius > 0)
-        {
-            if ()
-            {
-                result = outerCornerRadius;
-            }
-        }
-        */
-        
-        NSLog(@"outerCornerRadius = %f", outerCornerRadius);
-        
         if (arrowDirection == WYPopoverArrowDirectionUp)
         {
             origin = CGPointMake(CGRectGetMidX(outerRect) + arrowOffset - arrowBase / 2, CGRectGetMinY(outerRect));
