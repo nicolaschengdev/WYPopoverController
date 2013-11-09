@@ -1,5 +1,5 @@
 /*
- Version 0.1.6
+ Version 0.1.7
  
  WYPopoverController is available under the MIT license.
  
@@ -30,7 +30,7 @@
 @protocol WYPopoverControllerDelegate;
 
 #ifndef WY_POPOVER_DEFAULT_ANIMATION_DURATION
-    #define WY_POPOVER_DEFAULT_ANIMATION_DURATION    0.20f
+    #define WY_POPOVER_DEFAULT_ANIMATION_DURATION    .20f
 #endif
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
@@ -41,6 +41,12 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
     WYPopoverArrowDirectionNone = 1UL << 4,
     WYPopoverArrowDirectionAny = WYPopoverArrowDirectionUp | WYPopoverArrowDirectionDown | WYPopoverArrowDirectionLeft | WYPopoverArrowDirectionRight,
     WYPopoverArrowDirectionUnknown = NSUIntegerMax
+};
+
+typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
+    WYPopoverAnimationOptionFade = 1UL << 0,            // default
+    WYPopoverAnimationOptionScale = 1UL << 1,
+    WYPopoverAnimationOptionFadeWithScale = WYPopoverAnimationOptionFade | WYPopoverAnimationOptionScale
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -105,6 +111,20 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
                                animated:(BOOL)animated;
 
 - (void)presentPopoverAsDialogAnimated:(BOOL)animated;
+
+- (void)presentPopoverFromRect:(CGRect)rect
+                        inView:(UIView *)view
+      permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                      animated:(BOOL)animated
+                       options:(WYPopoverAnimationOptions)options;
+
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
+               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                               animated:(BOOL)animated
+                                options:(WYPopoverAnimationOptions)options;
+
+- (void)presentPopoverAsDialogAnimated:(BOOL)animated
+                               options:(WYPopoverAnimationOptions)options;
 
 - (void)dismissPopoverAnimated:(BOOL)animated;
 

@@ -83,7 +83,12 @@
         settingsPopoverController.passthroughViews = @[btn];
         settingsPopoverController.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
         settingsPopoverController.wantsDefaultContentAppearance = NO;
-        [settingsPopoverController presentPopoverFromRect:btn.bounds inView:btn permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+        
+        [settingsPopoverController presentPopoverFromRect:btn.bounds
+                                                   inView:btn
+                                 permittedArrowDirections:WYPopoverArrowDirectionAny
+                                                 animated:YES
+                                                  options:WYPopoverAnimationOptionFadeWithScale];
     }
     else
     {
@@ -172,3 +177,28 @@
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

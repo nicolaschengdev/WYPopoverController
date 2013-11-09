@@ -1,5 +1,5 @@
 /*
- Version 0.1.6
+ Version 0.1.7
  
  WYPopoverController is available under the MIT license.
  
@@ -1339,6 +1339,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     __weak UIBarButtonItem  *barButtonItem;
     CGRect                   keyboardRect;
     BOOL                     hasAppearanceProxyAvailable;
+    
+    WYPopoverAnimationOptions options;
 }
 
 @property (nonatomic, strong, readonly) UIView  *rootView;
@@ -1403,12 +1405,14 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (result.subviews.count > 0)
     {
-	for (UIView *view in result.subviews) {
-		if(!view.isHidden){
-			return view;
-		}
-	}
-//        result = [result.subviews lastObject];
+        for (UIView *view in result.subviews)
+        {
+            if(!view.isHidden)
+            {
+                return view;
+            }
+        }
+        // result = [result.subviews lastObject];
     }
 
     return result;
@@ -1492,7 +1496,39 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
-- (void)presentPopoverFromRect:(CGRect)aRect inView:(UIView *)aView permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections animated:(BOOL)aAnimated
+- (void)presentPopoverFromRect:(CGRect)aRect
+                        inView:(UIView *)aView
+      permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                      animated:(BOOL)aAnimated
+{
+    [self presentPopoverFromRect:aRect
+                          inView:aView
+        permittedArrowDirections:arrowDirections
+                        animated:aAnimated
+                         options:WYPopoverAnimationOptionFade];
+}
+
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
+               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                               animated:(BOOL)aAnimated
+{
+    [self presentPopoverFromBarButtonItem:item
+                 permittedArrowDirections:arrowDirections
+                                 animated:aAnimated
+                                  options:WYPopoverAnimationOptionFade];
+}
+
+- (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated
+{
+    [self presentPopoverAsDialogAnimated:aAnimated
+                                 options:WYPopoverAnimationOptionFade];
+}
+
+- (void)presentPopoverFromRect:(CGRect)aRect
+                        inView:(UIView *)aView
+      permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                      animated:(BOOL)aAnimated
+                       options:(WYPopoverAnimationOptions)aOptions
 {
     NSAssert((arrowDirections != WYPopoverArrowDirectionUnknown), @"WYPopoverArrowDirection must not be UNKNOWN");
     
@@ -1500,6 +1536,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     inView = aView;
     permittedArrowDirections = arrowDirections;
     animated = aAnimated;
+    options = aOptions;
     
     CGSize contentViewSize = self.contentSizeForViewInPopover;
 
@@ -1567,11 +1604,23 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (animated)
     {
-        containerView.alpha = 0;
+        if ((options & WYPopoverAnimationOptionFade) == WYPopoverAnimationOptionFade)
+        {
+            containerView.alpha = 0;
+        }
+        
         [viewController viewWillAppear:YES];
+        
+        if ((options & WYPopoverAnimationOptionScale) == WYPopoverAnimationOptionScale)
+        {
+            CGAffineTransform transform = [self transformTranslateForArrowDirection:containerView.arrowDirection];
+            transform = CGAffineTransformScale(transform, 0, 0);
+            containerView.transform = transform;
+        }
         
         [UIView animateWithDuration:WY_POPOVER_DEFAULT_ANIMATION_DURATION animations:^{
             containerView.alpha = 1;
+            containerView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
             if ([viewController isKindOfClass:[UINavigationController class]] == NO)
             {
@@ -1614,6 +1663,63 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     }
 }
 
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
+               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                               animated:(BOOL)aAnimated
+                                options:(WYPopoverAnimationOptions)aOptions
+{
+    barButtonItem = item;
+    UIView *itemView = [barButtonItem valueForKey:@"view"];
+    arrowDirections = WYPopoverArrowDirectionDown | WYPopoverArrowDirectionUp;
+    [self presentPopoverFromRect:itemView.bounds
+                          inView:itemView
+        permittedArrowDirections:arrowDirections
+                        animated:aAnimated
+                         options:aOptions];
+}
+
+- (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated
+                               options:(WYPopoverAnimationOptions)aOptions
+{
+    [self presentPopoverFromRect:CGRectZero
+                          inView:nil
+        permittedArrowDirections:WYPopoverArrowDirectionNone
+                        animated:aAnimated
+                         options:aOptions];
+}
+
+- (CGAffineTransform)transformTranslateForArrowDirection:(WYPopoverArrowDirection)arrowDirection
+{
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    if (containerView.arrowHeight > 0)
+    {
+        CGSize containerViewSize = containerView.frame.size;
+        
+        if (arrowDirection == WYPopoverArrowDirectionDown)
+        {
+            transform = CGAffineTransformTranslate(CGAffineTransformIdentity, containerView.arrowOffset, containerViewSize.height / 2);
+        }
+        
+        if (arrowDirection == WYPopoverArrowDirectionUp)
+        {
+            transform = CGAffineTransformTranslate(CGAffineTransformIdentity, containerView.arrowOffset, -containerViewSize.height / 2);
+        }
+        
+        if (arrowDirection == WYPopoverArrowDirectionRight)
+        {
+            transform = CGAffineTransformTranslate(CGAffineTransformIdentity, containerView.frame.size.width / 2, containerView.arrowOffset);
+        }
+        
+        if (arrowDirection == WYPopoverArrowDirectionLeft)
+        {
+            transform = CGAffineTransformTranslate(CGAffineTransformIdentity, -containerView.frame.size.width / 2, containerView.arrowOffset);
+        }
+    }
+    
+    return transform;
+}
+
 - (void)setPopoverNavigationBarBackgroundImage
 {
     if (wantsDefaultContentAppearance == NO && [viewController isKindOfClass:[UINavigationController class]])
@@ -1642,19 +1748,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     {
         viewController.view.layer.cornerRadius = containerView.outerCornerRadius;
     }
-}
-
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections animated:(BOOL)aAnimated
-{
-    barButtonItem = item;
-    UIView *itemView = [barButtonItem valueForKey:@"view"];
-    arrowDirections = WYPopoverArrowDirectionDown | WYPopoverArrowDirectionUp;
-    [self presentPopoverFromRect:itemView.bounds inView:itemView permittedArrowDirections:arrowDirections animated:aAnimated];
-}
-
-- (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated
-{
-    [self presentPopoverFromRect:CGRectZero inView:nil permittedArrowDirections:WYPopoverArrowDirectionNone animated:aAnimated];
 }
 
 - (void)positionPopover

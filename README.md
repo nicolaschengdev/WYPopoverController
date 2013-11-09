@@ -15,11 +15,11 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 * UIAppearance support
 * Works like UIPopoverController
+* Animation options
 * Automatic orientation support
 * UIStoryboard support
 * Keyboard show / hide support
 * iOS 6 & 7 support
-
 
 ### UIAppearance support
 
@@ -94,6 +94,27 @@ Determines whether the default content appearance should be used for the popover
 
 The margins that define the portion of the screen in which it is permissible to display the popover.
 
+### Animation options
+
+---
+
+Introduced in release 0.1.7, there are 3 styles of animation :
+* Fade *(by default)*
+* Scale
+* Fade with Scale
+
+#### Examples
+
+```objective-c
+
+popover = [[WYPopoverController alloc] initWithContentViewController:contentViewController];
+[popover presentPopoverFromRect:btn.bounds
+                         inView:btn
+       permittedArrowDirections:WYPopoverArrowDirectionAny
+                       animated:YES
+                        options:WYPopoverAnimationOptionFadeWithScale];
+```
+
 ### ARC
 
 ---
@@ -108,13 +129,13 @@ WYPopoverController uses ARC.
 
 #### Cocoapods
 
-Add this line `pod 'WYPopoverController', '~> 0.1.5'` to your PodFile.
+Add this line `pod 'WYPopoverController', '~> 0.1.7'` to your PodFile.
 
 Your PodFile should look like :
 
 ```Ruby
 platform :ios, '6.0'
-pod 'WYPopoverController', '~> 0.1.5'
+pod 'WYPopoverController', '~> 0.1.7'
 ```
 
 To use the `master` branch of the repo :

@@ -1,5 +1,5 @@
 /*
- Version 0.1.6
+ Version 0.1.7
  
  WYPopoverController is available under the MIT license.
  
@@ -28,6 +28,13 @@
 
 @interface WYStoryboardPopoverSegue : UIStoryboardSegue
 
-- (WYPopoverController*)popoverControllerWithSender:(id)sender permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections animated:(BOOL)animated;
+- (WYPopoverController*)popoverControllerWithSender:(id)sender
+                           permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                                           animated:(BOOL)animated;
+
+- (WYPopoverController*)popoverControllerWithSender:(id)sender
+                           permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                                           animated:(BOOL)animated
+                                            options:(WYPopoverAnimationOptions)options;
 
 @end
