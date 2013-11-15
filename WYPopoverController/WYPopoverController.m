@@ -1401,25 +1401,28 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (UIView *)rootView
 {
-    UIWindow *result = [[UIApplication sharedApplication] keyWindow];
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
     
-    int count = result.subviews.count;
+    int count = keyWindow.subviews.count;
+    
+    UIView *result = keyWindow;
     
     if (count > 0)
     {
-        UIView *view = nil;
-        
-        for (NSUInteger i = count; i <= 0; i--)
+        int lastIndex = count - 1;
+                
+        for (NSInteger i = lastIndex; i >= 0; i--)
         {
-            view = [result.subviews objectAtIndex:i];
+            UIView *view = [keyWindow.subviews objectAtIndex:i];
+            
+            //WY_LOG(@"rootView.subview[%i] = %@", i, view);
             
             if (!view.isHidden)
             {
-                return view;
+                result = view;
+                break;
             }
         }
-        
-        // result = [result.subviews lastObject];
     }
     
     return result;
