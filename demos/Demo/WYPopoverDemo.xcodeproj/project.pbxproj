@@ -12,6 +12,7 @@
 		9722D80617C1667E000D922B /* button-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 9722D80217C1667E000D922B /* button-normal.png */; };
 		9722D80717C1667E000D922B /* button-normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9722D80317C1667E000D922B /* button-normal@2x.png */; };
 		97635BCA17D118A700B642AC /* WYStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97635BC917D118A700B642AC /* WYStoryboard.storyboard */; };
+		9767EC6518354C73007D283B /* WYModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9767EC6418354C73007D283B /* WYModalViewController.m */; };
 		976A341F17BB9AEB0071BF21 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976A341E17BB9AEB0071BF21 /* UIKit.framework */; };
 		976A342117BB9AEB0071BF21 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976A342017BB9AEB0071BF21 /* Foundation.framework */; };
 		976A342317BB9AEB0071BF21 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 976A342217BB9AEB0071BF21 /* CoreGraphics.framework */; };
@@ -35,6 +36,8 @@
 		9722D80217C1667E000D922B /* button-normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-normal.png"; sourceTree = "<group>"; };
 		9722D80317C1667E000D922B /* button-normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-normal@2x.png"; sourceTree = "<group>"; };
 		97635BC917D118A700B642AC /* WYStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = WYStoryboard.storyboard; sourceTree = "<group>"; };
+		9767EC6318354C73007D283B /* WYModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WYModalViewController.h; sourceTree = "<group>"; };
+		9767EC6418354C73007D283B /* WYModalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WYModalViewController.m; sourceTree = "<group>"; };
 		976A341B17BB9AEB0071BF21 /* WYPopoverDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WYPopoverDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		976A341E17BB9AEB0071BF21 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		976A342017BB9AEB0071BF21 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -130,6 +133,8 @@
 				976A342D17BB9AEB0071BF21 /* WYAppDelegate.h */,
 				976A342E17BB9AEB0071BF21 /* WYAppDelegate.m */,
 				97635BC917D118A700B642AC /* WYStoryboard.storyboard */,
+				9767EC6318354C73007D283B /* WYModalViewController.h */,
+				9767EC6418354C73007D283B /* WYModalViewController.m */,
 			);
 			path = WYPopoverDemo;
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				976A344A17BBAA4C0071BF21 /* WYSettingsViewController.m in Sources */,
 				97B3CB2F17CD57910005E1A1 /* WYAnotherViewController.m in Sources */,
 				97FA5C3017D1A82E00F611A0 /* WYPopoverController.m in Sources */,
+				9767EC6518354C73007D283B /* WYModalViewController.m in Sources */,
 				97FA5C3117D1A82E00F611A0 /* WYStoryboardPopoverSegue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

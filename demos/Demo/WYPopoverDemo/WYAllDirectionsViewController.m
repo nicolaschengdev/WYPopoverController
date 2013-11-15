@@ -8,14 +8,15 @@
 #import "WYAllDirectionsViewController.h"
 #import "WYSettingsViewController.h"
 #import "WYAnotherViewController.h"
+#import "WYModalViewController.h"
 
 @interface WYAllDirectionsViewController () <WYPopoverControllerDelegate>
 {
-    WYPopoverController* settingsPopoverController;
     WYPopoverController* anotherPopoverController;
+    WYPopoverController* settingsPopoverController;
 }
 
-- (IBAction)showPopover:(id)sender;
+- (IBAction)open:(id)sender;
 
 @end
 
@@ -56,7 +57,21 @@
     [bottomRightButton setBackgroundImage:normal forState:UIControlStateNormal]; [bottomRightButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
 }
 
-- (IBAction)showPopover:(id)sender
+- (IBAction)open:(id)sender
+{
+    [self showmodal:sender];
+}
+
+- (IBAction)showmodal:(id)sender
+{
+    WYModalViewController *modalViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYModalViewController"];
+    
+    modalViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    [self presentViewController:modalViewController animated:YES completion:NULL];
+}
+
+- (IBAction)showpopover:(id)sender
 {
     if (settingsPopoverController == nil)
     {
@@ -90,10 +105,6 @@
                                                  animated:YES
                                                   options:WYPopoverAnimationOptionFadeWithScale];
     }
-    else
-    {
-        [self done:nil];
-    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -106,15 +117,6 @@
     }
 }
 
-#pragma mark - Selectors
-
-- (void)done:(id)sender
-{
-    [settingsPopoverController dismissPopoverAnimated:YES];
-    settingsPopoverController.delegate = nil;
-    settingsPopoverController = nil;
-}
-
 #pragma mark - WYPopoverControllerDelegate
 
 - (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
@@ -124,15 +126,15 @@
 
 - (void)popoverControllerDidDismissPopover:(WYPopoverController *)controller
 {
-    if (controller == settingsPopoverController)
-    {
-        settingsPopoverController.delegate = nil;
-        settingsPopoverController = nil;
-    }
-    else if (controller == anotherPopoverController)
+    if (controller == anotherPopoverController)
     {
         anotherPopoverController.delegate = nil;
         anotherPopoverController = nil;
+    }
+    else if (controller == settingsPopoverController)
+    {
+        settingsPopoverController.delegate = nil;
+        settingsPopoverController = nil;
     }
 }
 
@@ -177,28 +179,3 @@
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

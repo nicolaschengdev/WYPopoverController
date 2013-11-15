@@ -48,7 +48,7 @@
     
     [popoverAppearance setViewContentInsets:UIEdgeInsetsMake(3, 0, 0, 0)];
     */
-    UINavigationBar *navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[WYPopoverBackgroundView class], [UINavigationController class], nil];
+    UINavigationBar *navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], [WYPopoverBackgroundView class], nil];
     [navBarAppearance setTitleTextAttributes:@{
                    UITextAttributeTextColor : [UIColor whiteColor],
               UITextAttributeTextShadowColor: [UIColor clearColor],

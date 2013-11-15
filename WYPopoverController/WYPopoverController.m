@@ -1403,18 +1403,25 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     UIWindow *result = [[UIApplication sharedApplication] keyWindow];
     
-    if (result.subviews.count > 0)
+    int count = result.subviews.count;
+    
+    if (count > 0)
     {
-        for (UIView *view in result.subviews)
+        UIView *view = nil;
+        
+        for (NSUInteger i = count; i <= 0; i--)
         {
-            if(!view.isHidden)
+            view = [result.subviews objectAtIndex:i];
+            
+            if (!view.isHidden)
             {
                 return view;
             }
         }
+        
         // result = [result.subviews lastObject];
     }
-
+    
     return result;
 }
 
@@ -2278,6 +2285,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 #pragma mark Inline functions
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
+
 static NSString* NSStringFromOrientation(NSInteger orientation) {
     NSString* result = @"Unknown";
     
@@ -2300,6 +2310,8 @@ static NSString* NSStringFromOrientation(NSInteger orientation) {
     
     return result;
 }
+
+#pragma clang diagnostic pop
 
 static CGFloat GetStatusBarHeight() {
     UIInterfaceOrientation orienation = [[UIApplication sharedApplication] statusBarOrientation];
