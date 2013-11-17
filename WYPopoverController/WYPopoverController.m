@@ -1478,10 +1478,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     {
         UINavigationController *navigationController = (UINavigationController *)controller;
         
-        if ([[navigationController viewControllers] count] > 0)
-        {
-            controller = (UIViewController *)[[navigationController viewControllers] objectAtIndex:0];
-        }
+        controller = [navigationController visibleViewController];
     }
     
 #ifdef WY_BASE_SDK_7_ENABLED
