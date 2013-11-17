@@ -1410,7 +1410,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     if (count > 0)
     {
         int lastIndex = count - 1;
-                
+        
         for (NSInteger i = lastIndex; i >= 0; i--)
         {
             UIView *view = [keyWindow.subviews objectAtIndex:i];
