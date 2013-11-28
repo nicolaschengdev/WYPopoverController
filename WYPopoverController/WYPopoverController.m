@@ -2383,7 +2383,7 @@ static CGFloat GetStatusBarHeight() {
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
-    NSDictionary* info = [notification userInfo];
+    NSDictionary *info = [notification userInfo];
     keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     [self positionPopover];
     [containerView setNeedsDisplay];

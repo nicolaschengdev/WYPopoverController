@@ -17,6 +17,7 @@
 }
 
 - (IBAction)open:(id)sender;
+- (void)close:(id)sender;
 
 @end
 
@@ -43,8 +44,8 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     
-    UIImage* normal = [[UIImage imageNamed:@"button-normal"] stretchableImageWithLeftCapWidth:16 topCapHeight:0];
-    UIImage* highlighted = [[UIImage imageNamed:@"button-highlighted"] stretchableImageWithLeftCapWidth:16 topCapHeight:0];
+    UIImage *normal = [[UIImage imageNamed:@"button-normal"] stretchableImageWithLeftCapWidth:16 topCapHeight:0];
+    UIImage *highlighted = [[UIImage imageNamed:@"button-highlighted"] stretchableImageWithLeftCapWidth:16 topCapHeight:0];
     
     [topLeftButton setBackgroundImage:normal forState:UIControlStateNormal]; [topLeftButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
     [topButton setBackgroundImage:normal forState:UIControlStateNormal]; [topButton setBackgroundImage:highlighted forState:UIControlStateHighlighted];
@@ -59,7 +60,14 @@
 
 - (IBAction)open:(id)sender
 {
-    [self showmodal:sender];
+    [self showpopover:sender];
+}
+
+- (void)close:(id)sender
+{
+    [settingsPopoverController dismissPopoverAnimated:YES];
+    settingsPopoverController.delegate = nil;
+    settingsPopoverController = nil;
 }
 
 - (IBAction)showmodal:(id)sender
@@ -75,7 +83,7 @@
 {
     if (settingsPopoverController == nil)
     {
-        UIView* btn = (UIView*)sender;
+        UIView *btn = (UIView*)sender;
         
         WYSettingsViewController *settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYSettingsViewController"];
         
@@ -87,7 +95,7 @@
         }
         
         settingsViewController.title = @"Settings";
-        [settingsViewController.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done:)]];
+        [settingsViewController.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(close:)]];
         
         settingsViewController.modalInPopover = NO;
         
@@ -104,6 +112,10 @@
                                  permittedArrowDirections:WYPopoverArrowDirectionAny
                                                  animated:YES
                                                   options:WYPopoverAnimationOptionFadeWithScale];
+    }
+    else
+    {
+        [self close:nil];
     }
 }
 
