@@ -1613,6 +1613,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     {
         if ((options & WYPopoverAnimationOptionFade) == WYPopoverAnimationOptionFade)
         {
+            overlayView.alpha = 0;
             containerView.alpha = 0;
         }
         
@@ -1626,6 +1627,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         }
         
         [UIView animateWithDuration:WY_POPOVER_DEFAULT_ANIMATION_DURATION animations:^{
+            overlayView.alpha = 1;
+            overlayView.transform = CGAffineTransformIdentity;
             containerView.alpha = 1;
             containerView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
