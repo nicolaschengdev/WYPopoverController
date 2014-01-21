@@ -2030,8 +2030,20 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
           
     completionBlock = ^(BOOL finished) {
         
-        [overlayView removeFromSuperview];
-        overlayView = nil;
+        if (aAnimated)
+        {
+            [UIView animateWithDuration:WY_POPOVER_DEFAULT_ANIMATION_DURATION animations:^{
+                overlayView.alpha = 0;
+            } completion:^(BOOL finished) {
+                [overlayView removeFromSuperview];
+                overlayView = nil;
+            }];
+        }
+        else
+        {
+            [overlayView removeFromSuperview];
+            overlayView = nil;
+        }
         
         if ([viewController isKindOfClass:[UINavigationController class]] == NO)
         {
