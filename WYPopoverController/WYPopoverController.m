@@ -1423,11 +1423,18 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             // the "last visible" subview. But as I cannot be 100% sure of the original author's intent, I'll
             // instead work around our use of DCIntrospect by saying if that class exists, skip it because it
             // certainly isn't the UIView we want.
+            //
             // Hrm. Seems that DCIntrospect installs a DCTextView under iOS7 and UITextView under pre-7. So
             // we'll still use the presense of Class DCTextView as our key, then check for either TextView
             // class at runtime.
+            //
+            // It also seems to do the same with DCFrameView
             Class DCTextView = NSClassFromString(@"DCTextView");
-            if (!view.isHidden && (!DCTextView || (DCTextView && ![view isKindOfClass:DCTextView] && ![view isKindOfClass:[UITextView class]])) )
+            Class DCFrameView = NSClassFromString(@"DCFrameView");
+            if (!view.isHidden
+                && (!DCTextView || (DCTextView && ![view isKindOfClass:DCTextView] && ![view isKindOfClass:[UITextView class]]))
+                && (!DCFrameView || (DCFrameView && ![view isKindOfClass:DCFrameView]))
+                )
             {
                 result = view;
                 break;
