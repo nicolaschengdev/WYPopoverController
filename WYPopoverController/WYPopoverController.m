@@ -1548,11 +1548,31 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                                  options:WYPopoverAnimationOptionFade];
 }
 
+
 - (void)presentPopoverFromRect:(CGRect)aRect
                         inView:(UIView *)aView
       permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
                       animated:(BOOL)aAnimated
                        options:(WYPopoverAnimationOptions)aOptions
+{
+    [self presentPopoverFromRect:aRect
+                          inView:aView
+        permittedArrowDirections:arrowDirections
+                        animated:aAnimated
+                         options:aOptions
+                      completion:nil];
+}
+
+
+// Hsoi 2014-01-24 - Added the 'completion' parameter: adding the parameter, the invocation
+// of it, and the compatiblity version of this method that lacks the 'completion' parameter
+// so existing code can function without change.
+- (void)presentPopoverFromRect:(CGRect)aRect
+                        inView:(UIView *)aView
+      permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                      animated:(BOOL)aAnimated
+                       options:(WYPopoverAnimationOptions)aOptions
+                    completion:(void (^)(void))completion
 {
     NSAssert((arrowDirections != WYPopoverArrowDirectionUnknown), @"WYPopoverArrowDirection must not be UNKNOWN");
     
@@ -1650,6 +1670,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             {
                 [self->viewController viewDidAppear:YES];
             }
+            
+            if (completion)
+            {
+                completion();
+            }
         }];
     }
     else
@@ -1659,6 +1684,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         if ([viewController isKindOfClass:[UINavigationController class]] == NO)
         {
             [viewController viewDidAppear:NO];
+        }
+        
+        if (completion)
+        {
+            completion();
         }
     }
     
