@@ -95,7 +95,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 @property (nonatomic, copy) NSArray *passthroughViews;
 @property (nonatomic, assign) BOOL wantsDefaultContentAppearance;
 @property (nonatomic, assign) UIEdgeInsets popoverLayoutMargins;
-@property (nonatomic, assign, readonly) BOOL isPopoverVisible;
+@property (nonatomic, assign, readonly, getter = isPopoverVisible) BOOL popoverVisible;
 @property (nonatomic, strong, readonly) UIViewController* contentViewController;
 @property (nonatomic, assign) CGSize popoverContentSize;
 

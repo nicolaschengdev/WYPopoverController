@@ -1371,7 +1371,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @synthesize delegate;
 @synthesize passthroughViews;
 @synthesize wantsDefaultContentAppearance;
-@synthesize isPopoverVisible;
+@synthesize popoverVisible;
 @synthesize popoverLayoutMargins;
 
 - (id)initWithContentViewController:(UIViewController *)aViewController
