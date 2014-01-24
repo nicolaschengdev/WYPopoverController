@@ -1417,7 +1417,14 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             
             //WY_LOG(@"rootView.subview[%i] = %@", i, view);
             
-            if (!view.isHidden)
+            // Hsoi 2014-01-24 - If using DCIntrospect, it inserts a DCTextView into the window's subviews
+            // and breaks WYPopoverController's assumptions about the view hierarchy. It'd probably be better
+            // if WYPopoverController was more explicit about exactly what it wanted here instead of assuming
+            // the "last visible" subview. But as I cannot be 100% sure of the original author's intent, I'll
+            // instead work around our use of DCIntrospect by saying if that class exists, skip it because it
+            // certainly isn't the UIView we want.
+            Class DCTextView = NSClassFromString(@"DCTextView");
+            if (!view.isHidden && (!DCTextView || (DCTextView && ![view isKindOfClass:DCTextView])) )
             {
                 result = view;
                 break;
