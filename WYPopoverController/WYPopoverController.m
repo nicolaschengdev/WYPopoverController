@@ -2287,6 +2287,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-variable"
+#pragma clang diagnostic ignored "-Wunused-function"
 
 static NSString* NSStringFromOrientation(NSInteger orientation) {
     NSString* result = @"Unknown";
