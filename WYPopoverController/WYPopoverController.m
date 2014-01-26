@@ -1613,6 +1613,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     {
         if ((options & WYPopoverAnimationOptionFade) == WYPopoverAnimationOptionFade)
         {
+            overlayView.alpha = 0;
             containerView.alpha = 0;
         }
         
@@ -1626,6 +1627,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         }
         
         [UIView animateWithDuration:WY_POPOVER_DEFAULT_ANIMATION_DURATION animations:^{
+            overlayView.alpha = 1;
+            overlayView.transform = CGAffineTransformIdentity;
             containerView.alpha = 1;
             containerView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
@@ -2027,8 +2030,20 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
           
     completionBlock = ^(BOOL finished) {
         
-        [overlayView removeFromSuperview];
-        overlayView = nil;
+        if (aAnimated)
+        {
+            [UIView animateWithDuration:WY_POPOVER_DEFAULT_ANIMATION_DURATION animations:^{
+                overlayView.alpha = 0;
+            } completion:^(BOOL finished) {
+                [overlayView removeFromSuperview];
+                overlayView = nil;
+            }];
+        }
+        else
+        {
+            [overlayView removeFromSuperview];
+            overlayView = nil;
+        }
         
         if ([viewController isKindOfClass:[UINavigationController class]] == NO)
         {
@@ -2285,9 +2300,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 #pragma mark Inline functions
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-variable"
-
+/*
 static NSString* NSStringFromOrientation(NSInteger orientation) {
     NSString* result = @"Unknown";
     
@@ -2310,8 +2323,7 @@ static NSString* NSStringFromOrientation(NSInteger orientation) {
     
     return result;
 }
-
-#pragma clang diagnostic pop
+*/
 
 static CGFloat GetStatusBarHeight() {
     UIInterfaceOrientation orienation = [[UIApplication sharedApplication] statusBarOrientation];

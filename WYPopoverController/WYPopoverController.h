@@ -88,7 +88,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface WYPopoverController : NSObject
+@interface WYPopoverController : NSObject <UIAppearanceContainer>
 
 @property (nonatomic, weak) id <WYPopoverControllerDelegate> delegate;
 

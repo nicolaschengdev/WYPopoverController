@@ -280,7 +280,6 @@ A brief summary of each WYPopoverController release can be found on the [wiki](h
 
 * [@mikl_jeo](https://twitter.com/mikl_jeo) on Twitter
 * [@nicolaschengdev](https://github.com/nicolaschengdev) on Github
-* <a href="mailTo:nicolas.cheng.dev@gmail.com">nicolas.cheng.dev [at] gmail [dot] com</a>
 
 ### License
 
