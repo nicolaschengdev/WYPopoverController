@@ -96,14 +96,17 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 @property (nonatomic, weak) id <WYPopoverControllerDelegate> delegate;
 
-@property (nonatomic, copy) NSArray *passthroughViews;
-@property (nonatomic, assign) BOOL wantsDefaultContentAppearance;
-@property (nonatomic, assign) UIEdgeInsets popoverLayoutMargins;
-@property (nonatomic, assign, readonly) BOOL isPopoverVisible;
-@property (nonatomic, strong, readonly) UIViewController* contentViewController;
-@property (nonatomic, assign) CGSize popoverContentSize;
+@property (nonatomic, copy) NSArray                         *passthroughViews;
+@property (nonatomic, assign) BOOL                           wantsDefaultContentAppearance;
+@property (nonatomic, assign) UIEdgeInsets                   popoverLayoutMargins;
+@property (nonatomic, assign, readonly) BOOL                 isPopoverVisible;
+@property (nonatomic, strong, readonly) UIViewController    *contentViewController;
+@property (nonatomic, assign) CGSize                         popoverContentSize;
+@property (nonatomic, assign) CGFloat                        animationDuration;
 
 - (id)initWithContentViewController:(UIViewController *)viewController;
+
+//
 
 - (void)presentPopoverFromRect:(CGRect)rect
                         inView:(UIView *)view
@@ -115,6 +118,8 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
                                animated:(BOOL)animated;
 
 - (void)presentPopoverAsDialogAnimated:(BOOL)animated;
+
+//
 
 - (void)presentPopoverFromRect:(CGRect)rect
                         inView:(UIView *)view
@@ -129,6 +134,8 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 - (void)presentPopoverAsDialogAnimated:(BOOL)animated
                                options:(WYPopoverAnimationOptions)options;
+
+//
 
 - (void)dismissPopoverAnimated:(BOOL)animated;
 

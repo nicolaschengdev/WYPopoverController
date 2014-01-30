@@ -1372,6 +1372,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @synthesize wantsDefaultContentAppearance;
 @synthesize isPopoverVisible;
 @synthesize popoverLayoutMargins;
+@synthesize animationDuration;
 
 - (id)initWithContentViewController:(UIViewController *)aViewController
 {
@@ -1382,6 +1383,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         viewController = aViewController;
         popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
         keyboardRect = CGRectZero;
+        animationDuration = WY_POPOVER_DEFAULT_ANIMATION_DURATION;
     }
     
     return self;
@@ -1598,7 +1600,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             containerView.transform = startTransform;
         }
         
-        [UIView animateWithDuration:WY_POPOVER_DEFAULT_ANIMATION_DURATION animations:^{
+        [UIView animateWithDuration:animationDuration animations:^{
             overlayView.alpha = 1;
             containerView.alpha = 1;
             containerView.transform = endTransform;
@@ -2028,7 +2030,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         if (aAnimated)
         {
-            [UIView animateWithDuration:WY_POPOVER_DEFAULT_ANIMATION_DURATION animations:^{
+            [UIView animateWithDuration:animationDuration animations:^{
                 overlayView.alpha = 0;
             } completion:^(BOOL finished) {
                 [overlayView removeFromSuperview];
@@ -2084,7 +2086,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (aAnimated)
     {
-        [UIView animateWithDuration:WY_POPOVER_DEFAULT_ANIMATION_DURATION animations:^{
+        [UIView animateWithDuration:animationDuration animations:^{
             containerView.alpha = 0;
         } completion:^(BOOL finished) {
             completionBlock(finished);
