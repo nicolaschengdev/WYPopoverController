@@ -1,5 +1,5 @@
 /*
- Version 0.1.7
+ Version 0.1.8
  
  WYPopoverController is available under the MIT license.
  
@@ -1343,8 +1343,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     WYPopoverAnimationOptions options;
 }
 
-@property (nonatomic, strong, readonly) UIView  *rootView;
-@property (nonatomic, assign, readonly) CGSize   contentSizeForViewInPopover;
+@property (nonatomic, assign, readonly) CGSize contentSizeForViewInPopover;
 
 - (void)dismissPopoverAnimated:(BOOL)animated callDelegate:(BOOL)callDelegate;
 
@@ -1394,38 +1393,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
-- (UIViewController*)contentViewController
+- (UIViewController *)contentViewController
 {
     return viewController;
-}
-
-- (UIView *)rootView
-{
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-    
-    int count = keyWindow.subviews.count;
-    
-    UIView *result = keyWindow;
-    
-    if (count > 0)
-    {
-        int lastIndex = count - 1;
-        
-        for (NSInteger i = lastIndex; i >= 0; i--)
-        {
-            UIView *view = [keyWindow.subviews objectAtIndex:i];
-            
-            //WY_LOG(@"rootView.subview[%i] = %@", i, view);
-            
-            if (!view.isHidden)
-            {
-                result = view;
-                break;
-            }
-        }
-    }
-    
-    return result;
 }
 
 - (CGSize)popoverContentSize
@@ -1549,26 +1519,25 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
     if (overlayView == nil)
     {
-        overlayView = [[WYPopoverOverlayView alloc] initWithFrame:self.rootView.bounds];
-        overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        overlayView = [[WYPopoverOverlayView alloc] initWithFrame:inView.window.bounds];
         overlayView.autoresizesSubviews = NO;
         overlayView.userInteractionEnabled = YES;
         overlayView.delegate = self;
         overlayView.passthroughViews = passthroughViews;
         
-        containerView = [[WYPopoverBackgroundView alloc] initWithContentSize:contentViewSize];
+        [inView.window addSubview:overlayView];
 
-        [overlayView addSubview:containerView];
+        containerView = [[WYPopoverBackgroundView alloc] initWithContentSize:contentViewSize];
+        [inView.window addSubview:containerView];
         
         containerView.hidden = YES;
-        [self.rootView addSubview:overlayView];
     }
     
     if (WY_IS_IOS_LESS_THAN(@"6.0") && hasAppearanceProxyAvailable == NO)
     {
         hasAppearanceProxyAvailable = YES;
         
-        WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
+        WYPopoverBackgroundView *appearance = [WYPopoverBackgroundView appearance];
         
         containerView.tintColor = appearance.tintColor;
         
@@ -1597,9 +1566,10 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         containerView.innerShadowOffset = appearance.innerShadowOffset;
         containerView.innerCornerRadius = appearance.innerCornerRadius;
         containerView.viewContentInsets = appearance.viewContentInsets;
-
         overlayView.backgroundColor = appearance.overlayColor;
-    } else {
+    }
+    else
+    {
         overlayView.backgroundColor = containerView.overlayColor;
     }
     
@@ -1619,18 +1589,19 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         [viewController viewWillAppear:YES];
         
+        CGAffineTransform endTransform = containerView.transform;
+        
         if ((options & WYPopoverAnimationOptionScale) == WYPopoverAnimationOptionScale)
         {
-            CGAffineTransform transform = [self transformTranslateForArrowDirection:containerView.arrowDirection];
-            transform = CGAffineTransformScale(transform, 0, 0);
-            containerView.transform = transform;
+            CGAffineTransform startTransform = [self transformTranslateForArrowDirection:containerView.arrowDirection];
+            startTransform = CGAffineTransformScale(startTransform, 0.1, 0.1);
+            containerView.transform = startTransform;
         }
         
         [UIView animateWithDuration:WY_POPOVER_DEFAULT_ANIMATION_DURATION animations:^{
             overlayView.alpha = 1;
-            overlayView.transform = CGAffineTransformIdentity;
             containerView.alpha = 1;
-            containerView.transform = CGAffineTransformIdentity;
+            containerView.transform = endTransform;
         } completion:^(BOOL finished) {
             if ([viewController isKindOfClass:[UINavigationController class]] == NO)
             {
@@ -1700,7 +1671,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (CGAffineTransform)transformTranslateForArrowDirection:(WYPopoverArrowDirection)arrowDirection
 {
-    CGAffineTransform transform = CGAffineTransformIdentity;
+    CGAffineTransform transform = containerView.transform;
     
     if (containerView.arrowHeight > 0)
     {
@@ -1708,22 +1679,22 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         if (arrowDirection == WYPopoverArrowDirectionDown)
         {
-            transform = CGAffineTransformTranslate(CGAffineTransformIdentity, containerView.arrowOffset, containerViewSize.height / 2);
+            transform = CGAffineTransformTranslate(transform, containerView.arrowOffset, containerViewSize.height / 2);
         }
         
         if (arrowDirection == WYPopoverArrowDirectionUp)
         {
-            transform = CGAffineTransformTranslate(CGAffineTransformIdentity, containerView.arrowOffset, -containerViewSize.height / 2);
+            transform = CGAffineTransformTranslate(transform, containerView.arrowOffset, -containerViewSize.height / 2);
         }
         
         if (arrowDirection == WYPopoverArrowDirectionRight)
         {
-            transform = CGAffineTransformTranslate(CGAffineTransformIdentity, containerView.frame.size.width / 2, containerView.arrowOffset);
+            transform = CGAffineTransformTranslate(transform, containerView.frame.size.width / 2, containerView.arrowOffset);
         }
         
         if (arrowDirection == WYPopoverArrowDirectionLeft)
         {
-            transform = CGAffineTransformTranslate(CGAffineTransformIdentity, -containerView.frame.size.width / 2, containerView.arrowOffset);
+            transform = CGAffineTransformTranslate(transform, -containerView.frame.size.width / 2, containerView.arrowOffset);
         }
     }
     
@@ -1762,36 +1733,47 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)positionPopover
 {
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
     CGSize contentViewSize = self.contentSizeForViewInPopover;
+    CGSize minContainerSize = WY_POPOVER_MIN_SIZE;
     
     CGRect viewFrame;
     CGRect containerFrame = CGRectZero;
-    CGFloat minX, maxX, minY, maxY = 0;
-    const CGSize minContainerSize = CGSizeMake(200, 100);
-    CGFloat offset = 0;
+    CGFloat minX, maxX, minY, maxY, offset = 0;
     CGSize containerViewSize = CGSizeZero;
-    WYPopoverArrowDirection arrowDirection = WYPopoverArrowDirectionUnknown;
-    UIInterfaceOrientation orienation = [[UIApplication sharedApplication] statusBarOrientation];
     
-    overlayView.frame = self.rootView.bounds;
+    CGFloat overlayWidth = UIInterfaceOrientationIsPortrait(orientation) ? overlayView.bounds.size.width : overlayView.bounds.size.height;
+    CGFloat overlayHeight = UIInterfaceOrientationIsPortrait(orientation) ? overlayView.bounds.size.height : overlayView.bounds.size.width;
     
-    viewFrame = [overlayView convertRect:rect fromView:inView];
+    WYPopoverArrowDirection arrowDirection = permittedArrowDirections;
+    
+    overlayView.bounds = inView.window.bounds;
+    containerView.transform = CGAffineTransformIdentity;
+    
+    viewFrame = [inView convertRect:rect toView:nil];
+    
+    viewFrame = WYRectInWindowBounds(viewFrame, orientation);
     
     minX = popoverLayoutMargins.left;
-    maxX = self.rootView.bounds.size.width - popoverLayoutMargins.right;
-    minY = GetStatusBarHeight() + popoverLayoutMargins.top;
-    maxY = self.rootView.bounds.size.height - popoverLayoutMargins.bottom;
+    maxX = overlayWidth - popoverLayoutMargins.right;
+    minY = WYStatusBarHeight() + popoverLayoutMargins.top;
+    maxY = overlayHeight - popoverLayoutMargins.bottom;
     
     // Which direction ?
     //
-    arrowDirection = [self arrowDirectionForRect:rect inView:inView contentSize:contentViewSize arrowHeight:containerView.arrowHeight permittedArrowDirections:permittedArrowDirections];
+    arrowDirection = [self arrowDirectionForRect:rect
+                                          inView:inView
+                                     contentSize:contentViewSize
+                                     arrowHeight:containerView.arrowHeight
+                        permittedArrowDirections:arrowDirection];
     
     // Position of the popover
     //
     minX -= containerView.outerShadowInsets.left;
     maxX += containerView.outerShadowInsets.right;
     minY -= containerView.outerShadowInsets.top;
-    maxY += containerView.outerShadowInsets.bottom - ((UIInterfaceOrientationIsPortrait(orienation)) ? keyboardRect.size.height : keyboardRect.size.width);
+    maxY += containerView.outerShadowInsets.bottom - ((UIInterfaceOrientationIsPortrait(orientation)) ? keyboardRect.size.height : keyboardRect.size.width);
     
     if (arrowDirection == WYPopoverArrowDirectionDown)
     {
@@ -2010,11 +1992,25 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         containerView.arrowOffset = offset;
     }
     
-    containerView.frame = CGRectIntegral(containerFrame);
+    containerFrame = CGRectIntegral(containerFrame);
+    
+    containerView.frame = containerFrame;
     
     containerView.wantsDefaultContentAppearance = wantsDefaultContentAppearance;
     
     [containerView setViewController:viewController];
+    
+    CGPoint containerOrigin = containerFrame.origin;
+    
+    containerView.transform = CGAffineTransformMakeRotation(WYInterfaceOrientationAngleOfOrientation(orientation));
+    
+    containerFrame = containerView.frame;
+    
+    containerFrame.origin = WYPointRelativeToOrientation(containerOrigin, containerFrame.size, orientation);
+    
+    containerView.frame = containerFrame;
+    
+    WY_LOG(@"orientation = %@", WYStringFromOrientation(orientation));
 }
 
 - (void)dismissPopoverAnimated:(BOOL)aAnimated
@@ -2102,7 +2098,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 #pragma mark WYPopoverOverlayViewDelegate
 
-- (void)popoverOverlayView:(WYPopoverOverlayView*)aOverlayView didTouchAtPoint:(CGPoint)aPoint
+- (void)popoverOverlayView:(WYPopoverOverlayView *)aOverlayView didTouchAtPoint:(CGPoint)aPoint
 {
     BOOL isTouched = [containerView isTouchedAtPoint:[containerView convertPoint:aPoint fromView:aOverlayView]];
     
@@ -2125,15 +2121,15 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 #pragma mark Private
 
 - (WYPopoverArrowDirection)arrowDirectionForRect:(CGRect)aRect
-                                          inView:(UIView*)aView
+                                          inView:(UIView *)aView
                                      contentSize:(CGSize)contentSize
                                      arrowHeight:(CGFloat)arrowHeight
                         permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
 {
     WYPopoverArrowDirection arrowDirection = WYPopoverArrowDirectionUnknown;
     
-    NSMutableArray* areas = [NSMutableArray arrayWithCapacity:0];
-    WYPopoverArea* area;
+    NSMutableArray *areas = [NSMutableArray arrayWithCapacity:0];
+    WYPopoverArea *area;
     
     if ((arrowDirections & WYPopoverArrowDirectionDown) == WYPopoverArrowDirectionDown)
     {
@@ -2251,17 +2247,24 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 }
 
 - (CGSize)sizeForRect:(CGRect)aRect
-               inView:(UIView*)aView
+               inView:(UIView *)aView
           arrowHeight:(CGFloat)arrowHeight
        arrowDirection:(WYPopoverArrowDirection)arrowDirection
 {
-    CGRect viewFrame = [overlayView convertRect:rect fromView:inView];
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    CGRect viewFrame = [aView convertRect:aRect toView:nil];
+    viewFrame = WYRectInWindowBounds(viewFrame, orientation);
+
     CGFloat minX, maxX, minY, maxY = 0;
     
+    CGFloat overlayWidth = UIInterfaceOrientationIsPortrait(orientation) ? overlayView.bounds.size.width : overlayView.bounds.size.height;
+    CGFloat overlayHeight = UIInterfaceOrientationIsPortrait(orientation) ? overlayView.bounds.size.height : overlayView.bounds.size.width;
+    
     minX = popoverLayoutMargins.left;
-    maxX = self.rootView.bounds.size.width - popoverLayoutMargins.right;
-    minY = GetStatusBarHeight() + popoverLayoutMargins.top;
-    maxY = self.rootView.bounds.size.height - popoverLayoutMargins.bottom;
+    maxX = overlayWidth - popoverLayoutMargins.right;
+    minY = WYStatusBarHeight() + popoverLayoutMargins.top;
+    maxY = overlayHeight - popoverLayoutMargins.bottom;
     
     CGSize result = CGSizeZero;
     
@@ -2300,9 +2303,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 #pragma mark Inline functions
 
-/*
-static NSString* NSStringFromOrientation(NSInteger orientation) {
-    NSString* result = @"Unknown";
+static NSString* WYStringFromOrientation(NSInteger orientation) {
+    NSString *result = @"Unknown";
     
     switch (orientation) {
         case UIInterfaceOrientationPortrait:
@@ -2323,9 +2325,8 @@ static NSString* NSStringFromOrientation(NSInteger orientation) {
     
     return result;
 }
-*/
 
-static CGFloat GetStatusBarHeight() {
+static CGFloat WYStatusBarHeight() {
     UIInterfaceOrientation orienation = [[UIApplication sharedApplication] statusBarOrientation];
     
     CGFloat statusBarHeight = 0;
@@ -2342,14 +2343,98 @@ static CGFloat GetStatusBarHeight() {
     return statusBarHeight;
 }
 
+static CGFloat WYInterfaceOrientationAngleOfOrientation(UIInterfaceOrientation orientation)
+{
+    CGFloat angle;
+    
+    switch (orientation)
+    {
+        case UIInterfaceOrientationPortraitUpsideDown:
+            angle = M_PI;
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+            angle = -M_PI_2;
+            break;
+        case UIInterfaceOrientationLandscapeRight:
+            angle = M_PI_2;
+            break;
+        default:
+            angle = 0.0;
+            break;
+    }
+    
+    return angle;
+}
+
+static CGRect WYRectInWindowBounds(CGRect rect, UIInterfaceOrientation orientation) {
+    
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    
+    CGFloat windowWidth = keyWindow.bounds.size.width;
+    CGFloat windowHeight = keyWindow.bounds.size.height;
+    
+    CGRect result = rect;
+    
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
+        
+        result.origin.x = rect.origin.y;
+        result.origin.y = windowWidth - rect.origin.x - rect.size.width;
+        result.size.width = rect.size.height;
+        result.size.height = rect.size.width;
+    }
+    
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        
+        result.origin.x = windowHeight - rect.origin.y - rect.size.height;
+        result.origin.y = rect.origin.x;
+        result.size.width = rect.size.height;
+        result.size.height = rect.size.width;
+    }
+    
+    if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        
+        result.origin.x = windowWidth - rect.origin.x - rect.size.width;
+        result.origin.y = windowHeight - rect.origin.y - rect.size.height;
+    }
+    
+    return result;
+}
+
+static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInterfaceOrientation orientation) {
+    
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    
+    CGFloat windowWidth = keyWindow.bounds.size.width;
+    CGFloat windowHeight = keyWindow.bounds.size.height;
+    
+    CGPoint result = origin;
+    
+    if (orientation == UIInterfaceOrientationLandscapeRight) {
+        result.x = windowWidth - origin.y - size.width;
+        result.y = origin.x;
+    }
+    
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        result.x = origin.y;
+        result.y = windowHeight - origin.x - size.height;
+    }
+    
+    if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        result.x = windowWidth - origin.x - size.width;
+        result.y = windowHeight - origin.y - size.height;
+    }
+    
+    return result;
+}
+
 #pragma mark Selectors
 
-- (void)didChangeStatusBarOrientation:(NSNotification*)notification
+- (void)didChangeStatusBarOrientation:(NSNotification *)notification
 {
     isInterfaceOrientationChanging = YES;
 }
 
-- (void)didChangeDeviceOrientation:(NSNotification*)notification
+- (void)didChangeDeviceOrientation:(NSNotification *)notification
 {
     if (isInterfaceOrientationChanging == NO) return;
     

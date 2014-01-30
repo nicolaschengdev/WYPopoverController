@@ -1,5 +1,5 @@
 /*
- Version 0.1.7
+ Version 0.1.8
  
  WYPopoverController is available under the MIT license.
  
@@ -30,7 +30,11 @@
 @protocol WYPopoverControllerDelegate;
 
 #ifndef WY_POPOVER_DEFAULT_ANIMATION_DURATION
-    #define WY_POPOVER_DEFAULT_ANIMATION_DURATION    .20f
+    #define WY_POPOVER_DEFAULT_ANIMATION_DURATION    .25f
+#endif
+
+#ifndef WY_POPOVER_MIN_SIZE
+    #define WY_POPOVER_MIN_SIZE                      CGSizeMake(200, 100)
 #endif
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
