@@ -1509,6 +1509,21 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                       animated:(BOOL)aAnimated
                        options:(WYPopoverAnimationOptions)aOptions
 {
+    [self presentPopoverFromRect:aRect
+                          inView:aView
+        permittedArrowDirections:arrowDirections
+                        animated:aAnimated
+                         options:aOptions
+                      completion:nil];
+}
+
+- (void)presentPopoverFromRect:(CGRect)aRect
+                        inView:(UIView *)aView
+      permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                      animated:(BOOL)aAnimated
+                       options:(WYPopoverAnimationOptions)aOptions
+                    completion:(void (^)(void))completion
+{
     NSAssert((arrowDirections != WYPopoverArrowDirectionUnknown), @"WYPopoverArrowDirection must not be UNKNOWN");
     
     rect = aRect;
@@ -1609,6 +1624,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             {
                 [viewController viewDidAppear:YES];
             }
+            
+            if (completion)
+            {
+                completion();
+            }
         }];
     }
     else
@@ -1618,6 +1638,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         if ([viewController isKindOfClass:[UINavigationController class]] == NO)
         {
             [viewController viewDidAppear:NO];
+        }
+        
+        if (completion)
+        {
+            completion();
         }
     }
     
