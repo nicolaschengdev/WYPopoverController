@@ -1601,13 +1601,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         }
         
         [UIView animateWithDuration:animationDuration animations:^{
-            overlayView.alpha = 1;
-            containerView.alpha = 1;
-            containerView.transform = endTransform;
+            self->overlayView.alpha = 1;
+            self->containerView.alpha = 1;
+            self->containerView.transform = endTransform;
         } completion:^(BOOL finished) {
-            if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+            if ([self->viewController isKindOfClass:[UINavigationController class]] == NO)
             {
-                [viewController viewDidAppear:YES];
+                [self->viewController viewDidAppear:YES];
             }
         }];
     }
@@ -2030,29 +2030,29 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         if (aAnimated)
         {
-            [UIView animateWithDuration:animationDuration animations:^{
-                overlayView.alpha = 0;
-            } completion:^(BOOL finished) {
-                [overlayView removeFromSuperview];
-                overlayView = nil;
+            [UIView animateWithDuration:self->animationDuration animations:^{
+                self->overlayView.alpha = 0;
+            } completion:^(BOOL finished1) {
+                [self->overlayView removeFromSuperview];
+                self->overlayView = nil;
             }];
         }
         else
         {
-            [overlayView removeFromSuperview];
-            overlayView = nil;
+            [self->overlayView removeFromSuperview];
+            self->overlayView = nil;
         }
         
-        if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+        if ([self->viewController isKindOfClass:[UINavigationController class]] == NO)
         {
-            [viewController viewDidDisappear:aAnimated];
+            [self->viewController viewDidDisappear:aAnimated];
         }
         
         if (callDelegate)
         {
-            if (delegate && [delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
+            if (self->delegate && [self->delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
             {
-                [delegate popoverControllerDidDismissPopover:self];
+                [self->delegate popoverControllerDidDismissPopover:self];
             }
         }
     };
@@ -2087,7 +2087,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     if (aAnimated)
     {
         [UIView animateWithDuration:animationDuration animations:^{
-            containerView.alpha = 0;
+            self->containerView.alpha = 0;
         } completion:^(BOOL finished) {
             completionBlock(finished);
         }];
