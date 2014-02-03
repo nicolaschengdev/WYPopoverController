@@ -1,5 +1,5 @@
 /*
- Version 0.1.7
+ Version 0.1.8
  
  WYPopoverController is available under the MIT license.
  
@@ -30,7 +30,11 @@
 @protocol WYPopoverControllerDelegate;
 
 #ifndef WY_POPOVER_DEFAULT_ANIMATION_DURATION
-    #define WY_POPOVER_DEFAULT_ANIMATION_DURATION    .20f
+    #define WY_POPOVER_DEFAULT_ANIMATION_DURATION    .25f
+#endif
+
+#ifndef WY_POPOVER_MIN_SIZE
+    #define WY_POPOVER_MIN_SIZE                      CGSizeMake(200, 100)
 #endif
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
@@ -88,18 +92,21 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface WYPopoverController : NSObject
+@interface WYPopoverController : NSObject <UIAppearanceContainer>
 
 @property (nonatomic, weak) id <WYPopoverControllerDelegate> delegate;
 
-@property (nonatomic, copy) NSArray *passthroughViews;
-@property (nonatomic, assign) BOOL wantsDefaultContentAppearance;
-@property (nonatomic, assign) UIEdgeInsets popoverLayoutMargins;
-@property (nonatomic, assign, readonly, getter = isPopoverVisible) BOOL popoverVisible;
-@property (nonatomic, strong, readonly) UIViewController* contentViewController;
-@property (nonatomic, assign) CGSize popoverContentSize;
+@property (nonatomic, copy) NSArray                         *passthroughViews;
+@property (nonatomic, assign) BOOL                           wantsDefaultContentAppearance;
+@property (nonatomic, assign) UIEdgeInsets                   popoverLayoutMargins;
+@property (nonatomic, assign, readonly, getter=isPopoverVisible) BOOL popoverVisible;
+@property (nonatomic, strong, readonly) UIViewController    *contentViewController;
+@property (nonatomic, assign) CGSize                         popoverContentSize;
+@property (nonatomic, assign) CGFloat                        animationDuration;
 
 - (id)initWithContentViewController:(UIViewController *)viewController;
+
+//
 
 - (void)presentPopoverFromRect:(CGRect)rect
                         inView:(UIView *)view
@@ -112,11 +119,13 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 - (void)presentPopoverAsDialogAnimated:(BOOL)animated;
 
-- (void)presentPopoverFromRect:(CGRect)aRect
-                        inView:(UIView *)aView
+//
+
+- (void)presentPopoverFromRect:(CGRect)rect
+                        inView:(UIView *)view
       permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
-                      animated:(BOOL)aAnimated
-                       options:(WYPopoverAnimationOptions)aOptions;
+                      animated:(BOOL)animated
+                       options:(WYPopoverAnimationOptions)options;
 
 - (void)presentPopoverFromRect:(CGRect)rect
                         inView:(UIView *)view
@@ -125,6 +134,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
                        options:(WYPopoverAnimationOptions)options
                     completion:(void (^)(void))completion;
 
+
 - (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
                permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
                                animated:(BOOL)animated
@@ -132,6 +142,8 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 - (void)presentPopoverAsDialogAnimated:(BOOL)animated
                                options:(WYPopoverAnimationOptions)options;
+
+//
 
 - (void)dismissPopoverAnimated:(BOOL)animated;
 
@@ -146,6 +158,6 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 - (void)popoverControllerDidDismissPopover:(WYPopoverController *)popoverController;
 
-- (void)popoverController:(WYPopoverController *)popoverController willRepositionPopoverToRect:(inout CGRect *)rect inView:(inout UIView * __autoreleasing *)view;
+- (void)popoverController:(WYPopoverController *)popoverController willRepositionPopoverToRect:(inout CGRect *)rect inView:(inout UIView **)view;
 
 @end

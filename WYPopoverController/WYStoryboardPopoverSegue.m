@@ -1,5 +1,5 @@
 /*
- Version 0.1.7
+ Version 0.1.8
  
  WYPopoverController is available under the MIT license.
  
@@ -52,7 +52,7 @@
                                                   animated:animated
                                                    options:options];
     }
-    else if ([sender isKindOfClass:[UIView class]])
+    else
     {
         UIView *view = (UIView *)sender;
         [popoverController presentPopoverFromRect:view.bounds
