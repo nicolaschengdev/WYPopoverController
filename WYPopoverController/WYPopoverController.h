@@ -146,6 +146,7 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 //
 
 - (void)dismissPopoverAnimated:(BOOL)animated;
+- (void)dismissPopoverAnimated:(BOOL)animated options:(WYPopoverAnimationOptions)aOptions;
 
 @end
 
