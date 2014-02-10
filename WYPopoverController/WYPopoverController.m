@@ -32,7 +32,7 @@
 #endif
 
 #ifdef DEBUG
-    #define WY_LOG(fmt, ...)		NSLog((@"%s (%d) : " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+    #define WY_LOG(fmt, ...)        NSLog((@"%s (%d) : " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 #else
     #define WY_LOG(...)
 #endif
@@ -511,17 +511,17 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (BOOL)isPassthroughView:(UIView *)view
 {
-	if (view == nil)
+    if (view == nil)
     {
-		return NO;
-	}
-	
-	if ([self.passthroughViews containsObject:view])
+        return NO;
+    }
+    
+    if ([self.passthroughViews containsObject:view])
     {
-		return YES;
-	}
-	
-	return [self isPassthroughView:view.superview];
+        return YES;
+    }
+    
+    return [self isPassthroughView:view.superview];
 }
 
 @end
@@ -1614,15 +1614,20 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             startTransform = CGAffineTransformScale(startTransform, 0.1, 0.1);
             containerView.transform = startTransform;
         }
+
+        __weak __typeof__(self) weakSelf = self;
         
         [UIView animateWithDuration:animationDuration animations:^{
-            overlayView.alpha = 1;
-            containerView.alpha = 1;
-            containerView.transform = endTransform;
+            __typeof__(self) strongSelf = weakSelf;
+            strongSelf->overlayView.alpha = 1;
+            strongSelf->containerView.alpha = 1;
+            strongSelf->containerView.transform = endTransform;
         } completion:^(BOOL finished) {
-            if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+            __typeof__(self) strongSelf = weakSelf;
+
+            if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
             {
-                [viewController viewDidAppear:YES];
+                [strongSelf->viewController viewDidAppear:YES];
             }
             
             if (completion)
@@ -2050,34 +2055,41 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     if (overlayView == nil) return;
     
     void (^completionBlock)(BOOL);
-          
+
+    CGFloat duration = self.animationDuration;
+    __weak __typeof__(self) weakSelf = self;
+    
     completionBlock = ^(BOOL finished) {
+
+        __typeof__(self) strongSelf = weakSelf;
         
         if (aAnimated)
         {
-            [UIView animateWithDuration:animationDuration animations:^{
-                overlayView.alpha = 0;
+            [UIView animateWithDuration:duration animations:^{
+                __typeof__(self) strongSelf = weakSelf;
+                strongSelf->overlayView.alpha = 0;
             } completion:^(BOOL finished) {
-                [overlayView removeFromSuperview];
-                overlayView = nil;
+                __typeof__(self) strongSelf = weakSelf;
+                [strongSelf->overlayView removeFromSuperview];
+                strongSelf->overlayView = nil;
             }];
         }
         else
         {
-            [overlayView removeFromSuperview];
-            overlayView = nil;
+            [strongSelf->overlayView removeFromSuperview];
+            strongSelf->overlayView = nil;
         }
         
-        if ([viewController isKindOfClass:[UINavigationController class]] == NO)
+        if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
         {
-            [viewController viewDidDisappear:aAnimated];
+            [strongSelf->viewController viewDidDisappear:aAnimated];
         }
         
         if (callDelegate)
         {
-            if (delegate && [delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
+            if (strongSelf->delegate && [strongSelf->delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
             {
-                [delegate popoverControllerDidDismissPopover:self];
+                [strongSelf->delegate popoverControllerDidDismissPopover:strongSelf];
             }
         }
     };
@@ -2111,8 +2123,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (aAnimated)
     {
-        [UIView animateWithDuration:animationDuration animations:^{
-            containerView.alpha = 0;
+        CGFloat duration = self.animationDuration;
+        
+        [UIView animateWithDuration:duration animations:^{
+            __typeof__(self) strongSelf = weakSelf;
+            strongSelf->containerView.alpha = 0;
         } completion:^(BOOL finished) {
             completionBlock(finished);
         }];
