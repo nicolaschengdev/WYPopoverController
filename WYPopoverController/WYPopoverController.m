@@ -1345,7 +1345,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 @property (nonatomic, assign, readonly) CGSize contentSizeForViewInPopover;
 
-- (void)dismissPopoverAnimated:(BOOL)animated callDelegate:(BOOL)callDelegate;
+- (void)dismissPopoverAnimated:(BOOL)animated callDelegate:(BOOL)callDelegate options:(WYPopoverAnimationOptions)options;
 
 - (WYPopoverArrowDirection)arrowDirectionForRect:(CGRect)aRect
                                           inView:(UIView*)aView
@@ -1614,15 +1614,20 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             startTransform = CGAffineTransformScale(startTransform, 0.1, 0.1);
             containerView.transform = startTransform;
         }
+
+        __weak __typeof__(self) weakSelf = self;
         
         [UIView animateWithDuration:animationDuration animations:^{
-            self->overlayView.alpha = 1;
-            self->containerView.alpha = 1;
-            self->containerView.transform = endTransform;
+            __typeof__(self) strongSelf = weakSelf;
+            strongSelf->overlayView.alpha = 1;
+            strongSelf->containerView.alpha = 1;
+            strongSelf->containerView.transform = endTransform;
         } completion:^(BOOL finished) {
-            if ([self->viewController isKindOfClass:[UINavigationController class]] == NO)
+            __typeof__(self) strongSelf = weakSelf;
+
+            if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
             {
-                [self->viewController viewDidAppear:YES];
+                [strongSelf->viewController viewDidAppear:YES];
             }
             
             if (completion)
@@ -2042,42 +2047,63 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)dismissPopoverAnimated:(BOOL)aAnimated
 {
-    [self dismissPopoverAnimated:aAnimated callDelegate:NO];
+    [self dismissPopoverAnimated:aAnimated callDelegate:NO options:options];
 }
 
-- (void)dismissPopoverAnimated:(BOOL)aAnimated callDelegate:(BOOL)callDelegate
+- (void)dismissPopoverAnimated:(BOOL)aAnimated options:(WYPopoverAnimationOptions)aOptions
+{
+    [self dismissPopoverAnimated:aAnimated callDelegate:NO options:aOptions];
+}
+
+- (void)dismissPopoverAnimated:(BOOL)aAnimated callDelegate:(BOOL)callDelegate options:(WYPopoverAnimationOptions)aOptions
 {
     if (overlayView == nil) return;
     
     void (^completionBlock)(BOOL);
-          
+
+    CGFloat duration = self.animationDuration;
+    WYPopoverAnimationOptions style = aOptions;
+    
+    __weak __typeof__(self) weakSelf = self;
+    
     completionBlock = ^(BOOL finished) {
+
+        __typeof__(self) strongSelf = weakSelf;
         
         if (aAnimated)
         {
-            [UIView animateWithDuration:self->animationDuration animations:^{
-                self->overlayView.alpha = 0;
-            } completion:^(BOOL finished1) {
-                [self->overlayView removeFromSuperview];
-                self->overlayView = nil;
+            [UIView animateWithDuration:duration animations:^{
+                __typeof__(self) strongSelf = weakSelf;
+                strongSelf->overlayView.alpha = 0;
+            } completion:^(BOOL finished) {
+                __typeof__(self) strongSelf = weakSelf;
+                
+                [strongSelf->containerView removeFromSuperview];
+                strongSelf->containerView = nil;
+                
+                [strongSelf->overlayView removeFromSuperview];
+                strongSelf->overlayView = nil;
             }];
         }
         else
         {
-            [self->overlayView removeFromSuperview];
-            self->overlayView = nil;
+            [strongSelf->containerView removeFromSuperview];
+            strongSelf->containerView = nil;
+            
+            [strongSelf->overlayView removeFromSuperview];
+            strongSelf->overlayView = nil;
         }
         
-        if ([self->viewController isKindOfClass:[UINavigationController class]] == NO)
+        if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
         {
-            [self->viewController viewDidDisappear:aAnimated];
+            [strongSelf->viewController viewDidDisappear:aAnimated];
         }
         
         if (callDelegate)
         {
-            if (self->delegate && [self->delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
+            if (strongSelf->delegate && [strongSelf->delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
             {
-                [self->delegate popoverControllerDidDismissPopover:self];
+                [strongSelf->delegate popoverControllerDidDismissPopover:strongSelf];
             }
         }
     };
@@ -2111,8 +2137,21 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (aAnimated)
     {
-        [UIView animateWithDuration:animationDuration animations:^{
-            self->containerView.alpha = 0;
+        [UIView animateWithDuration:duration animations:^{
+            __typeof__(self) strongSelf = weakSelf;
+            
+            if ((style & WYPopoverAnimationOptionFade) == WYPopoverAnimationOptionFade)
+            {
+                strongSelf->containerView.alpha = 0;
+            }
+            
+            if ((style & WYPopoverAnimationOptionScale) == WYPopoverAnimationOptionScale)
+            {
+                CGAffineTransform endTransform = [self transformTranslateForArrowDirection:strongSelf->containerView.arrowDirection];
+                endTransform = CGAffineTransformScale(endTransform, 0.1, 0.1);
+                strongSelf->containerView.transform = endTransform;
+            }
+            
         } completion:^(BOOL finished) {
             completionBlock(finished);
         }];
@@ -2140,7 +2179,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         if (shouldDismiss)
         {
-            [self dismissPopoverAnimated:animated callDelegate:YES];
+            [self dismissPopoverAnimated:animated callDelegate:YES options:options];
         }
     }
 }
@@ -2212,8 +2251,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     }
     
     [areas sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        WYPopoverArea* area1 = (WYPopoverArea*)obj1;
-        WYPopoverArea* area2 = (WYPopoverArea*)obj2;
+        WYPopoverArea *area1 = (WYPopoverArea *)obj1;
+        WYPopoverArea *area2 = (WYPopoverArea *)obj2;
         
         CGFloat val1 = area1.value;
         CGFloat val2 = area2.value;
@@ -2234,7 +2273,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     for (NSUInteger i = 0; i < [areas count]; i++)
     {
-        WYPopoverArea* popoverArea = (WYPopoverArea*)[areas objectAtIndex:i];
+        WYPopoverArea *popoverArea = (WYPopoverArea *)[areas objectAtIndex:i];
         
         if (popoverArea.areaSize.width >= contentSize.width)
         {
@@ -2247,7 +2286,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     {
         if ([areas count] > 0)
         {
-            arrowDirection = ((WYPopoverArea*)[areas objectAtIndex:0]).arrowDirection;
+            arrowDirection = ((WYPopoverArea *)[areas objectAtIndex:0]).arrowDirection;
         }
         else
         {
