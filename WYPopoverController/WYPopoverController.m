@@ -2073,16 +2073,16 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         if (aAnimated)
         {
             [UIView animateWithDuration:duration animations:^{
-                __typeof__(self) strongSelf = weakSelf;
-                strongSelf->overlayView.alpha = 0;
-            } completion:^(BOOL finished) {
-                __typeof__(self) strongSelf = weakSelf;
+                __typeof__(self) strongSelf1 = weakSelf;
+                strongSelf1->overlayView.alpha = 0;
+            } completion:^(BOOL finished1) {
+                __typeof__(self) strongSelf1 = weakSelf;
                 
-                [strongSelf->containerView removeFromSuperview];
-                strongSelf->containerView = nil;
+                [strongSelf1->containerView removeFromSuperview];
+                strongSelf1->containerView = nil;
                 
-                [strongSelf->overlayView removeFromSuperview];
-                strongSelf->overlayView = nil;
+                [strongSelf1->overlayView removeFromSuperview];
+                strongSelf1->overlayView = nil;
             }];
         }
         else
