@@ -1619,15 +1619,21 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         [UIView animateWithDuration:animationDuration animations:^{
             __typeof__(self) strongSelf = weakSelf;
-            strongSelf->overlayView.alpha = 1;
-            strongSelf->containerView.alpha = 1;
-            strongSelf->containerView.transform = endTransform;
+            if (strongSelf)
+            {
+                strongSelf->overlayView.alpha = 1;
+                strongSelf->containerView.alpha = 1;
+                strongSelf->containerView.transform = endTransform;
+            }
         } completion:^(BOOL finished) {
             __typeof__(self) strongSelf = weakSelf;
 
-            if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
+            if (strongSelf)
             {
-                [strongSelf->viewController viewDidAppear:YES];
+                if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
+                {
+                    [strongSelf->viewController viewDidAppear:YES];
+                }
             }
             
             if (completion)
@@ -2070,40 +2076,48 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
         __typeof__(self) strongSelf = weakSelf;
         
-        if (aAnimated)
+        if (strongSelf)
         {
-            [UIView animateWithDuration:duration animations:^{
-                __typeof__(self) strongSelf1 = weakSelf;
-                strongSelf1->overlayView.alpha = 0;
-            } completion:^(BOOL finished1) {
-                __typeof__(self) strongSelf1 = weakSelf;
-                
-                [strongSelf1->containerView removeFromSuperview];
-                strongSelf1->containerView = nil;
-                
-                [strongSelf1->overlayView removeFromSuperview];
-                strongSelf1->overlayView = nil;
-            }];
-        }
-        else
-        {
-            [strongSelf->containerView removeFromSuperview];
-            strongSelf->containerView = nil;
-            
-            [strongSelf->overlayView removeFromSuperview];
-            strongSelf->overlayView = nil;
-        }
-        
-        if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
-        {
-            [strongSelf->viewController viewDidDisappear:aAnimated];
-        }
-        
-        if (callDelegate)
-        {
-            if (strongSelf->delegate && [strongSelf->delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
+            if (aAnimated)
             {
-                [strongSelf->delegate popoverControllerDidDismissPopover:strongSelf];
+                [UIView animateWithDuration:duration animations:^{
+                    __typeof__(self) strongSelf1 = weakSelf;
+                    if (strongSelf1)
+                    {
+                        strongSelf1->overlayView.alpha = 0;
+                    }
+                } completion:^(BOOL finished1) {
+                    __typeof__(self) strongSelf1 = weakSelf;
+                    if (strongSelf1)
+                    {
+                        [strongSelf1->containerView removeFromSuperview];
+                        strongSelf1->containerView = nil;
+                        
+                        [strongSelf1->overlayView removeFromSuperview];
+                        strongSelf1->overlayView = nil;
+                    }
+                }];
+            }
+            else
+            {
+                [strongSelf->containerView removeFromSuperview];
+                strongSelf->containerView = nil;
+                
+                [strongSelf->overlayView removeFromSuperview];
+                strongSelf->overlayView = nil;
+            }
+            
+            if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
+            {
+                [strongSelf->viewController viewDidDisappear:aAnimated];
+            }
+            
+            if (callDelegate)
+            {
+                if (strongSelf->delegate && [strongSelf->delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
+                {
+                    [strongSelf->delegate popoverControllerDidDismissPopover:strongSelf];
+                }
             }
         }
     };
@@ -2140,16 +2154,19 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         [UIView animateWithDuration:duration animations:^{
             __typeof__(self) strongSelf = weakSelf;
             
-            if ((style & WYPopoverAnimationOptionFade) == WYPopoverAnimationOptionFade)
+            if (strongSelf)
             {
-                strongSelf->containerView.alpha = 0;
-            }
-            
-            if ((style & WYPopoverAnimationOptionScale) == WYPopoverAnimationOptionScale)
-            {
-                CGAffineTransform endTransform = [self transformTranslateForArrowDirection:strongSelf->containerView.arrowDirection];
-                endTransform = CGAffineTransformScale(endTransform, 0.1, 0.1);
-                strongSelf->containerView.transform = endTransform;
+                if ((style & WYPopoverAnimationOptionFade) == WYPopoverAnimationOptionFade)
+                {
+                    strongSelf->containerView.alpha = 0;
+                }
+                
+                if ((style & WYPopoverAnimationOptionScale) == WYPopoverAnimationOptionScale)
+                {
+                    CGAffineTransform endTransform = [self transformTranslateForArrowDirection:strongSelf->containerView.arrowDirection];
+                    endTransform = CGAffineTransformScale(endTransform, 0.1, 0.1);
+                    strongSelf->containerView.transform = endTransform;
+                }
             }
             
         } completion:^(BOOL finished) {
