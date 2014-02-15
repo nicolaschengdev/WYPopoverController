@@ -1657,7 +1657,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                     [strongSelf->viewController viewDidAppear:YES];
                 }
                 
-                containerView.accessibilityViewIsModal = NO;
+                strongSelf->containerView.accessibilityViewIsModal = NO;
             }
             
             if (completion)
