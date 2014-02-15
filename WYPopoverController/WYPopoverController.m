@@ -2089,8 +2089,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)dismissPopoverAnimated:(BOOL)aAnimated callDelegate:(BOOL)callDelegate options:(WYPopoverAnimationOptions)aOptions
 {
-    if (overlayView == nil) return;
-    
     void (^completionBlock)(BOOL);
     
     CGFloat duration = self.animationDuration;
@@ -2610,11 +2608,14 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    [containerView removeFromSuperview];
+    [overlayView removeFromSuperview];
+    [overlayView setDelegate:nil];
+    
     barButtonItem = nil;
     passthroughViews = nil;
     viewController = nil;
     inView = nil;
-    [overlayView setDelegate:nil];
     overlayView = nil;
     containerView = nil;
 }
