@@ -1,5 +1,5 @@
 /*
- Version 0.1.8
+ Version 0.1.9
  
  WYPopoverController is available under the MIT license.
  
@@ -1708,29 +1708,53 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     overlayView.isAccessibilityElement = YES;
 }
 
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
-               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)aItem
+               permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
                                animated:(BOOL)aAnimated
                                 options:(WYPopoverAnimationOptions)aOptions
 {
-    barButtonItem = item;
+    [self presentPopoverFromBarButtonItem:aItem
+                 permittedArrowDirections:aArrowDirections
+                                 animated:aAnimated
+                                  options:aOptions
+                               completion:nil];
+}
+
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)aItem
+               permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
+                               animated:(BOOL)aAnimated
+                                options:(WYPopoverAnimationOptions)aOptions
+                             completion:(void (^)(void))completion
+{
+    barButtonItem = aItem;
     UIView *itemView = [barButtonItem valueForKey:@"view"];
-    arrowDirections = WYPopoverArrowDirectionDown | WYPopoverArrowDirectionUp;
+    aArrowDirections = WYPopoverArrowDirectionDown | WYPopoverArrowDirectionUp;
     [self presentPopoverFromRect:itemView.bounds
                           inView:itemView
-        permittedArrowDirections:arrowDirections
+        permittedArrowDirections:aArrowDirections
                         animated:aAnimated
-                         options:aOptions];
+                         options:aOptions
+                      completion:completion];
 }
 
 - (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated
                                options:(WYPopoverAnimationOptions)aOptions
 {
+    [self presentPopoverAsDialogAnimated:aAnimated
+                                 options:aOptions
+                              completion:nil];
+}
+
+- (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated
+                               options:(WYPopoverAnimationOptions)aOptions
+                            completion:(void (^)(void))completion
+{
     [self presentPopoverFromRect:CGRectZero
                           inView:nil
         permittedArrowDirections:WYPopoverArrowDirectionNone
                         animated:aAnimated
-                         options:aOptions];
+                         options:aOptions
+                      completion:completion];
 }
 
 - (CGAffineTransform)transformTranslateForArrowDirection:(WYPopoverArrowDirection)arrowDirection

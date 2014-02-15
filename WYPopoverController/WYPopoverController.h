@@ -1,5 +1,5 @@
 /*
- Version 0.1.8
+ Version 0.1.9
  
  WYPopoverController is available under the MIT license.
  
@@ -135,13 +135,27 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
                     completion:(void (^)(void))completion;
 
 
+//
+
 - (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
                permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
                                animated:(BOOL)animated
                                 options:(WYPopoverAnimationOptions)options;
 
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
+               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                               animated:(BOOL)animated
+                                options:(WYPopoverAnimationOptions)options
+                             completion:(void (^)(void))completion;
+
+//
+
 - (void)presentPopoverAsDialogAnimated:(BOOL)animated
                                options:(WYPopoverAnimationOptions)options;
+
+- (void)presentPopoverAsDialogAnimated:(BOOL)animated
+                               options:(WYPopoverAnimationOptions)options
+                            completion:(void (^)(void))completion;
 
 //
 
