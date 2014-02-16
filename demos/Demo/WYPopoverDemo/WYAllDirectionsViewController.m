@@ -109,9 +109,9 @@
         
         [settingsPopoverController presentPopoverFromRect:btn.bounds
                                                    inView:btn
-                                 permittedArrowDirections:WYPopoverArrowDirectionRight
+                                 permittedArrowDirections:WYPopoverArrowDirectionAny
                                                  animated:YES
-                                                  options:WYPopoverAnimationOptionScale];
+                                                  options:WYPopoverAnimationOptionFadeWithScale];
     }
     else
     {

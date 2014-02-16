@@ -1356,7 +1356,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                         permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections;
 
 - (CGSize)sizeForRect:(CGRect)aRect
-               inView:(UIView*)aView
+               inView:(UIView *)aView
           arrowHeight:(CGFloat)arrowHeight
        arrowDirection:(WYPopoverArrowDirection)arrowDirection;
 
@@ -1781,7 +1781,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     CGAffineTransform transform = containerView.transform;
     
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    
+
     CGSize containerViewSize = containerView.frame.size;
     
     if (containerView.arrowHeight > 0)
@@ -1890,10 +1890,12 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     // Position of the popover
     //
+    CGFloat keyboardHeight = UIInterfaceOrientationIsPortrait(orientation) ? keyboardRect.size.height : keyboardRect.size.width;
+    
     minX -= containerView.outerShadowInsets.left;
     maxX += containerView.outerShadowInsets.right;
     minY -= containerView.outerShadowInsets.top;
-    maxY += containerView.outerShadowInsets.bottom - ((UIInterfaceOrientationIsPortrait(orientation)) ? keyboardRect.size.height : keyboardRect.size.width);
+    maxY += containerView.outerShadowInsets.bottom - keyboardHeight;
     
     if (arrowDirection == WYPopoverArrowDirectionDown)
     {
@@ -2120,6 +2122,22 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     [containerView setViewController:viewController];
     
+    // keyboard support
+    //
+    if (keyboardHeight > 0) {
+        
+        CGFloat keyboardY = UIInterfaceOrientationIsPortrait(orientation) ? keyboardRect.origin.y : keyboardRect.origin.x;
+        
+        if (containerFrame.origin.y + containerFrame.size.height > keyboardY) {
+            
+            containerFrame.origin.y -= (containerFrame.origin.y + containerFrame.size.height - keyboardY);
+            
+            if (containerFrame.origin.y < minY) {
+                containerFrame.origin.y = minY;
+            }
+        }
+    }
+    
     CGPoint containerOrigin = containerFrame.origin;
     
     containerView.transform = CGAffineTransformMakeRotation(WYInterfaceOrientationAngleOfOrientation(orientation));
@@ -2127,6 +2145,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     containerFrame = containerView.frame;
     
     containerFrame.origin = WYPointRelativeToOrientation(containerOrigin, containerFrame.size, orientation);
+    
+    
     
     containerView.frame = containerFrame;
 }
@@ -2457,13 +2477,16 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     CGFloat minX, maxX, minY, maxY = 0;
     
+    CGFloat keyboardHeight = UIInterfaceOrientationIsPortrait(orientation) ? keyboardRect.size.height : keyboardRect.size.width;
+    
     CGFloat overlayWidth = UIInterfaceOrientationIsPortrait(orientation) ? overlayView.bounds.size.width : overlayView.bounds.size.height;
+    
     CGFloat overlayHeight = UIInterfaceOrientationIsPortrait(orientation) ? overlayView.bounds.size.height : overlayView.bounds.size.width;
     
     minX = popoverLayoutMargins.left;
     maxX = overlayWidth - popoverLayoutMargins.right;
     minY = WYStatusBarHeight() + popoverLayoutMargins.top;
-    maxY = overlayHeight - popoverLayoutMargins.bottom;
+    maxY = overlayHeight - popoverLayoutMargins.bottom - keyboardHeight;
     
     CGSize result = CGSizeZero;
     
@@ -2681,6 +2704,13 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
 {
     NSDictionary *info = [notification userInfo];
     keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    WY_LOG(@"orientation = %@", WYStringFromOrientation(orientation));
+    
+    WY_LOG(@"keyboardRect = %@", NSStringFromCGRect(keyboardRect));
+    
     [self positionPopover];
     [containerView setNeedsDisplay];
 }
