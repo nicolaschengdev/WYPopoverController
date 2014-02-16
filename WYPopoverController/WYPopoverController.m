@@ -1615,6 +1615,16 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         }
     };
     
+#ifdef WY_BASE_SDK_7_ENABLED
+    if ([inView.window respondsToSelector:@selector(setTintAdjustmentMode:)]) {
+        for (UIView *subview in inView.window.subviews) {
+            if (subview != containerView) {
+                [subview setTintAdjustmentMode:UIViewTintAdjustmentModeDimmed];
+            }
+        }
+    }
+#endif
+    
     containerView.hidden = NO;
     
     if (animated)
@@ -2149,6 +2159,16 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                     completion:(void (^)(void))completion
                   callDelegate:(BOOL)callDelegate
 {
+#ifdef WY_BASE_SDK_7_ENABLED
+    if ([inView.window respondsToSelector:@selector(setTintAdjustmentMode:)]) {
+        for (UIView *subview in inView.window.subviews) {
+            if (subview != containerView) {
+                [subview setTintAdjustmentMode:UIViewTintAdjustmentModeAutomatic];
+            }
+        }
+    }
+#endif
+    
     CGFloat duration = self.animationDuration;
     WYPopoverAnimationOptions style = aOptions;
     

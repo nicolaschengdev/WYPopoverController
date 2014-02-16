@@ -155,7 +155,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JsB-uJ-03V">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="0.160242959856987" green="0.18130968511104584" blue="0.24362963438034058" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
