@@ -15,6 +15,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 * UIAppearance support
 * Works like UIPopoverController
+* Works also with blocks
 * Animation options
 * Automatic orientation support
 * UIStoryboard support
@@ -61,7 +62,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 ##### Stroke & Fill
 
-![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_strokecolor.png "strokeColor: #c3045e DEPRECATED in [0.1.3]. Use 'outerStrokeColor' instead.") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_innerstrokecolor.png "innerStrokeColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_outerstrokecolor.png "outerStrokeColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_filltopcolor.png "fillTopColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_fillbottomcolor.png "fillBottomColor: #c3045e")
+![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_innerstrokecolor.png "innerStrokeColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_outerstrokecolor.png "outerStrokeColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_filltopcolor.png "fillTopColor: #c3045e") , ![](https://raw.github.com/nicolaschengdev/WYPopoverController/master/screenshots/appearance/small/wypopover_fillbottomcolor.png "fillBottomColor: #c3045e")
 
 ##### Gloss
 
@@ -95,11 +96,30 @@ Determines whether the default content appearance should be used for the popover
 
 The margins that define the portion of the screen in which it is permissible to display the popover.
 
+### Works also with blocks
+
+---
+
+A block object can be executed when animation sequences ends. This parameter may be `nil`.
+
+*Important :* If a block object is defined then correspondent delegate methods is not called.
+
+#### Examples
+
+```objective-c
+
+popover = [[WYPopoverController alloc] initWithContentViewController:contentViewController];
+[popover presentPopoverAsDialogAnimated:YES
+                                     completion:^{
+                                         // Code executed after popover presentation animation sequence ends
+                                     }];
+```
+
 ### Animation options
 
 ---
 
-Introduced in release 0.1.7, there are 3 styles of animation :
+There are 3 styles of animation :
 * Fade *(by default)*
 * Scale
 * Fade with Scale

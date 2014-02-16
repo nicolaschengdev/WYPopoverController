@@ -12,8 +12,8 @@
 
 @interface WYAllDirectionsViewController () <WYPopoverControllerDelegate>
 {
-    WYPopoverController* anotherPopoverController;
-    WYPopoverController* settingsPopoverController;
+    WYPopoverController *anotherPopoverController;
+    WYPopoverController *settingsPopoverController;
 }
 
 - (IBAction)open:(id)sender;
@@ -65,9 +65,9 @@
 
 - (void)close:(id)sender
 {
-    [settingsPopoverController dismissPopoverAnimated:YES];
-    settingsPopoverController.delegate = nil;
-    settingsPopoverController = nil;
+    [settingsPopoverController dismissPopoverAnimated:YES completion:^{
+        [self popoverControllerDidDismissPopover:settingsPopoverController];
+    }];
 }
 
 - (IBAction)showmodal:(id)sender
@@ -112,6 +112,8 @@
                                  permittedArrowDirections:WYPopoverArrowDirectionAny
                                                  animated:YES
                                                   options:WYPopoverAnimationOptionFadeWithScale];
+        
+        
     }
     else
     {
@@ -130,6 +132,11 @@
 }
 
 #pragma mark - WYPopoverControllerDelegate
+
+- (void)popoverControllerDidPresentPopover:(WYPopoverController *)controller
+{
+    NSLog(@"popoverControllerDidPresentPopover");
+}
 
 - (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)controller
 {

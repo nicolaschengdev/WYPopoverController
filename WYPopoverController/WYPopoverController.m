@@ -1,5 +1,5 @@
 /*
- Version 0.1.9
+ Version 0.2.0
  
  WYPopoverController is available under the MIT license.
  
@@ -592,8 +592,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 @synthesize tintColor;
 
-@synthesize strokeColor;
-
 @synthesize fillTopColor;
 @synthesize fillBottomColor;
 @synthesize glossShadowColor;
@@ -633,11 +631,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         {
             appearance.tintColor = nil;
             
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated"
-            appearance.strokeColor = nil;
-#pragma clang diagnostic pop
-            
             appearance.outerStrokeColor = nil;
             appearance.innerStrokeColor = nil;
             appearance.fillTopColor = nil;
@@ -663,11 +656,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         else
         {
             appearance.tintColor = nil;
-            
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated"
-            appearance.strokeColor = [UIColor clearColor];
-#pragma clang diagnostic pop
             
             appearance.outerStrokeColor = [UIColor clearColor];
             appearance.innerStrokeColor = [UIColor clearColor];
@@ -888,43 +876,33 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
-- (UIColor*)innerStrokeColor
+- (UIColor *)innerStrokeColor
 {
-    UIColor* result = innerStrokeColor;
+    UIColor *result = innerStrokeColor;
     
     if (result == nil)
     {
-        result = strokeColor;
-        
-        if (result == nil)
-        {
-            result = [self.fillTopColor colorByDarken:0.6];
-        }
+        result = [self.fillTopColor colorByDarken:0.6];
     }
     
     return result;
 }
 
-- (UIColor*)outerStrokeColor
+- (UIColor *)outerStrokeColor
 {
-    UIColor* result = outerStrokeColor;
+    UIColor *result = outerStrokeColor;
     
     if (result == nil)
     {
-        result = strokeColor;
-        
-        if (result == nil)
-        {
-            result = [self.fillTopColor colorByDarken:0.6];
-        }
+        result = [self.fillTopColor colorByDarken:0.6];
     }
     
     return result;
 }
 
-- (UIColor*)glossShadowColor
+- (UIColor *)glossShadowColor
 {
-    UIColor* result = glossShadowColor;
+    UIColor *result = glossShadowColor;
     
     if (result == nil)
     {
@@ -934,9 +912,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
-- (UIColor*)fillTopColor
+- (UIColor *)fillTopColor
 {
-    UIColor* result = fillTopColor;
+    UIColor *result = fillTopColor;
     
     if (result == nil)
     {
@@ -953,9 +931,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
-- (UIColor*)fillBottomColor
+- (UIColor *)fillBottomColor
 {
-    UIColor* result = fillBottomColor;
+    UIColor *result = fillBottomColor;
     
     if (result == nil)
     {
@@ -965,7 +943,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return result;
 }
 
-- (UIColor*)defaultTintColor
+- (UIColor *)defaultTintColor
 {
     BOOL isUI7 = (WY_IS_IOS_LESS_THAN(@"7.0") == NO);
     
@@ -1333,7 +1311,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     contentView = nil;
     innerView = nil;
     tintColor = nil;
-    strokeColor = nil;
     outerStrokeColor = nil;
     innerStrokeColor = nil;
     fillTopColor = nil;
@@ -1367,7 +1344,10 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 @property (nonatomic, assign, readonly) CGSize contentSizeForViewInPopover;
 
-- (void)dismissPopoverAnimated:(BOOL)animated callDelegate:(BOOL)callDelegate options:(WYPopoverAnimationOptions)options;
+- (void)dismissPopoverAnimated:(BOOL)animated
+                       options:(WYPopoverAnimationOptions)options
+                    completion:(void (^)(void))completion
+                  callDelegate:(BOOL)callDelegate;
 
 - (WYPopoverArrowDirection)arrowDirectionForRect:(CGRect)aRect
                                           inView:(UIView*)aView
@@ -1499,41 +1479,39 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)presentPopoverFromRect:(CGRect)aRect
                         inView:(UIView *)aView
-      permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+      permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
                       animated:(BOOL)aAnimated
 {
     [self presentPopoverFromRect:aRect
                           inView:aView
-        permittedArrowDirections:arrowDirections
+        permittedArrowDirections:aArrowDirections
                         animated:aAnimated
-                         options:WYPopoverAnimationOptionFade];
-}
-
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
-               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
-                               animated:(BOOL)aAnimated
-{
-    [self presentPopoverFromBarButtonItem:item
-                 permittedArrowDirections:arrowDirections
-                                 animated:aAnimated
-                                  options:WYPopoverAnimationOptionFade];
-}
-
-- (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated
-{
-    [self presentPopoverAsDialogAnimated:aAnimated
-                                 options:WYPopoverAnimationOptionFade];
+                      completion:nil];
 }
 
 - (void)presentPopoverFromRect:(CGRect)aRect
                         inView:(UIView *)aView
-      permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+      permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
+                      animated:(BOOL)aAnimated
+                    completion:(void (^)(void))completion
+{
+    [self presentPopoverFromRect:aRect
+                          inView:aView
+        permittedArrowDirections:aArrowDirections
+                        animated:aAnimated
+                         options:WYPopoverAnimationOptionFade
+                      completion:completion];
+}
+
+- (void)presentPopoverFromRect:(CGRect)aRect
+                        inView:(UIView *)aView
+      permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
                       animated:(BOOL)aAnimated
                        options:(WYPopoverAnimationOptions)aOptions
 {
     [self presentPopoverFromRect:aRect
                           inView:aView
-        permittedArrowDirections:arrowDirections
+        permittedArrowDirections:aArrowDirections
                         animated:aAnimated
                          options:aOptions
                       completion:nil];
@@ -1541,16 +1519,16 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)presentPopoverFromRect:(CGRect)aRect
                         inView:(UIView *)aView
-      permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+      permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
                       animated:(BOOL)aAnimated
                        options:(WYPopoverAnimationOptions)aOptions
                     completion:(void (^)(void))completion
 {
-    NSAssert((arrowDirections != WYPopoverArrowDirectionUnknown), @"WYPopoverArrowDirection must not be UNKNOWN");
+    NSAssert((aArrowDirections != WYPopoverArrowDirectionUnknown), @"WYPopoverArrowDirection must not be UNKNOWN");
     
     rect = aRect;
     inView = aView;
-    permittedArrowDirections = arrowDirections;
+    permittedArrowDirections = aArrowDirections;
     animated = aAnimated;
     options = aOptions;
     
@@ -1579,11 +1557,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         WYPopoverBackgroundView *appearance = [WYPopoverBackgroundView appearance];
         
         containerView.tintColor = appearance.tintColor;
-        
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated"
-        containerView.strokeColor = appearance.strokeColor;
-#pragma clang diagnostic pop
         
         containerView.outerStrokeColor = appearance.outerStrokeColor;
         containerView.innerStrokeColor = appearance.innerStrokeColor;
@@ -1616,6 +1589,32 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     [self setPopoverNavigationBarBackgroundImage];
     
+    __weak __typeof__(self) weakSelf = self;
+    
+    void (^completionBlock)(BOOL) = ^(BOOL animated) {
+        
+        __typeof__(self) strongSelf = weakSelf;
+        
+        if (strongSelf)
+        {
+            if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
+            {
+                [strongSelf->viewController viewDidAppear:YES];
+            }
+            
+            strongSelf->containerView.accessibilityViewIsModal = NO;
+        }
+        
+        if (completion)
+        {
+            completion();
+        }
+        else if (strongSelf && strongSelf->delegate && [strongSelf->delegate respondsToSelector:@selector(popoverControllerDidPresentPopover:)])
+        {
+            [strongSelf->delegate popoverControllerDidPresentPopover:strongSelf];
+        }
+    };
+    
     containerView.hidden = NO;
     
     if (animated)
@@ -1637,10 +1636,9 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             containerView.transform = startTransform;
         }
         
-        __weak __typeof__(self) weakSelf = self;
-        
         [UIView animateWithDuration:animationDuration animations:^{
             __typeof__(self) strongSelf = weakSelf;
+            
             if (strongSelf)
             {
                 strongSelf->overlayView.alpha = 1;
@@ -1648,37 +1646,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                 strongSelf->containerView.transform = endTransform;
             }
         } completion:^(BOOL finished) {
-            __typeof__(self) strongSelf = weakSelf;
-            
-            if (strongSelf)
-            {
-                if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
-                {
-                    [strongSelf->viewController viewDidAppear:YES];
-                }
-                
-                strongSelf->containerView.accessibilityViewIsModal = NO;
-            }
-            
-            if (completion)
-            {
-                completion();
-            }
+            completionBlock(YES);
         }];
     }
     else
     {
         [viewController viewWillAppear:NO];
-        
-        if ([viewController isKindOfClass:[UINavigationController class]] == NO)
-        {
-            [viewController viewDidAppear:NO];
-        }
-        
-        if (completion)
-        {
-            completion();
-        }
+        completionBlock(NO);
     }
     
     if (isListeningNotifications == NO)
@@ -1711,6 +1685,28 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 - (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)aItem
                permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
                                animated:(BOOL)aAnimated
+{
+    [self presentPopoverFromBarButtonItem:aItem
+                 permittedArrowDirections:aArrowDirections
+                                 animated:aAnimated
+                               completion:nil];
+}
+
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)aItem
+               permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
+                               animated:(BOOL)aAnimated
+                             completion:(void (^)(void))completion
+{
+    [self presentPopoverFromBarButtonItem:aItem
+                 permittedArrowDirections:aArrowDirections
+                                 animated:aAnimated
+                                  options:WYPopoverAnimationOptionFade
+                               completion:completion];
+}
+
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)aItem
+               permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections
+                               animated:(BOOL)aAnimated
                                 options:(WYPopoverAnimationOptions)aOptions
 {
     [self presentPopoverFromBarButtonItem:aItem
@@ -1735,6 +1731,20 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                         animated:aAnimated
                          options:aOptions
                       completion:completion];
+}
+
+- (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated
+{
+    [self presentPopoverAsDialogAnimated:aAnimated
+                              completion:nil];
+}
+
+- (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated
+                            completion:(void (^)(void))completion
+{
+    [self presentPopoverAsDialogAnimated:aAnimated
+                                 options:WYPopoverAnimationOptionFade
+                              completion:completion];
 }
 
 - (void)presentPopoverAsDialogAnimated:(BOOL)aAnimated
@@ -2103,70 +2113,94 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)dismissPopoverAnimated:(BOOL)aAnimated
 {
-    [self dismissPopoverAnimated:aAnimated callDelegate:NO options:options];
+    [self dismissPopoverAnimated:aAnimated
+                         options:options
+                      completion:nil];
 }
 
-- (void)dismissPopoverAnimated:(BOOL)aAnimated options:(WYPopoverAnimationOptions)aOptions
+- (void)dismissPopoverAnimated:(BOOL)aAnimated
+                    completion:(void (^)(void))completion
 {
-    [self dismissPopoverAnimated:aAnimated callDelegate:NO options:aOptions];
+    [self dismissPopoverAnimated:aAnimated
+                         options:options
+                      completion:completion];
 }
 
-- (void)dismissPopoverAnimated:(BOOL)aAnimated callDelegate:(BOOL)callDelegate options:(WYPopoverAnimationOptions)aOptions
+- (void)dismissPopoverAnimated:(BOOL)aAnimated
+                       options:(WYPopoverAnimationOptions)aOptions
 {
-    void (^completionBlock)(BOOL);
-    
+    [self dismissPopoverAnimated:aAnimated
+                         options:aOptions
+                      completion:nil];
+}
+
+- (void)dismissPopoverAnimated:(BOOL)aAnimated
+                       options:(WYPopoverAnimationOptions)aOptions
+                    completion:(void (^)(void))completion
+{
+    [self dismissPopoverAnimated:aAnimated
+                         options:aOptions
+                      completion:completion
+                    callDelegate:NO];
+}
+
+- (void)dismissPopoverAnimated:(BOOL)aAnimated
+                       options:(WYPopoverAnimationOptions)aOptions
+                    completion:(void (^)(void))completion
+                  callDelegate:(BOOL)callDelegate
+{
     CGFloat duration = self.animationDuration;
     WYPopoverAnimationOptions style = aOptions;
     
     __weak __typeof__(self) weakSelf = self;
     
-    completionBlock = ^(BOOL finished) {
-        
+    void (^afterCompletionBlock)() = ^() {
         __typeof__(self) strongSelf = weakSelf;
         
         if (strongSelf)
         {
-            if (aAnimated)
-            {
-                [UIView animateWithDuration:duration animations:^{
-                    __typeof__(self) strongSelf1 = weakSelf;
-                    if (strongSelf1)
-                    {
-                        strongSelf1->overlayView.alpha = 0;
-                    }
-                } completion:^(BOOL finished1) {
-                    __typeof__(self) strongSelf1 = weakSelf;
-                    if (strongSelf1)
-                    {
-                        [strongSelf1->containerView removeFromSuperview];
-                        strongSelf1->containerView = nil;
-                        
-                        [strongSelf1->overlayView removeFromSuperview];
-                        strongSelf1->overlayView = nil;
-                    }
-                }];
-            }
-            else
-            {
-                [strongSelf->containerView removeFromSuperview];
-                strongSelf->containerView = nil;
-                
-                [strongSelf->overlayView removeFromSuperview];
-                strongSelf->overlayView = nil;
-            }
+            [strongSelf->containerView removeFromSuperview];
+            strongSelf->containerView = nil;
+            
+            [strongSelf->overlayView removeFromSuperview];
+            strongSelf->overlayView = nil;
             
             if ([strongSelf->viewController isKindOfClass:[UINavigationController class]] == NO)
             {
                 [strongSelf->viewController viewDidDisappear:aAnimated];
             }
             
-            if (callDelegate)
+            if (completion)
+            {
+                completion();
+            }
+            else if (callDelegate)
             {
                 if (strongSelf->delegate && [strongSelf->delegate respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
                 {
                     [strongSelf->delegate popoverControllerDidDismissPopover:strongSelf];
                 }
             }
+        }
+    };
+    
+    void (^completionBlock)() = ^() {
+        if (aAnimated)
+        {
+            [UIView animateWithDuration:duration animations:^{
+                __typeof__(self) strongSelf = weakSelf;
+                
+                if (strongSelf)
+                {
+                    strongSelf->overlayView.alpha = 0;
+                }
+            } completion:^(BOOL finished) {
+                afterCompletionBlock();
+            }];
+        }
+        else
+        {
+            afterCompletionBlock();
         }
     };
     
@@ -2216,14 +2250,13 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                     strongSelf->containerView.transform = endTransform;
                 }
             }
-            
         } completion:^(BOOL finished) {
-            completionBlock(finished);
+            completionBlock();
         }];
     }
     else
     {
-        completionBlock(YES);
+        completionBlock();
     }
     
     overlayView.isAccessibilityElement = NO;
@@ -2246,7 +2279,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         if (shouldDismiss)
         {
-            [self dismissPopoverAnimated:animated callDelegate:YES options:options];
+            [self dismissPopoverAnimated:animated options:options completion:nil callDelegate:YES];
         }
     }
 }

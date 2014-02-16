@@ -1,5 +1,5 @@
 /*
- Version 0.1.9
+ Version 0.2.0
  
  WYPopoverController is available under the MIT license.
  
@@ -57,8 +57,6 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 @interface WYPopoverBackgroundView : UIView
 
-@property (nonatomic, strong) UIColor *strokeColor              UI_APPEARANCE_SELECTOR __attribute((deprecated("WYPopoverController [0.1.3] : Use 'outerStrokeColor' instead.")));
-
 @property (nonatomic, strong) UIColor *tintColor                UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *fillTopColor             UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *fillBottomColor          UI_APPEARANCE_SELECTOR;
@@ -106,20 +104,18 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 - (id)initWithContentViewController:(UIViewController *)viewController;
 
-//
+// Present popover from classic views methods
 
 - (void)presentPopoverFromRect:(CGRect)rect
                         inView:(UIView *)view
       permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
                       animated:(BOOL)animated;
 
-- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
-               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
-                               animated:(BOOL)animated;
-
-- (void)presentPopoverAsDialogAnimated:(BOOL)animated;
-
-//
+- (void)presentPopoverFromRect:(CGRect)rect
+                        inView:(UIView *)view
+      permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                      animated:(BOOL)animated
+                    completion:(void (^)(void))completion;
 
 - (void)presentPopoverFromRect:(CGRect)rect
                         inView:(UIView *)view
@@ -134,8 +130,16 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
                        options:(WYPopoverAnimationOptions)options
                     completion:(void (^)(void))completion;
 
+// Present popover from bar button items methods
 
-//
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
+               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                               animated:(BOOL)animated;
+
+- (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
+               permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
+                               animated:(BOOL)animated
+                             completion:(void (^)(void))completion;
 
 - (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)item
                permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections
@@ -148,7 +152,12 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
                                 options:(WYPopoverAnimationOptions)options
                              completion:(void (^)(void))completion;
 
-//
+// Present popover as dialog methods
+
+- (void)presentPopoverAsDialogAnimated:(BOOL)animated;
+
+- (void)presentPopoverAsDialogAnimated:(BOOL)animated
+                            completion:(void (^)(void))completion;
 
 - (void)presentPopoverAsDialogAnimated:(BOOL)animated
                                options:(WYPopoverAnimationOptions)options;
@@ -157,10 +166,19 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
                                options:(WYPopoverAnimationOptions)options
                             completion:(void (^)(void))completion;
 
-//
+// Dismiss popover methods
 
 - (void)dismissPopoverAnimated:(BOOL)animated;
-- (void)dismissPopoverAnimated:(BOOL)animated options:(WYPopoverAnimationOptions)aOptions;
+
+- (void)dismissPopoverAnimated:(BOOL)animated
+                    completion:(void (^)(void))completion;
+
+- (void)dismissPopoverAnimated:(BOOL)animated
+                       options:(WYPopoverAnimationOptions)aOptions;
+
+- (void)dismissPopoverAnimated:(BOOL)animated
+                       options:(WYPopoverAnimationOptions)aOptions
+                    completion:(void (^)(void))completion;
 
 @end
 
@@ -170,6 +188,8 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 @optional
 
 - (BOOL)popoverControllerShouldDismissPopover:(WYPopoverController *)popoverController;
+
+- (void)popoverControllerDidPresentPopover:(WYPopoverController *)popoverController;
 
 - (void)popoverControllerDidDismissPopover:(WYPopoverController *)popoverController;
 
