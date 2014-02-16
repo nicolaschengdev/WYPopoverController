@@ -47,7 +47,6 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 | innerShadowColor                                                   | `UIColor`      | 			 #000000bf | 		   #transparent |
 | innerShadowBlurRadius                                              | `CGFloat`      |                      2 |                      0 |
 | innerShadowOffset                                                  | `CGSize`       |               { 0, 1 } |             CGSizeZero |
-| strokeColor          ![](screenshots/wypopover_deprecated_ico.png) | `UIColor`      |              #262c31ff |                  *nil* |
 | minOuterCornerRadius ![](screenshots/wypopover_new_ico.png)        | `CGFloat`      |  		             0 |  		              0 |
 | innerStrokeColor     ![](screenshots/wypopover_new_ico.png) 		 | `UIColor`      |              #262c31ff |           #transparent |
 | outerStrokeColor     ![](screenshots/wypopover_new_ico.png) 		 | `UIColor`      |              #262c31ff |           #transparent |
@@ -102,9 +101,9 @@ The margins that define the portion of the screen in which it is permissible to 
 
 A block object can be executed when animation sequences ends. This parameter may be `nil`.
 
-*Important :* If a block object is defined then correspondent delegate methods is not called.
+**Important :** If a block object is defined then correspondent delegate methods is not called.
 
-#### Examples
+#### Example
 
 ```objective-c
 
@@ -124,7 +123,7 @@ There are 3 styles of animation :
 * Scale
 * Fade with Scale
 
-#### Examples
+#### Example
 
 ```objective-c
 
