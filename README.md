@@ -27,29 +27,29 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 
 ---
 
-| Property                                                           | Type           | Default value (iOS 6)  | Default value (iOS 7)  |
-| ------------------------------------------------------------------ | -------------- | ---------------------: | ---------------------: |
-| tintColor                                                          | `UIColor`      |                  *nil* |                  *nil* |
-| arrowBase                                                          | `CGFloat`      |                     42 |                     25 |
-| arrowHeight                                                        | `CGFloat`      |                     18 |                     13 |
-| borderWidth                                                        | `CGFloat`      |                      6 |                      0 |
-| outerCornerRadius                                                  | `CGFloat`      |                      8 |                      5 |
-| innerCornerRadius                                                  | `CGFloat`      |                      6 |                      0 |
-| viewContentInsets                                                  | `UIEdgeInsets` |         { 3, 0, 0, 0 } |       UIEdgeInsetsZero |
-| fillTopColor                                                       | `UIColor`      | 	         #373f47ff | 	          #f4f4f4ff |
-| fillBottomColor                                                    | `UIColor`      |              #3b434cff |              #f4f4f4ff |
-| glossShadowColor                                                   | `UIColor`      |              #c3c5c77f |           #transparent |
-| glossShadowBlurRadius                                              | `CGFloat`      |                      0 |                      0 |
-| glossShadowOffset                                                  | `CGSize`       |             { 0, 1.5 } |             CGSizeZero |
-| outerShadowColor                                                   | `UIColor`      |              #000000bf |           #transparent |
-| outerShadowBlurRadius                                              | `CGFloat`      |                      8 |                      0 |
-| outerShadowOffset                                                  | `CGSize`       |               { 0, 2 } |             CGSizeZero |
-| innerShadowColor                                                   | `UIColor`      | 			 #000000bf | 		   #transparent |
-| innerShadowBlurRadius                                              | `CGFloat`      |                      2 |                      0 |
-| innerShadowOffset                                                  | `CGSize`       |               { 0, 1 } |             CGSizeZero |
-| minOuterCornerRadius ![](screenshots/wypopover_new_ico.png)        | `CGFloat`      |  		             0 |  		              0 |
-| innerStrokeColor     ![](screenshots/wypopover_new_ico.png) 		 | `UIColor`      |              #262c31ff |           #transparent |
-| outerStrokeColor     ![](screenshots/wypopover_new_ico.png) 		 | `UIColor`      |              #262c31ff |           #transparent |
+| Property                      | Type           | Default value (iOS 6)  | Default value (iOS 7)  |
+| ----------------------------- | -------------- | ---------------------: | ---------------------: |
+| tintColor                     | `UIColor`      |                  *nil* |                  *nil* |
+| arrowBase                     | `CGFloat`      |                     42 |                     25 |
+| arrowHeight                   | `CGFloat`      |                     18 |                     13 |
+| borderWidth                   | `CGFloat`      |                      6 |                      0 |
+| outerCornerRadius             | `CGFloat`      |                      8 |                      5 |
+| innerCornerRadius             | `CGFloat`      |                      6 |                      0 |
+| viewContentInsets             | `UIEdgeInsets` |         { 3, 0, 0, 0 } |       UIEdgeInsetsZero |
+| fillTopColor                  | `UIColor`      | 	            #373f47ff | 	           #f4f4f4ff |
+| fillBottomColor               | `UIColor`      |              #3b434cff |              #f4f4f4ff |
+| glossShadowColor              | `UIColor`      |              #c3c5c77f |           #transparent |
+| glossShadowBlurRadius         | `CGFloat`      |                      0 |                      0 |
+| glossShadowOffset             | `CGSize`       |             { 0, 1.5 } |             CGSizeZero |
+| outerShadowColor              | `UIColor`      |              #000000bf |           #transparent |
+| outerShadowBlurRadius         | `CGFloat`      |                      8 |                      0 |
+| outerShadowOffset             | `CGSize`       |               { 0, 2 } |             CGSizeZero |
+| innerShadowColor              | `UIColor`      | 			        #000000bf | 		      #transparent |
+| innerShadowBlurRadius         | `CGFloat`      |                      2 |                      0 |
+| innerShadowOffset             | `CGSize`       |               { 0, 1 } |             CGSizeZero |
+| minOuterCornerRadius          | `CGFloat`      |  		                0 |  		                 0 |
+| innerStrokeColor              | `UIColor`      |              #262c31ff |           #transparent |
+| outerStrokeColor              | `UIColor`      |              #262c31ff |           #transparent |
 
 ##### Arrow & Border
 
@@ -109,9 +109,9 @@ A block object can be executed when animation sequences ends. This parameter may
 
 popover = [[WYPopoverController alloc] initWithContentViewController:contentViewController];
 [popover presentPopoverAsDialogAnimated:YES
-                                     completion:^{
-                                         // Code executed after popover presentation animation sequence ends
-                                     }];
+                             completion:^{
+                                 // Code executed after popover presentation animation sequence ends
+                             }];
 ```
 
 ### Animation options
