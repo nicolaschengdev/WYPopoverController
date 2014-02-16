@@ -88,10 +88,10 @@
         WYSettingsViewController *settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYSettingsViewController"];
         
         if ([settingsViewController respondsToSelector:@selector(setPreferredContentSize:)]) {
-            settingsViewController.preferredContentSize = CGSizeMake(280, 200);             // iOS 7
+            settingsViewController.preferredContentSize = CGSizeMake(300, 200);             // iOS 7
         }
         else {
-            settingsViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);      // iOS < 7
+            settingsViewController.contentSizeForViewInPopover = CGSizeMake(300, 200);      // iOS < 7
         }
         
         settingsViewController.title = @"Settings";
@@ -109,11 +109,9 @@
         
         [settingsPopoverController presentPopoverFromRect:btn.bounds
                                                    inView:btn
-                                 permittedArrowDirections:WYPopoverArrowDirectionAny
+                                 permittedArrowDirections:WYPopoverArrowDirectionRight
                                                  animated:YES
-                                                  options:WYPopoverAnimationOptionFadeWithScale];
-        
-        
+                                                  options:WYPopoverAnimationOptionScale];
     }
     else
     {
@@ -126,7 +124,10 @@
     if ([segue.identifier isEqualToString:@"AnotherPopoverSegue"])
     {
         WYStoryboardPopoverSegue *popoverSegue = (WYStoryboardPopoverSegue *)segue;
-        anotherPopoverController = [popoverSegue popoverControllerWithSender:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
+        anotherPopoverController = [popoverSegue popoverControllerWithSender:sender
+                                                    permittedArrowDirections:WYPopoverArrowDirectionDown
+                                                                    animated:YES
+                                                                     options:WYPopoverAnimationOptionFadeWithScale];
         anotherPopoverController.delegate = self;
     }
 }

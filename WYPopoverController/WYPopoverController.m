@@ -1641,8 +1641,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         if ((options & WYPopoverAnimationOptionScale) == WYPopoverAnimationOptionScale)
         {
-            CGAffineTransform startTransform = [self transformTranslateForArrowDirection:containerView.arrowDirection];
-            startTransform = CGAffineTransformScale(startTransform, 0.1, 0.1);
+            CGAffineTransform startTransform = [self transformForArrowDirection:containerView.arrowDirection];
             containerView.transform = startTransform;
         }
         
@@ -1777,13 +1776,24 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                       completion:completion];
 }
 
-- (CGAffineTransform)transformTranslateForArrowDirection:(WYPopoverArrowDirection)arrowDirection
+- (CGAffineTransform)transformForArrowDirection:(WYPopoverArrowDirection)arrowDirection
 {
     CGAffineTransform transform = containerView.transform;
     
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    CGSize containerViewSize = containerView.frame.size;
+    
     if (containerView.arrowHeight > 0)
     {
-        CGSize containerViewSize = containerView.frame.size;
+        if (UIDeviceOrientationIsLandscape(orientation)) {
+            containerViewSize.width = containerView.frame.size.height;
+            containerViewSize.height = containerView.frame.size.width;
+        }
+        
+        //WY_LOG(@"containerView.arrowOffset = %f", containerView.arrowOffset);
+        //WY_LOG(@"containerViewSize = %@", NSStringFromCGSize(containerViewSize));
+        //WY_LOG(@"orientation = %@", WYStringFromOrientation(orientation));
         
         if (arrowDirection == WYPopoverArrowDirectionDown)
         {
@@ -1797,14 +1807,16 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         if (arrowDirection == WYPopoverArrowDirectionRight)
         {
-            transform = CGAffineTransformTranslate(transform, containerView.frame.size.width / 2, containerView.arrowOffset);
+            transform = CGAffineTransformTranslate(transform, containerViewSize.width / 2, containerView.arrowOffset);
         }
         
         if (arrowDirection == WYPopoverArrowDirectionLeft)
         {
-            transform = CGAffineTransformTranslate(transform, -containerView.frame.size.width / 2, containerView.arrowOffset);
+            transform = CGAffineTransformTranslate(transform, -containerViewSize.width / 2, containerView.arrowOffset);
         }
     }
+    
+    transform = CGAffineTransformScale(transform, 0.01, 0.01);
     
     return transform;
 }
@@ -2117,8 +2129,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     containerFrame.origin = WYPointRelativeToOrientation(containerOrigin, containerFrame.size, orientation);
     
     containerView.frame = containerFrame;
-    
-    WY_LOG(@"orientation = %@", WYStringFromOrientation(orientation));
 }
 
 - (void)dismissPopoverAnimated:(BOOL)aAnimated
@@ -2159,27 +2169,27 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                     completion:(void (^)(void))completion
                   callDelegate:(BOOL)callDelegate
 {
-#ifdef WY_BASE_SDK_7_ENABLED
-    if ([inView.window respondsToSelector:@selector(setTintAdjustmentMode:)]) {
-        for (UIView *subview in inView.window.subviews) {
-            if (subview != containerView) {
-                [subview setTintAdjustmentMode:UIViewTintAdjustmentModeAutomatic];
-            }
-        }
-    }
-#endif
-    
     CGFloat duration = self.animationDuration;
     WYPopoverAnimationOptions style = aOptions;
     
     __weak __typeof__(self) weakSelf = self;
     
     void (^afterCompletionBlock)() = ^() {
+        
+#ifdef WY_BASE_SDK_7_ENABLED
+        if ([inView.window respondsToSelector:@selector(setTintAdjustmentMode:)]) {
+            for (UIView *subview in inView.window.subviews) {
+                if (subview != containerView) {
+                    [subview setTintAdjustmentMode:UIViewTintAdjustmentModeAutomatic];
+                }
+            }
+        }
+#endif
+        
         __typeof__(self) strongSelf = weakSelf;
         
         if (strongSelf)
         {
-            [strongSelf->containerView removeFromSuperview];
             strongSelf->containerView = nil;
             
             [strongSelf->overlayView removeFromSuperview];
@@ -2205,6 +2215,10 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     };
     
     void (^completionBlock)() = ^() {
+        
+        __typeof__(self) strongSelf = weakSelf;
+        [strongSelf->containerView removeFromSuperview];
+        
         if (aAnimated)
         {
             [UIView animateWithDuration:duration animations:^{
@@ -2265,8 +2279,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
                 
                 if ((style & WYPopoverAnimationOptionScale) == WYPopoverAnimationOptionScale)
                 {
-                    CGAffineTransform endTransform = [self transformTranslateForArrowDirection:strongSelf->containerView.arrowDirection];
-                    endTransform = CGAffineTransformScale(endTransform, 0.1, 0.1);
+                    CGAffineTransform endTransform = [self transformForArrowDirection:strongSelf->containerView.arrowDirection];
                     strongSelf->containerView.transform = endTransform;
                 }
             }

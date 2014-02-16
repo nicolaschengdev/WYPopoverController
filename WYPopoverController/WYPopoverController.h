@@ -34,7 +34,7 @@
 #endif
 
 #ifndef WY_POPOVER_MIN_SIZE
-    #define WY_POPOVER_MIN_SIZE                      CGSizeMake(200, 100)
+    #define WY_POPOVER_MIN_SIZE                      CGSizeMake(240, 160)
 #endif
 
 typedef NS_OPTIONS(NSUInteger, WYPopoverArrowDirection) {
