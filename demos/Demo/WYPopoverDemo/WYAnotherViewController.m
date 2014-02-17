@@ -23,6 +23,11 @@
     return self;
 }
 
+- (IBAction)resizeme:(id)sender
+{
+    self.preferredContentSize = CGSizeMake(300, 300);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

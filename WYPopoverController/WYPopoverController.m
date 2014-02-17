@@ -63,8 +63,12 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
     Method original, swizzle;
     
     original = class_getInstanceMethod(self, @selector(pushViewController:animated:));
-    
     swizzle = class_getInstanceMethod(self, @selector(sizzled_pushViewController:animated:));
+    
+    method_exchangeImplementations(original, swizzle);
+    
+    original = class_getInstanceMethod(self, @selector(setViewControllers:animated:));
+    swizzle = class_getInstanceMethod(self, @selector(sizzled_setViewControllers:animated:));
     
     method_exchangeImplementations(original, swizzle);
 }
@@ -88,23 +92,99 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
     objc_setAssociatedObject(self, UINavigationControllerEmbedInPopoverTagKey, [NSNumber numberWithBool:value], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)sizzled_pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+- (void)sizzled_pushViewController:(UIViewController *)aViewController animated:(BOOL)aAnimated
 {
     if (self.isEmbedInPopover)
     {
 #ifdef WY_BASE_SDK_7_ENABLED
-        if ([viewController respondsToSelector:@selector(setEdgesForExtendedLayout:)])
+        if ([aViewController respondsToSelector:@selector(setEdgesForExtendedLayout:)])
         {
-            viewController.edgesForExtendedLayout = UIRectEdgeNone;
+            aViewController.edgesForExtendedLayout = UIRectEdgeNone;
         }
 #endif
     }
     
-    [self sizzled_pushViewController:viewController animated:animated];
+    [self sizzled_pushViewController:aViewController animated:aAnimated];
+}
+
+- (void)sizzled_setViewControllers:(NSArray *)aViewControllers animated:(BOOL)aAnimated
+{
+    if (self.isEmbedInPopover)
+    {
+#ifdef WY_BASE_SDK_7_ENABLED
+        if (aViewControllers && [aViewControllers count] > 0)
+        {
+            for (UIViewController *viewController in aViewControllers) {
+                if ([viewController respondsToSelector:@selector(setEdgesForExtendedLayout:)])
+                {
+                    viewController.edgesForExtendedLayout = UIRectEdgeNone;
+                }
+            }
+        }
+#endif
+    }
+    
+    [self sizzled_setViewControllers:aViewControllers animated:aAnimated];
 }
 
 @end
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface UIViewController (WYPopover)
+@end
+
+@implementation UIViewController (WYPopover)
+
++ (void)load
+{
+    Method original, swizzle;
+    
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+    original = class_getInstanceMethod(self, @selector(setContentSizeForViewInPopover:));
+    swizzle = class_getInstanceMethod(self, @selector(sizzled_setContentSizeForViewInPopover:));
+    method_exchangeImplementations(original, swizzle);
+#pragma clang diagnostic pop
+    
+#ifdef WY_BASE_SDK_7_ENABLED
+    original = class_getInstanceMethod(self, @selector(setPreferredContentSize:));
+    swizzle = class_getInstanceMethod(self, @selector(sizzled_setPreferredContentSize:));
+    
+    if (original != NULL) {
+        method_exchangeImplementations(original, swizzle);
+    }
+#endif
+}
+
+- (void)sizzled_setContentSizeForViewInPopover:(CGSize)aSize
+{
+    [self sizzled_setContentSizeForViewInPopover:aSize];
+    
+    if ([self isKindOfClass:[UINavigationController class]] == NO && self.navigationController != nil)
+    {
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+        [self.navigationController setContentSizeForViewInPopover:aSize];
+#pragma clang diagnostic pop
+    }
+}
+
+- (void)sizzled_setPreferredContentSize:(CGSize)aSize
+{
+    [self sizzled_setPreferredContentSize:aSize];
+    
+    if ([self isKindOfClass:[UINavigationController class]] == NO && self.navigationController != nil)
+    {
+#ifdef WY_BASE_SDK_7_ENABLED
+        if ([self respondsToSelector:@selector(setPreferredContentSize:)]) {
+            [self.navigationController setPreferredContentSize:aSize];
+        }
+#endif
+    }
+}
+
+@end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1342,7 +1422,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     WYPopoverAnimationOptions options;
 }
 
-@property (nonatomic, assign, readonly) CGSize contentSizeForViewInPopover;
+//@property (nonatomic, assign, readonly) CGSize contentSizeForViewInPopover;
 
 - (void)dismissPopoverAnimated:(BOOL)animated
                        options:(WYPopoverAnimationOptions)options
@@ -1406,66 +1486,26 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     CGSize result = CGSizeZero;
     
-#ifdef WY_BASE_SDK_7_ENABLED
-    if ([viewController respondsToSelector:@selector(preferredContentSize)])
-    {
-        result = [viewController preferredContentSize];
-    }
-    else
-#endif
-    {
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated"
-        result = [viewController contentSizeForViewInPopover];
-#pragma clang diagnostic pop
-    }
+    UIViewController *topViewController = viewController;
     
-    return result;
-}
-
-- (void)setPopoverContentSize:(CGSize)size
-{
-#ifdef WY_BASE_SDK_7_ENABLED
-    if ([viewController respondsToSelector:@selector(setPreferredContentSize:)])
+    if ([viewController isKindOfClass:[UINavigationController class]] == YES)
     {
-        [viewController setPreferredContentSize:size];
-    }
-    else
-#endif
-    {
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated"
-        [viewController setContentSizeForViewInPopover:size];
-#pragma clang diagnostic pop
-    }
-    
-    [self positionPopover];
-}
-
-- (CGSize)contentSizeForViewInPopover
-{
-    CGSize result = CGSizeZero;
-    
-    UIViewController *controller = viewController;
-    
-    if ([controller isKindOfClass:[UINavigationController class]])
-    {
-        UINavigationController *navigationController = (UINavigationController *)controller;
-        
-        controller = [navigationController visibleViewController];
+        UINavigationController *navigationController = (UINavigationController *)viewController;
+        topViewController = [navigationController topViewController];
     }
     
 #ifdef WY_BASE_SDK_7_ENABLED
-    if ([controller respondsToSelector:@selector(preferredContentSize)])
+    if ([topViewController respondsToSelector:@selector(preferredContentSize)])
     {
-        result = controller.preferredContentSize;
+        result = topViewController.preferredContentSize;
     }
 #endif
+    
     if (CGSizeEqualToSize(result, CGSizeZero))
     {
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated"
-        result = controller.contentSizeForViewInPopover;
+        result = topViewController.contentSizeForViewInPopover;
 #pragma clang diagnostic pop
     }
     
@@ -1475,6 +1515,47 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     }
     
     return result;
+}
+
+- (void)setPopoverContentSize:(CGSize)size
+{
+    UIViewController *topViewController = viewController;
+    
+    if ([viewController isKindOfClass:[UINavigationController class]] == YES)
+    {
+        UINavigationController *navigationController = (UINavigationController *)viewController;
+        topViewController = [navigationController topViewController];
+    }
+    
+#ifdef WY_BASE_SDK_7_ENABLED
+    if ([viewController respondsToSelector:@selector(setPreferredContentSize:)])
+    {
+        @try {
+            [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(setPreferredContentSize))];
+        }
+        @catch (NSException * __unused exception) {}
+        
+        [topViewController setPreferredContentSize:size];
+        
+        [viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize)) options:0 context:nil];
+    }
+    else
+#endif
+    {
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+        @try {
+            [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSizeForViewInPopover))];
+        }
+        @catch (NSException * __unused exception) {}
+        
+        [topViewController setContentSizeForViewInPopover:size];
+        
+        [viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSizeForViewInPopover)) options:0 context:nil];
+#pragma clang diagnostic pop
+    }
+    
+    [self positionPopover];
 }
 
 - (void)presentPopoverFromRect:(CGRect)aRect
@@ -1532,7 +1613,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     animated = aAnimated;
     options = aOptions;
     
-    CGSize contentViewSize = self.contentSizeForViewInPopover;
+    CGSize contentViewSize = self.popoverContentSize;
     
     if (overlayView == nil)
     {
@@ -1603,6 +1684,15 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
             }
             
             strongSelf->containerView.accessibilityViewIsModal = NO;
+            
+            if ([strongSelf->viewController respondsToSelector:@selector(preferredContentSize)])
+            {
+                [strongSelf->viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize)) options:0 context:nil];
+            }
+            else
+            {
+                [strongSelf->viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSizeForViewInPopover)) options:0 context:nil];
+            }
         }
         
         if (completion)
@@ -1613,6 +1703,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         {
             [strongSelf->delegate popoverControllerDidPresentPopover:strongSelf];
         }
+        
+        
     };
     
 #ifdef WY_BASE_SDK_7_ENABLED
@@ -1823,24 +1915,23 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 
 - (void)setPopoverNavigationBarBackgroundImage
 {
-    if (wantsDefaultContentAppearance == NO && [viewController isKindOfClass:[UINavigationController class]])
+    if ([viewController isKindOfClass:[UINavigationController class]] == YES)
     {
         UINavigationController *navigationController = (UINavigationController *)viewController;
         navigationController.embedInPopover = YES;
         
-        if ([navigationController viewControllers] && [[navigationController viewControllers] count] > 0)
-        {
 #ifdef WY_BASE_SDK_7_ENABLED
-            UIViewController *firstViewController = (UIViewController *)[[navigationController viewControllers] objectAtIndex:0];
-            
-            if ([firstViewController respondsToSelector:@selector(setEdgesForExtendedLayout:)])
-            {
-                [firstViewController setEdgesForExtendedLayout:UIRectEdgeNone];
-            }
-#endif
+        if ([navigationController respondsToSelector:@selector(setEdgesForExtendedLayout:)])
+        {
+            UIViewController *topViewController = [navigationController topViewController];
+            [topViewController setEdgesForExtendedLayout:UIRectEdgeNone];
         }
+#endif
         
-        [navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
+        if (wantsDefaultContentAppearance == NO)
+        {
+            [navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
+        }
     }
     
     viewController.view.clipsToBounds = YES;
@@ -1855,7 +1946,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 {
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     
-    CGSize contentViewSize = self.contentSizeForViewInPopover;
+    CGSize contentViewSize = self.popoverContentSize;
     CGSize minContainerSize = WY_POPOVER_MIN_SIZE;
     
     CGRect viewFrame;
@@ -2116,8 +2207,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     containerFrame = CGRectIntegral(containerFrame);
     
-    containerView.frame = containerFrame;
-    
     containerView.wantsDefaultContentAppearance = wantsDefaultContentAppearance;
     
     [containerView setViewController:viewController];
@@ -2145,9 +2234,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     containerFrame = containerView.frame;
     
     containerFrame.origin = WYPointRelativeToOrientation(containerOrigin, containerFrame.size, orientation);
-    
-    
-    
+
     containerView.frame = containerFrame;
 }
 
@@ -2285,6 +2372,15 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         [viewController viewWillDisappear:aAnimated];
     }
     
+    @try {
+        if ([viewController respondsToSelector:@selector(preferredContentSize)]) {
+            [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize))];
+        } else {
+            [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSizeForViewInPopover))];
+        }
+    }
+    @catch (NSException * __unused exception) {}
+    
     if (aAnimated)
     {
         [UIView animateWithDuration:duration animations:^{
@@ -2313,6 +2409,20 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     }
     
     overlayView.isAccessibilityElement = NO;
+}
+
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == viewController)
+    {
+        if ([keyPath isEqualToString:NSStringFromSelector(@selector(preferredContentSize))]
+            || [keyPath isEqualToString:NSStringFromSelector(@selector(contentSizeForViewInPopover))])
+        {
+            [self positionPopover];
+        }
+    }
 }
 
 #pragma mark WYPopoverOverlayViewDelegate
@@ -2708,7 +2818,6 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     
     WY_LOG(@"orientation = %@", WYStringFromOrientation(orientation));
-    
     WY_LOG(@"keyboardRect = %@", NSStringFromCGRect(keyboardRect));
     
     [self positionPopover];

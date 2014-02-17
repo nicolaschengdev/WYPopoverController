@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface WYAnotherViewController : UIViewController
+{
+}
+
+- (IBAction)resizeme:(id)sender;
 
 @end
