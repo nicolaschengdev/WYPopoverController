@@ -25,7 +25,7 @@
 
 - (IBAction)resizeme:(id)sender
 {
-    self.preferredContentSize = CGSizeMake(300, 300);
+    self.preferredContentSize = CGSizeMake(360, 220);
 }
 
 - (void)viewDidLoad

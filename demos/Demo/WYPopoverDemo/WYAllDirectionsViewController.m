@@ -88,10 +88,10 @@
         WYSettingsViewController *settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYSettingsViewController"];
         
         if ([settingsViewController respondsToSelector:@selector(setPreferredContentSize:)]) {
-            settingsViewController.preferredContentSize = CGSizeMake(300, 200);             // iOS 7
+            settingsViewController.preferredContentSize = CGSizeMake(320, 320);             // iOS 7
         }
         else {
-            settingsViewController.contentSizeForViewInPopover = CGSizeMake(300, 200);      // iOS < 7
+            settingsViewController.contentSizeForViewInPopover = CGSizeMake(320, 320);      // iOS < 7
         }
         
         settingsViewController.title = @"Settings";

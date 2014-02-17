@@ -1511,7 +1511,11 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (CGSizeEqualToSize(result, CGSizeZero))
     {
-        result = CGSizeMake(320, 1100);
+        CGSize windowSize = [[UIApplication sharedApplication] keyWindow].bounds.size;
+        
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        
+        result = CGSizeMake(320, UIDeviceOrientationIsLandscape(orientation) ? windowSize.width : windowSize.height);
     }
     
     return result;
@@ -1555,7 +1559,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 #pragma clang diagnostic pop
     }
     
-    [self positionPopover];
+    [self positionPopover:NO];
 }
 
 - (void)presentPopoverFromRect:(CGRect)aRect
@@ -1666,7 +1670,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         overlayView.backgroundColor = containerView.overlayColor;
     }
     
-    [self positionPopover];
+    [self positionPopover:NO];
     
     [self setPopoverNavigationBarBackgroundImage];
     
@@ -1942,8 +1946,10 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     }
 }
 
-- (void)positionPopover
+- (void)positionPopover:(BOOL)aAnimated
 {
+    CGRect savedContainerFrame = containerView.frame;
+    
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     
     CGSize contentViewSize = self.popoverContentSize;
@@ -2207,6 +2213,8 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     containerFrame = CGRectIntegral(containerFrame);
     
+    containerView.frame = containerFrame;
+    
     containerView.wantsDefaultContentAppearance = wantsDefaultContentAppearance;
     
     [containerView setViewController:viewController];
@@ -2235,7 +2243,18 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     containerFrame.origin = WYPointRelativeToOrientation(containerOrigin, containerFrame.size, orientation);
 
-    containerView.frame = containerFrame;
+    if (aAnimated == YES) {
+        containerView.frame = savedContainerFrame;
+        __weak __typeof__(self) weakSelf = self;
+        [UIView animateWithDuration:0.10f animations:^{
+            __typeof__(self) strongSelf = weakSelf;
+            strongSelf->containerView.frame = containerFrame;
+        }];
+    } else {
+        containerView.frame = containerFrame;
+    }
+    
+    WY_LOG(@"popoverContainerView.frame = %@", NSStringFromCGRect(containerView.frame));
 }
 
 - (void)dismissPopoverAnimated:(BOOL)aAnimated
@@ -2420,7 +2439,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         if ([keyPath isEqualToString:NSStringFromSelector(@selector(preferredContentSize))]
             || [keyPath isEqualToString:NSStringFromSelector(@selector(contentSizeForViewInPopover))])
         {
-            [self positionPopover];
+            [self positionPopover:YES];
         }
     }
 }
@@ -2806,8 +2825,8 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
         }
     }
     
-    [self positionPopover];
-    [containerView setNeedsDisplay];
+    [self positionPopover:NO];
+    //[containerView setNeedsDisplay];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -2820,15 +2839,15 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
     WY_LOG(@"orientation = %@", WYStringFromOrientation(orientation));
     WY_LOG(@"keyboardRect = %@", NSStringFromCGRect(keyboardRect));
     
-    [self positionPopover];
-    [containerView setNeedsDisplay];
+    [self positionPopover:YES];
+    //[containerView setNeedsDisplay];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     keyboardRect = CGRectZero;
-    [self positionPopover];
-    [containerView setNeedsDisplay];
+    [self positionPopover:YES];
+    //[containerView setNeedsDisplay];
 }
 
 #pragma mark Memory management
