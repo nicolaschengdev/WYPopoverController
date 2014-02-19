@@ -1535,7 +1535,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     if ([viewController respondsToSelector:@selector(setPreferredContentSize:)])
     {
         @try {
-            [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(setPreferredContentSize))];
+            [viewController removeObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize))];
         }
         @catch (NSException * __unused exception) {}
         
