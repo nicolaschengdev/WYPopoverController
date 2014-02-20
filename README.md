@@ -22,6 +22,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 * Keyboard show / hide support
 * iOS 6 & 7 support
 * UIAccessibility support
+* Theme support
 
 ### UIAppearance support
 
@@ -155,7 +156,7 @@ Your PodFile should look like :
 
 ```Ruby
 platform :ios, '6.0'
-pod 'WYPopoverController', '~> 0.2.0'
+pod 'WYPopoverController', '~> 0.2.1'
 ```
 
 To use the `master` branch of the repo :
@@ -274,6 +275,36 @@ UINavigationBar* navBarInPopoverAppearance = [UINavigationBar appearanceWhenCont
         popoverController = [popoverSegue popoverControllerWithSender:sender permittedArrowDirections:WYPopoverArrowDirectionAny animated:YES];
         popoverController.delegate = self;
 	}
+}
+```
+
+##### Theme
+
+Introduced in 0.2.1 release, you can change appearance of your popovers with themes.
+
+```objective-c
+- (void)changePopoverTheme
+{
+    popover.theme = [WYPopoverTheme themeForIOS6];  // you set a new theme
+
+    // use beginThemeUpdates and endThemeUpdates methods if you have to change several values which compose your current theme
+    
+    [popover beginThemeUpdates];
+        popover.theme.arrowHeight = 30;
+        popover.theme.arrowBase = 40;
+    [popover endThemeUpdates];
+}
+```
+
+##### Keyboard
+
+By default, when keyboard is shown, popover will be repositionned if it is (partially) hidden.
+Introduced in 0.2.1 release, you can control value of y offset when keyboard is shown with the following `delegate` method :
+
+```objective-c
+- (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(CGFloat *)value
+{
+    *value = 0; // if value is setted to 0 then popover will not be translated
 }
 ```
 

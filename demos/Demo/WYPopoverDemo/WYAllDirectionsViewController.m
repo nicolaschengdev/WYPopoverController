@@ -70,9 +70,22 @@
     }];
 }
 
-- (void)sizeUp:(id)sender
+- (void)change:(id)sender
 {
-    [settingsPopoverController setPopoverContentSize:CGSizeMake(320, 480)];
+    // Change popover content size
+    
+    //[settingsPopoverController setPopoverContentSize:CGSizeMake(320, 480)];
+    
+    // Change complete theme
+    
+    //settingsPopoverController.theme = [WYPopoverTheme themeForIOS6];
+    
+    //
+    
+    [settingsPopoverController beginThemeUpdates];
+        settingsPopoverController.theme.arrowHeight = 13;
+        settingsPopoverController.theme.arrowBase = 25;
+    [settingsPopoverController endThemeUpdates];
 }
 
 - (IBAction)showmodal:(id)sender
@@ -104,7 +117,7 @@
         
         settingsViewController.title = @"Settings";
         
-        [settingsViewController.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Size Up" style:UIBarButtonItemStylePlain target:self action:@selector(sizeUp:)]];
+        [settingsViewController.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"change" style:UIBarButtonItemStylePlain target:self action:@selector(change:)]];
         
         [settingsViewController.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(close:)]];
         
@@ -167,6 +180,12 @@
         settingsPopoverController.delegate = nil;
         settingsPopoverController = nil;
     }
+}
+
+- (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(CGFloat *)value
+{
+    // keyboard is shown and the popover will be moved up by 163 pixels for example ( *value = 163 )
+    *value = 0; // set value to 0 if you want to avoid the popover to be moved
 }
 
 #pragma mark - UIViewControllerRotation
