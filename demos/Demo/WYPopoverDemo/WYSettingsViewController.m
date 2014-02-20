@@ -77,7 +77,7 @@
     
     if (section == 0)
     {
-        result = 2;
+        result = 12;
     }
     return result;
 }
@@ -139,7 +139,7 @@
     
     if (indexPath.section == 0)
     {
-        if (indexPath.row == 0)
+        if (indexPath.row % 2 == 0)
         {
             cell.textLabel.text = @"Medium - 100%";
             if ([pdfPhotoSize isEqualToString:@"large"])
@@ -147,7 +147,7 @@
                 cell.accessoryType = UITableViewCellAccessoryCheckmark;
             }
         }
-        else if (indexPath.row == 1)
+        else if (indexPath.row % 2 == 1)
         {
             cell.textLabel.text = @"Small - 50%";
             if ([pdfPhotoSize isEqualToString:@"half"])
