@@ -104,16 +104,7 @@
         UIView *btn = (UIView *)sender;
         
         WYSettingsViewController *settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYSettingsViewController"];
-        
-        if ([settingsViewController respondsToSelector:@selector(setPreferredContentSize:)]) {
-            settingsViewController.preferredContentSize = CGSizeMake(320, 280);             // iOS 7
-        }
-        else {
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated"
-            settingsViewController.contentSizeForViewInPopover = CGSizeMake(320, 280);      // iOS < 7
-#pragma clang diagnostic pop
-        }
+        settingsViewController.preferredContentSize = CGSizeMake(320, 280);
         
         settingsViewController.title = @"Settings";
         
@@ -180,6 +171,11 @@
         settingsPopoverController.delegate = nil;
         settingsPopoverController = nil;
     }
+}
+
+- (BOOL)popoverControllerShouldIgnoreKeyboardBounds:(WYPopoverController *)popoverController
+{
+    return YES;
 }
 
 - (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(CGFloat *)value

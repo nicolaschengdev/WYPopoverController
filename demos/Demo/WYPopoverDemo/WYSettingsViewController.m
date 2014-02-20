@@ -123,6 +123,7 @@
     else
     {
         WYAnotherViewController *anotherViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYAnotherViewController"];
+        anotherViewController.preferredContentSize = CGSizeMake(320, 420);
         [self.navigationController pushViewController:anotherViewController animated:YES];
     }
 }

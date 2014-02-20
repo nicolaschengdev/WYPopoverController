@@ -46,13 +46,10 @@
     [popoverAppearance setViewContentInsets:UIEdgeInsetsMake(3, 0, 0, 0)];
     */
     
-    WYPopoverBackgroundView *popoverAppearance = [WYPopoverBackgroundView appearance];
-    [popoverAppearance setArrowHeight:26];
-    [popoverAppearance setArrowBase:50];
+    /*
+    
     
     UINavigationBar *navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], [WYPopoverBackgroundView class], nil];
-    
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     
     NSShadow *shadow = [[NSShadow alloc] init];
     [shadow setShadowColor:[UIColor clearColor]];
@@ -63,15 +60,13 @@
             NSForegroundColorAttributeName : [UIColor whiteColor],
             NSShadowAttributeName: shadow
         }];
+    */
     
-#else
-    [navBarAppearance setTitleTextAttributes:
-        @{
-            UITextAttributeTextColor : [UIColor whiteColor],
-            UITextAttributeTextShadowColor: [UIColor clearColor],
-            UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, 0)]
-        }];
-#endif
+    [WYPopoverController setDefaultTheme:[WYPopoverTheme themeForIOS6]];
+    
+    WYPopoverBackgroundView *popoverAppearance = [WYPopoverBackgroundView appearance];
+    [popoverAppearance setArrowHeight:60];
+    [popoverAppearance setArrowBase:20];
     
     //Appearance 2 (orange popover)
     //
