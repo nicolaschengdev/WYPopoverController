@@ -1559,7 +1559,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 #pragma clang diagnostic pop
     }
     
-    [self positionPopover:NO];
+    [self positionPopover:YES];
 }
 
 - (void)presentPopoverFromRect:(CGRect)aRect

@@ -48,7 +48,10 @@
             settingsViewController.preferredContentSize = CGSizeMake(280, 200);             // iOS 7
         }
         else {
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
             settingsViewController.contentSizeForViewInPopover = CGSizeMake(280, 200);      // iOS < 7
+#pragma clang diagnostic pop
         }
         
         settingsViewController.title = @"Settings";

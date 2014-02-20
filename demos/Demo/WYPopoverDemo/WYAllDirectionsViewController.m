@@ -70,6 +70,11 @@
     }];
 }
 
+- (void)sizeUp:(id)sender
+{
+    [settingsPopoverController setPopoverContentSize:CGSizeMake(320, 480)];
+}
+
 - (IBAction)showmodal:(id)sender
 {
     WYModalViewController *modalViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYModalViewController"];
@@ -83,23 +88,29 @@
 {
     if (settingsPopoverController == nil)
     {
-        UIView *btn = (UIView*)sender;
+        UIView *btn = (UIView *)sender;
         
         WYSettingsViewController *settingsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WYSettingsViewController"];
         
         if ([settingsViewController respondsToSelector:@selector(setPreferredContentSize:)]) {
-            settingsViewController.preferredContentSize = CGSizeMake(320, 320);             // iOS 7
+            settingsViewController.preferredContentSize = CGSizeMake(320, 280);             // iOS 7
         }
         else {
-            settingsViewController.contentSizeForViewInPopover = CGSizeMake(320, 320);      // iOS < 7
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+            settingsViewController.contentSizeForViewInPopover = CGSizeMake(320, 280);      // iOS < 7
+#pragma clang diagnostic pop
         }
         
         settingsViewController.title = @"Settings";
+        
+        [settingsViewController.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Size Up" style:UIBarButtonItemStylePlain target:self action:@selector(sizeUp:)]];
+        
         [settingsViewController.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(close:)]];
         
         settingsViewController.modalInPopover = NO;
         
-        UINavigationController* contentViewController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
+        UINavigationController *contentViewController = [[UINavigationController alloc] initWithRootViewController:settingsViewController];
         
         settingsPopoverController = [[WYPopoverController alloc] initWithContentViewController:contentViewController];
         settingsPopoverController.delegate = self;
