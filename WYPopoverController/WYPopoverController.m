@@ -1,5 +1,5 @@
 /*
- Version 0.2.0
+ Version 0.2.1
  
  WYPopoverController is available under the MIT license.
  
@@ -46,11 +46,99 @@
 #define WY_IS_IOS_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface UIColor (WYPopover)
+
+- (BOOL)getValueOfRed:(CGFloat*)red green:(CGFloat*)green blue:(CGFloat*)blue alpha:(CGFloat*)apha;
+- (NSString *)hexString;
+- (UIColor *)colorByLighten:(CGFloat)d;
+- (UIColor *)colorByDarken:(CGFloat)d;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@implementation UIColor (WYPopover)
+
+- (BOOL)getValueOfRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha
+{
+    // model: kCGColorSpaceModelRGB, num_comps: 4
+    // model: kCGColorSpaceModelMonochrome, num_comps: 2
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceRetain(CGColorGetColorSpace([self CGColor]));
+    CGColorSpaceModel colorSpaceModel = CGColorSpaceGetModel(colorSpace);
+    CGColorSpaceRelease(colorSpace);
+    
+    CGFloat rFloat = 0, gFloat = 0, bFloat = 0, aFloat = 0;
+    BOOL result = NO;
+    
+    if (colorSpaceModel == kCGColorSpaceModelRGB)
+    {
+        result = [self getRed:&rFloat green:&gFloat blue:&bFloat alpha:&aFloat];
+    }
+    else if (colorSpaceModel == kCGColorSpaceModelMonochrome)
+    {
+        result = [self getWhite:&rFloat alpha:&aFloat];
+        gFloat = rFloat;
+        bFloat = rFloat;
+    }
+    
+    if (red) *red = rFloat;
+    if (green) *green = gFloat;
+    if (blue) *blue = bFloat;
+    if (alpha) *alpha = aFloat;
+    
+    return result;
+}
+
+- (NSString *)hexString
+{
+    CGFloat rFloat, gFloat, bFloat, aFloat;
+    int r, g, b, a;
+    [self getValueOfRed:&rFloat green:&gFloat blue:&bFloat alpha:&aFloat];
+    
+    r = (int)(255.0 * rFloat);
+    g = (int)(255.0 * gFloat);
+    b = (int)(255.0 * bFloat);
+    a = (int)(255.0 * aFloat);
+    
+    return [NSString stringWithFormat:@"#%02x%02x%02x%02x", r, g, b, a];
+}
+
+- (UIColor *)colorByLighten:(CGFloat)d
+{
+    CGFloat rFloat, gFloat, bFloat, aFloat;
+    [self getValueOfRed:&rFloat green:&gFloat blue:&bFloat alpha:&aFloat];
+    
+    return [UIColor colorWithRed:MIN(rFloat + d, 1.0)
+                           green:MIN(gFloat + d, 1.0)
+                            blue:MIN(bFloat + d, 1.0)
+                           alpha:1.0];
+}
+
+- (UIColor *)colorByDarken:(CGFloat)d
+{
+    CGFloat rFloat, gFloat, bFloat, aFloat;
+    [self getValueOfRed:&rFloat green:&gFloat blue:&bFloat alpha:&aFloat];
+    
+    return [UIColor colorWithRed:MAX(rFloat - d, 0.0)
+                           green:MAX(gFloat - d, 0.0)
+                            blue:MAX(bFloat - d, 0.0)
+                           alpha:1.0];
+}
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 @interface UINavigationController (WYPopover)
 
 @property(nonatomic, assign, getter = isEmbedInPopover) BOOL embedInPopover;
 
 @end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation UINavigationController (WYPopover)
 
@@ -133,6 +221,8 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
 
 @interface UIViewController (WYPopover)
 @end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation UIViewController (WYPopover)
 
@@ -256,6 +346,213 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+@interface WYPopoverTheme ()
+
+- (NSArray *)observableKeypaths;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@implementation WYPopoverTheme
+
+@synthesize tintColor;
+@synthesize fillTopColor;
+@synthesize fillBottomColor;
+
+@synthesize glossShadowColor;
+@synthesize glossShadowOffset;
+@synthesize glossShadowBlurRadius;
+
+@synthesize borderWidth;
+@synthesize arrowBase;
+@synthesize arrowHeight;
+
+@synthesize outerShadowColor;
+@synthesize outerStrokeColor;
+@synthesize outerShadowBlurRadius;
+@synthesize outerShadowOffset;
+@synthesize outerCornerRadius;
+@synthesize minOuterCornerRadius;
+
+@synthesize innerShadowColor;
+@synthesize innerStrokeColor;
+@synthesize innerShadowBlurRadius;
+@synthesize innerShadowOffset;
+@synthesize innerCornerRadius;
+
+@synthesize viewContentInsets;
+
+@synthesize overlayColor;
+
++ (id)theme {
+    
+    WYPopoverTheme *result = nil;
+    
+    if (WY_IS_IOS_LESS_THAN(@"7.0")) {
+        result = [WYPopoverTheme themeForIOS6];
+    } else {
+        result = [WYPopoverTheme themeForIOS7];
+    }
+    
+    return result;
+}
+
++ (id)themeForIOS6 {
+    
+    WYPopoverTheme *result = [[WYPopoverTheme alloc] init];
+    
+    result.tintColor = [UIColor colorWithRed:55./255. green:63./255. blue:71./255. alpha:1.0];
+    result.outerStrokeColor = nil;
+    result.innerStrokeColor = nil;
+    result.fillTopColor = result.tintColor;
+    result.fillBottomColor = [result.tintColor colorByDarken:0.4];
+    result.glossShadowColor = nil;
+    result.glossShadowOffset = CGSizeMake(0, 1.5);
+    result.glossShadowBlurRadius = 0;
+    result.borderWidth = 6;
+    result.arrowBase = 42;
+    result.arrowHeight = 18;
+    result.outerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
+    result.outerShadowBlurRadius = 8;
+    result.outerShadowOffset = CGSizeMake(0, 2);
+    result.outerCornerRadius = 8;
+    result.minOuterCornerRadius = 0;
+    result.innerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
+    result.innerShadowBlurRadius = 2;
+    result.innerShadowOffset = CGSizeMake(0, 1);
+    result.innerCornerRadius = 6;
+    result.viewContentInsets = UIEdgeInsetsMake(3, 0, 0, 0);
+    result.overlayColor = [UIColor clearColor];
+    
+    return result;
+}
+
++ (id)themeForIOS7 {
+    
+    WYPopoverTheme *result = [[WYPopoverTheme alloc] init];
+    
+    result.tintColor = [UIColor colorWithRed:244./255. green:244./255. blue:244./255. alpha:1.0];
+    result.outerStrokeColor = [UIColor clearColor];
+    result.innerStrokeColor = [UIColor clearColor];
+    result.fillTopColor = nil;
+    result.fillBottomColor = nil;
+    result.glossShadowColor = nil;
+    result.glossShadowOffset = CGSizeZero;
+    result.glossShadowBlurRadius = 0;
+    result.borderWidth = 0;
+    result.arrowBase = 25;
+    result.arrowHeight = 13;
+    result.outerShadowColor = [UIColor clearColor];
+    result.outerShadowBlurRadius = 0;
+    result.outerShadowOffset = CGSizeZero;
+    result.outerCornerRadius = 5;
+    result.minOuterCornerRadius = 0;
+    result.innerShadowColor = [UIColor clearColor];
+    result.innerShadowBlurRadius = 0;
+    result.innerShadowOffset = CGSizeZero;
+    result.innerCornerRadius = 0;
+    result.viewContentInsets = UIEdgeInsetsZero;
+    result.overlayColor = [UIColor colorWithWhite:0 alpha:0.15];
+    
+    return result;
+}
+
+- (CGFloat)innerCornerRadius
+{
+    CGFloat result = innerCornerRadius;
+    
+    if (borderWidth == 0)
+    {
+        result = 0;
+        
+        if (outerCornerRadius > 0)
+        {
+            result = outerCornerRadius;
+        }
+    }
+    
+    return result;
+}
+
+- (CGSize)outerShadowOffset
+{
+    CGSize result = outerShadowOffset;
+    
+    result.width = MIN(result.width, outerShadowBlurRadius);
+    result.height = MIN(result.height, outerShadowBlurRadius);
+    
+    return result;
+}
+
+- (UIColor *)innerStrokeColor
+{
+    UIColor *result = innerStrokeColor;
+    
+    if (result == nil)
+    {
+        result = [self.fillTopColor colorByDarken:0.6];
+    }
+    
+    return result;
+}
+
+- (UIColor *)outerStrokeColor
+{
+    UIColor *result = outerStrokeColor;
+    
+    if (result == nil)
+    {
+        result = [self.fillTopColor colorByDarken:0.6];
+    }
+    
+    return result;
+}
+
+- (UIColor *)glossShadowColor
+{
+    UIColor *result = glossShadowColor;
+    
+    if (result == nil)
+    {
+        result = [self.fillTopColor colorByLighten:0.2];
+    }
+    
+    return result;
+}
+
+- (UIColor *)fillTopColor
+{
+    UIColor *result = fillTopColor;
+    
+    if (result == nil)
+    {
+        result = tintColor;
+    }
+    
+    return result;
+}
+
+- (UIColor *)fillBottomColor
+{
+    UIColor *result = fillBottomColor;
+    
+    if (result == nil)
+    {
+        result = self.fillTopColor;
+    }
+    
+    return result;
+}
+
+- (NSArray *)observableKeypaths {
+    return [NSArray arrayWithObjects:@"tintColor", @"outerStrokeColor", @"innerStrokeColor", @"fillTopColor", @"fillBottomColor", @"glossShadowColor", @"glossShadowOffset", @"glossShadowBlurRadius", @"borderWidth", @"arrowBase", @"arrowHeight", @"outerShadowColor", @"outerShadowBlurRadius", @"outerShadowOffset", @"outerCornerRadius", @"innerShadowColor", @"innerShadowBlurRadius", @"innerShadowOffset", @"innerCornerRadius", @"viewContentInsets", @"overlayColor", nil];
+}
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 @interface UIImage (WYPopover)
 
 + (UIImage *)imageWithColor:(UIColor *)color;
@@ -303,90 +600,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return [image resizableImageWithCapInsets:UIEdgeInsetsMake(cornerRadius, cornerRadius, cornerRadius, cornerRadius)];
-}
-
-@end
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-@interface UIColor (WYPopover)
-
-- (BOOL)getValueOfRed:(CGFloat*)red green:(CGFloat*)green blue:(CGFloat*)blue alpha:(CGFloat*)apha;
-- (NSString *)hexString;
-- (UIColor *)colorByLighten:(CGFloat)d;
-- (UIColor *)colorByDarken:(CGFloat)d;
-
-@end
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-@implementation UIColor (WYPopover)
-
-- (BOOL)getValueOfRed:(CGFloat *)red green:(CGFloat *)green blue:(CGFloat *)blue alpha:(CGFloat *)alpha
-{
-    // model: kCGColorSpaceModelRGB, num_comps: 4
-    // model: kCGColorSpaceModelMonochrome, num_comps: 2
-    
-    CGColorSpaceRef colorSpace = CGColorSpaceRetain(CGColorGetColorSpace([self CGColor]));
-    CGColorSpaceModel colorSpaceModel = CGColorSpaceGetModel(colorSpace);
-    CGColorSpaceRelease(colorSpace);
-    
-    CGFloat rFloat = 0, gFloat = 0, bFloat = 0, aFloat = 0;
-    BOOL result = NO;
-    
-    if (colorSpaceModel == kCGColorSpaceModelRGB)
-    {
-        result = [self getRed:&rFloat green:&gFloat blue:&bFloat alpha:&aFloat];
-    }
-    else if (colorSpaceModel == kCGColorSpaceModelMonochrome)
-    {
-        result = [self getWhite:&rFloat alpha:&aFloat];
-        gFloat = rFloat;
-        bFloat = rFloat;
-    }
-    
-    if (red) *red = rFloat;
-    if (green) *green = gFloat;
-    if (blue) *blue = bFloat;
-    if (alpha) *alpha = aFloat;
-    
-    return result;
-}
-
-- (NSString *)hexString
-{
-    CGFloat rFloat, gFloat, bFloat, aFloat;
-    int r, g, b, a;
-    [self getValueOfRed:&rFloat green:&gFloat blue:&bFloat alpha:&aFloat];
-    
-    r = (int)(255.0 * rFloat);
-    g = (int)(255.0 * gFloat);
-    b = (int)(255.0 * bFloat);
-    a = (int)(255.0 * aFloat);
-    
-    return [NSString stringWithFormat:@"#%02x%02x%02x%02x", r, g, b, a];
-}
-
-- (UIColor *)colorByLighten:(CGFloat)d
-{
-    CGFloat rFloat, gFloat, bFloat, aFloat;
-    [self getValueOfRed:&rFloat green:&gFloat blue:&bFloat alpha:&aFloat];
-    
-    return [UIColor colorWithRed:MIN(rFloat + d, 1.0)
-                           green:MIN(gFloat + d, 1.0)
-                            blue:MIN(bFloat + d, 1.0)
-                           alpha:1.0];
-}
-
-- (UIColor *)colorByDarken:(CGFloat)d
-{
-    CGFloat rFloat, gFloat, bFloat, aFloat;
-    [self getValueOfRed:&rFloat green:&gFloat blue:&bFloat alpha:&aFloat];
-    
-    return [UIColor colorWithRed:MAX(rFloat - d, 0.0)
-                           green:MAX(gFloat - d, 0.0)
-                            blue:MAX(bFloat - d, 0.0)
-                           alpha:1.0];
 }
 
 @end
@@ -645,9 +858,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @property (nonatomic, assign) CGFloat arrowOffset;
 @property (nonatomic, assign) BOOL wantsDefaultContentAppearance;
 
-@property (nonatomic, strong, readonly) UIColor* defaultTintColor;
-
-- (void)setViewController:(UIViewController*)viewController;
+- (void)setViewController:(UIViewController *)viewController;
 
 - (CGRect)outerRect;
 - (CGRect)innerRect;
@@ -698,67 +909,38 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @synthesize arrowOffset;
 @synthesize navigationBarHeight;
 @synthesize wantsDefaultContentAppearance;
-@synthesize defaultTintColor;
 
 @synthesize outerShadowInsets;
 
 + (void)load
 {
     @autoreleasepool {
-        WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
+        WYPopoverTheme *theme = [WYPopoverTheme theme];
         
-        if (WY_IS_IOS_LESS_THAN(@"7.0"))
-        {
-            appearance.tintColor = nil;
-            
-            appearance.outerStrokeColor = nil;
-            appearance.innerStrokeColor = nil;
-            appearance.fillTopColor = nil;
-            appearance.fillBottomColor = nil;
-            appearance.glossShadowColor = nil;
-            appearance.glossShadowOffset = CGSizeMake(0, 1.5);
-            appearance.glossShadowBlurRadius = 0;
-            appearance.borderWidth = 6;
-            appearance.arrowBase = 42;
-            appearance.arrowHeight = 18;
-            appearance.outerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
-            appearance.outerShadowBlurRadius = 8;
-            appearance.outerShadowOffset = CGSizeMake(0, 2);
-            appearance.outerCornerRadius = 8;
-            appearance.minOuterCornerRadius = 0;
-            appearance.innerShadowColor = [UIColor colorWithWhite:0 alpha:0.75];
-            appearance.innerShadowBlurRadius = 2;
-            appearance.innerShadowOffset = CGSizeMake(0, 1);
-            appearance.innerCornerRadius = 6;
-            appearance.viewContentInsets = UIEdgeInsetsMake(3, 0, 0, 0);
-            appearance.overlayColor = [UIColor clearColor];
-        }
-        else
-        {
-            appearance.tintColor = nil;
-            
-            appearance.outerStrokeColor = [UIColor clearColor];
-            appearance.innerStrokeColor = [UIColor clearColor];
-            appearance.fillTopColor = nil;
-            appearance.fillBottomColor = nil;
-            appearance.glossShadowColor = nil;
-            appearance.glossShadowOffset = CGSizeZero;
-            appearance.glossShadowBlurRadius = 0;
-            appearance.borderWidth = 0;
-            appearance.arrowBase = 25;
-            appearance.arrowHeight = 13;
-            appearance.outerShadowColor = [UIColor clearColor];
-            appearance.outerShadowBlurRadius = 0;
-            appearance.outerShadowOffset = CGSizeZero;
-            appearance.outerCornerRadius = 5;
-            appearance.minOuterCornerRadius = 0;
-            appearance.innerShadowColor = [UIColor clearColor];
-            appearance.innerShadowBlurRadius = 0;
-            appearance.innerShadowOffset = CGSizeZero;
-            appearance.innerCornerRadius = 0;
-            appearance.viewContentInsets = UIEdgeInsetsZero;
-            appearance.overlayColor = [UIColor colorWithWhite:0 alpha:0.15];
-        }
+        WYPopoverBackgroundView *appearance = [WYPopoverBackgroundView appearance];
+        
+        appearance.tintColor = theme.tintColor;
+        appearance.outerStrokeColor = theme.outerStrokeColor;
+        appearance.innerStrokeColor = theme.innerStrokeColor;
+        appearance.fillTopColor = theme.fillTopColor;
+        appearance.fillBottomColor = theme.fillBottomColor;
+        appearance.glossShadowColor = theme.glossShadowColor;
+        appearance.glossShadowOffset = theme.glossShadowOffset;
+        appearance.glossShadowBlurRadius = theme.glossShadowBlurRadius;
+        appearance.borderWidth = theme.borderWidth;
+        appearance.arrowBase = theme.arrowBase;
+        appearance.arrowHeight = theme.arrowHeight;
+        appearance.outerShadowColor = theme.outerShadowColor;
+        appearance.outerShadowBlurRadius = theme.outerShadowBlurRadius;
+        appearance.outerShadowOffset = theme.outerShadowOffset;
+        appearance.outerCornerRadius = theme.outerCornerRadius;
+        appearance.minOuterCornerRadius = theme.minOuterCornerRadius;
+        appearance.innerShadowColor = theme.innerShadowColor;
+        appearance.innerShadowBlurRadius = theme.innerShadowBlurRadius;
+        appearance.innerShadowOffset = theme.innerShadowOffset;
+        appearance.innerCornerRadius = theme.innerCornerRadius;
+        appearance.viewContentInsets = theme.viewContentInsets;
+        appearance.overlayColor = theme.overlayColor;
     }
 }
 
@@ -875,9 +1057,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         innerView.gradientTopColor = self.fillTopColor;
         innerView.gradientBottomColor = self.fillBottomColor;
         innerView.innerShadowColor = innerShadowColor;
-        
         innerView.innerStrokeColor = self.innerStrokeColor;
-        
         innerView.innerShadowOffset = innerShadowOffset;
         innerView.innerCornerRadius = self.innerCornerRadius;
         innerView.innerShadowBlurRadius = innerShadowBlurRadius;
@@ -927,114 +1107,6 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     self.bounds = CGRectMake(0, 0, size.width, size.height);
 }
 
-#pragma mark Overrides
-
-- (CGFloat)innerCornerRadius
-{
-    CGFloat result = innerCornerRadius;
-    
-    if (borderWidth == 0)
-    {
-        result = 0;
-        
-        if (outerCornerRadius > 0)
-        {
-            result = outerCornerRadius;
-        }
-    }
-    
-    return result;
-}
-
-- (CGSize)outerShadowOffset
-{
-    CGSize result = outerShadowOffset;
-    
-    result.width = MIN(result.width, outerShadowBlurRadius);
-    result.height = MIN(result.height, outerShadowBlurRadius);
-    
-    return result;
-}
-
-- (UIColor *)innerStrokeColor
-{
-    UIColor *result = innerStrokeColor;
-    
-    if (result == nil)
-    {
-        result = [self.fillTopColor colorByDarken:0.6];
-    }
-    
-    return result;
-}
-
-- (UIColor *)outerStrokeColor
-{
-    UIColor *result = outerStrokeColor;
-    
-    if (result == nil)
-    {
-        result = [self.fillTopColor colorByDarken:0.6];
-    }
-    
-    return result;
-}
-
-- (UIColor *)glossShadowColor
-{
-    UIColor *result = glossShadowColor;
-    
-    if (result == nil)
-    {
-        result = [self.fillTopColor colorByLighten:0.2];
-    }
-    
-    return result;
-}
-
-- (UIColor *)fillTopColor
-{
-    UIColor *result = fillTopColor;
-    
-    if (result == nil)
-    {
-        UIColor *baseColor = tintColor;
-        
-        if (baseColor == nil)
-        {
-            baseColor = self.defaultTintColor;
-        }
-        
-        result = baseColor;
-    }
-    
-    return result;
-}
-
-- (UIColor *)fillBottomColor
-{
-    UIColor *result = fillBottomColor;
-    
-    if (result == nil)
-    {
-        result = (WY_IS_IOS_LESS_THAN(@"7.0")) ? [self.fillTopColor colorByDarken:0.4] : self.fillTopColor;
-    }
-    
-    return result;
-}
-
-- (UIColor *)defaultTintColor
-{
-    BOOL isUI7 = (WY_IS_IOS_LESS_THAN(@"7.0") == NO);
-    
-    CGFloat r = ((isUI7) ? 244. : 55.) / 255.;
-    CGFloat g = ((isUI7) ? 244. : 63.) / 255.;
-    CGFloat b = ((isUI7) ? 244. : 71.) / 255.;
-    
-    UIColor* result = [UIColor colorWithRed:r green:g blue:b alpha:1];
-    return result;
-}
-
 #pragma mark Drawing
 
 - (void)setNeedsDisplay
@@ -1045,10 +1117,20 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     
     if (innerView)
     {
+        innerView.gradientTopColor = self.fillTopColor;
+        innerView.gradientBottomColor = self.fillBottomColor;
+        innerView.innerShadowColor = innerShadowColor;
+        innerView.innerStrokeColor = self.innerStrokeColor;
+        innerView.innerShadowOffset = innerShadowOffset;
+        innerView.innerCornerRadius = self.innerCornerRadius;
+        innerView.innerShadowBlurRadius = innerShadowBlurRadius;
+        innerView.borderWidth = self.borderWidth;
+        
         innerView.navigationBarHeight = navigationBarHeight;
         innerView.gradientHeight = self.frame.size.height - 2 * outerShadowBlurRadius;
         innerView.gradientTopPosition = contentView.frame.origin.y - self.outerShadowInsets.top;
         innerView.wantsDefaultContentAppearance = wantsDefaultContentAppearance;
+        
         [innerView setNeedsDisplay];
     }
 }
@@ -1417,28 +1499,32 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     BOOL                     isInterfaceOrientationChanging;
     __weak UIBarButtonItem  *barButtonItem;
     CGRect                   keyboardRect;
-    BOOL                     hasAppearanceProxyAvailable;
     
     WYPopoverAnimationOptions options;
+    
+    BOOL themeUpdatesEnabled;
+    BOOL themeIsUpdating;
 }
 
-//@property (nonatomic, assign, readonly) CGSize contentSizeForViewInPopover;
-
-- (void)dismissPopoverAnimated:(BOOL)animated
-                       options:(WYPopoverAnimationOptions)options
-                    completion:(void (^)(void))completion
-                  callDelegate:(BOOL)callDelegate;
+- (void)dismissPopoverAnimated:(BOOL)aAnimated
+                       options:(WYPopoverAnimationOptions)aAptions
+                    completion:(void (^)(void))aCompletion
+                  callDelegate:(BOOL)aCallDelegate;
 
 - (WYPopoverArrowDirection)arrowDirectionForRect:(CGRect)aRect
                                           inView:(UIView*)aView
-                                     contentSize:(CGSize)contentSize
-                                     arrowHeight:(CGFloat)arrowHeight
-                        permittedArrowDirections:(WYPopoverArrowDirection)arrowDirections;
+                                     contentSize:(CGSize)aContentSize
+                                     arrowHeight:(CGFloat)aArrowHeight
+                        permittedArrowDirections:(WYPopoverArrowDirection)aArrowDirections;
 
 - (CGSize)sizeForRect:(CGRect)aRect
                inView:(UIView *)aView
-          arrowHeight:(CGFloat)arrowHeight
-       arrowDirection:(WYPopoverArrowDirection)arrowDirection;
+          arrowHeight:(CGFloat)aArrowHeight
+       arrowDirection:(WYPopoverArrowDirection)aArrowDirection;
+
+- (void)registerTheme;
+- (void)unregisterTheme;
+- (void)updateThemeUI;
 
 @end
 
@@ -1455,20 +1541,160 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
 @synthesize popoverVisible;
 @synthesize popoverLayoutMargins;
 @synthesize animationDuration;
+@synthesize theme;
 
-- (id)initWithContentViewController:(UIViewController *)aViewController
+static WYPopoverTheme *defaultTheme_ = nil;
+
++ (void)setDefaultTheme:(WYPopoverTheme *)aTheme {
+    defaultTheme_ = aTheme;
+}
+
++ (WYPopoverTheme *)defaultTheme {
+    if (defaultTheme_ == nil) {
+        defaultTheme_ = [WYPopoverTheme theme];
+    }
+    return defaultTheme_;
+}
+
+- (id)init
 {
     self = [super init];
     
     if (self)
     {
-        viewController = aViewController;
         popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
         keyboardRect = CGRectZero;
         animationDuration = WY_POPOVER_DEFAULT_ANIMATION_DURATION;
+        
+        themeUpdatesEnabled = NO;
+        
+        [self setTheme:[WYPopoverTheme theme]];
+        
+        themeIsUpdating = YES;
+        
+        WYPopoverBackgroundView *appearance = [WYPopoverBackgroundView appearance];
+        theme.tintColor = appearance.tintColor;
+        theme.outerStrokeColor = appearance.outerStrokeColor;
+        theme.innerStrokeColor = appearance.innerStrokeColor;
+        theme.fillTopColor = appearance.fillTopColor;
+        theme.fillBottomColor = appearance.fillBottomColor;
+        theme.glossShadowColor = appearance.glossShadowColor;
+        theme.glossShadowOffset = appearance.glossShadowOffset;
+        theme.glossShadowBlurRadius = appearance.glossShadowBlurRadius;
+        theme.borderWidth = appearance.borderWidth;
+        theme.arrowBase = appearance.arrowBase;
+        theme.arrowHeight = appearance.arrowHeight;
+        theme.outerShadowColor = appearance.outerShadowColor;
+        theme.outerShadowBlurRadius = appearance.outerShadowBlurRadius;
+        theme.outerShadowOffset = appearance.outerShadowOffset;
+        theme.outerCornerRadius = appearance.outerCornerRadius;
+        theme.minOuterCornerRadius = appearance.minOuterCornerRadius;
+        theme.innerShadowColor = appearance.innerShadowColor;
+        theme.innerShadowBlurRadius = appearance.innerShadowBlurRadius;
+        theme.innerShadowOffset = appearance.innerShadowOffset;
+        theme.innerCornerRadius = appearance.innerCornerRadius;
+        theme.viewContentInsets = appearance.viewContentInsets;
+        theme.overlayColor = appearance.overlayColor;
+
+        themeIsUpdating = NO;
+        themeUpdatesEnabled = YES;
     }
     
     return self;
+}
+
+- (id)initWithContentViewController:(UIViewController *)aViewController
+{
+    self = [self init];
+    
+    if (self)
+    {
+        viewController = aViewController;
+    }
+    
+    return self;
+}
+
+- (void)setTheme:(WYPopoverTheme *)value
+{
+    [self unregisterTheme];
+    theme = value;
+    [self registerTheme];
+    [self updateThemeUI];
+    
+    themeIsUpdating = NO;
+}
+
+- (void)registerTheme
+{
+    if (theme == nil) return;
+    
+    NSArray *keypaths = [theme observableKeypaths];
+    for (NSString *keypath in keypaths) {
+		[theme addObserver:self forKeyPath:keypath options:NSKeyValueObservingOptionNew context:NULL];
+	}
+}
+
+- (void)unregisterTheme
+{
+    if (theme == nil) return;
+    
+    @try {
+        NSArray *keypaths = [theme observableKeypaths];
+        for (NSString *keypath in keypaths) {
+            [theme removeObserver:self forKeyPath:keypath];
+        }
+    }
+    @catch (NSException * __unused exception) {}
+}
+
+- (void)updateThemeUI
+{
+    if (theme == nil || themeUpdatesEnabled == NO || themeIsUpdating == YES) return;
+    
+    if (containerView != nil) {
+        containerView.tintColor = theme.tintColor;
+        containerView.outerStrokeColor = theme.outerStrokeColor;
+        containerView.innerStrokeColor = theme.innerStrokeColor;
+        containerView.fillTopColor = theme.fillTopColor;
+        containerView.fillBottomColor = theme.fillBottomColor;
+        containerView.glossShadowColor = theme.glossShadowColor;
+        containerView.glossShadowOffset = theme.glossShadowOffset;
+        containerView.glossShadowBlurRadius = theme.glossShadowBlurRadius;
+        containerView.borderWidth = theme.borderWidth;
+        containerView.arrowBase = theme.arrowBase;
+        containerView.arrowHeight = theme.arrowHeight;
+        containerView.outerShadowColor = theme.outerShadowColor;
+        containerView.outerShadowBlurRadius = theme.outerShadowBlurRadius;
+        containerView.outerShadowOffset = theme.outerShadowOffset;
+        containerView.outerCornerRadius = theme.outerCornerRadius;
+        containerView.minOuterCornerRadius = theme.minOuterCornerRadius;
+        containerView.innerShadowColor = theme.innerShadowColor;
+        containerView.innerShadowBlurRadius = theme.innerShadowBlurRadius;
+        containerView.innerShadowOffset = theme.innerShadowOffset;
+        containerView.innerCornerRadius = theme.innerCornerRadius;
+        containerView.viewContentInsets = theme.viewContentInsets;
+        [containerView setNeedsDisplay];
+    }
+    
+    if (overlayView != nil) {
+        overlayView.backgroundColor = theme.overlayColor;
+    }
+    
+    [self positionPopover:NO];
+    
+    [self setPopoverNavigationBarBackgroundImage];
+}
+
+- (void)beginThemeUpdates
+{
+    themeIsUpdating = YES;
+}
+
+- (void)endThemeUpdates
+{
+    themeIsUpdating = NO;
+    [self updateThemeUI];
 }
 
 - (BOOL)isPopoverVisible
@@ -1635,44 +1861,7 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         [inView.window insertSubview:overlayView belowSubview:containerView];
     }
     
-    if (WY_IS_IOS_LESS_THAN(@"6.0") && hasAppearanceProxyAvailable == NO)
-    {
-        hasAppearanceProxyAvailable = YES;
-        
-        WYPopoverBackgroundView *appearance = [WYPopoverBackgroundView appearance];
-        
-        containerView.tintColor = appearance.tintColor;
-        
-        containerView.outerStrokeColor = appearance.outerStrokeColor;
-        containerView.innerStrokeColor = appearance.innerStrokeColor;
-        containerView.fillTopColor = appearance.fillTopColor;
-        containerView.fillBottomColor = appearance.fillBottomColor;
-        containerView.glossShadowColor = appearance.glossShadowColor;
-        containerView.glossShadowOffset = appearance.glossShadowOffset;
-        containerView.glossShadowBlurRadius = appearance.glossShadowBlurRadius;
-        containerView.borderWidth = appearance.borderWidth;
-        containerView.arrowBase = appearance.arrowBase;
-        containerView.arrowHeight = appearance.arrowHeight;
-        containerView.outerShadowColor = appearance.outerShadowColor;
-        containerView.outerShadowBlurRadius = appearance.outerShadowBlurRadius;
-        containerView.outerShadowOffset = appearance.outerShadowOffset;
-        containerView.outerCornerRadius = appearance.outerCornerRadius;
-        containerView.minOuterCornerRadius = appearance.minOuterCornerRadius;
-        containerView.innerShadowColor = appearance.innerShadowColor;
-        containerView.innerShadowBlurRadius = appearance.innerShadowBlurRadius;
-        containerView.innerShadowOffset = appearance.innerShadowOffset;
-        containerView.innerCornerRadius = appearance.innerCornerRadius;
-        containerView.viewContentInsets = appearance.viewContentInsets;
-        overlayView.backgroundColor = appearance.overlayColor;
-    }
-    else
-    {
-        overlayView.backgroundColor = containerView.overlayColor;
-    }
-    
-    [self positionPopover:NO];
-    
-    [self setPopoverNavigationBarBackgroundImage];
+    [self updateThemeUI];
     
     __weak __typeof__(self) weakSelf = self;
     
@@ -2225,13 +2414,20 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         
         CGFloat keyboardY = UIInterfaceOrientationIsPortrait(orientation) ? keyboardRect.origin.y : keyboardRect.origin.x;
         
-        if (containerFrame.origin.y + containerFrame.size.height > keyboardY) {
+        CGFloat yOffset = containerFrame.origin.y + containerFrame.size.height - keyboardY;
+        
+        if (yOffset > 0) {
             
-            containerFrame.origin.y -= (containerFrame.origin.y + containerFrame.size.height - keyboardY);
-            
-            if (containerFrame.origin.y < minY) {
-                containerFrame.origin.y = minY;
+            if (containerFrame.origin.y - yOffset < minY) {
+                yOffset -= minY - (containerFrame.origin.y - yOffset);
             }
+            
+            if ([delegate respondsToSelector:@selector(popoverController:willTranslatePopoverWithYOffset:)])
+            {
+                [delegate popoverController:self willTranslatePopoverWithYOffset:&yOffset];
+            }
+            
+            containerFrame.origin.y -= yOffset;
         }
     }
     
@@ -2441,6 +2637,10 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
         {
             [self positionPopover:YES];
         }
+    }
+    else if (object == theme)
+    {
+        [self updateThemeUI];
     }
 }
 
@@ -2826,7 +3026,6 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
     }
     
     [self positionPopover:NO];
-    //[containerView setNeedsDisplay];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -2840,14 +3039,12 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
     WY_LOG(@"keyboardRect = %@", NSStringFromCGRect(keyboardRect));
     
     [self positionPopover:YES];
-    //[containerView setNeedsDisplay];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     keyboardRect = CGRectZero;
     [self positionPopover:YES];
-    //[containerView setNeedsDisplay];
 }
 
 #pragma mark Memory management
@@ -2866,6 +3063,10 @@ static CGPoint WYPointRelativeToOrientation(CGPoint origin, CGSize size, UIInter
     inView = nil;
     overlayView = nil;
     containerView = nil;
+    
+    [self unregisterTheme];
+    theme = nil;
 }
 
 @end
+

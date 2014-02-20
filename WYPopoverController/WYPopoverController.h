@@ -1,5 +1,5 @@
 /*
- Version 0.2.0
+ Version 0.2.1
  
  WYPopoverController is available under the MIT license.
  
@@ -28,6 +28,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @protocol WYPopoverControllerDelegate;
+@class WYPopoverTheme;
 
 #ifndef WY_POPOVER_DEFAULT_ANIMATION_DURATION
     #define WY_POPOVER_DEFAULT_ANIMATION_DURATION    .25f
@@ -102,7 +103,19 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 @property (nonatomic, assign) CGSize                            popoverContentSize;
 @property (nonatomic, assign) CGFloat                           animationDuration;
 
+@property (nonatomic, strong) WYPopoverTheme                   *theme;
+
++ (void)setDefaultTheme:(WYPopoverTheme *)theme;
++ (WYPopoverTheme *)defaultTheme;
+
+// initialization
+
 - (id)initWithContentViewController:(UIViewController *)viewController;
+
+// theme
+
+- (void)beginThemeUpdates;
+- (void)endThemeUpdates;
 
 // Present popover from classic views methods
 
@@ -194,5 +207,46 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 - (void)popoverControllerDidDismissPopover:(WYPopoverController *)popoverController;
 
 - (void)popoverController:(WYPopoverController *)popoverController willRepositionPopoverToRect:(inout CGRect *)rect inView:(inout UIView **)view;
+
+- (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(CGFloat *)value;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface WYPopoverTheme : NSObject
+
+@property (nonatomic, strong) UIColor *tintColor;
+@property (nonatomic, strong) UIColor *fillTopColor;
+@property (nonatomic, strong) UIColor *fillBottomColor;
+
+@property (nonatomic, strong) UIColor *glossShadowColor;
+@property (nonatomic, assign) CGSize   glossShadowOffset;
+@property (nonatomic, assign) CGFloat  glossShadowBlurRadius;
+
+@property (nonatomic, assign) CGFloat  borderWidth;
+@property (nonatomic, assign) CGFloat  arrowBase;
+@property (nonatomic, assign) CGFloat  arrowHeight;
+
+@property (nonatomic, strong) UIColor *outerShadowColor;
+@property (nonatomic, strong) UIColor *outerStrokeColor;
+@property (nonatomic, assign) CGFloat  outerShadowBlurRadius;
+@property (nonatomic, assign) CGSize   outerShadowOffset;
+@property (nonatomic, assign) CGFloat  outerCornerRadius;
+@property (nonatomic, assign) CGFloat  minOuterCornerRadius;
+
+@property (nonatomic, strong) UIColor *innerShadowColor;
+@property (nonatomic, strong) UIColor *innerStrokeColor;
+@property (nonatomic, assign) CGFloat  innerShadowBlurRadius;
+@property (nonatomic, assign) CGSize   innerShadowOffset;
+@property (nonatomic, assign) CGFloat  innerCornerRadius;
+
+@property (nonatomic, assign) UIEdgeInsets viewContentInsets;
+
+@property (nonatomic, strong) UIColor *overlayColor;
+
++ (instancetype)theme;
++ (instancetype)themeForIOS6;
++ (instancetype)themeForIOS7;
 
 @end
