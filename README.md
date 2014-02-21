@@ -37,7 +37,7 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 | outerCornerRadius             | `CGFloat`      |                      8 |                      5 |
 | innerCornerRadius             | `CGFloat`      |                      6 |                      0 |
 | viewContentInsets             | `UIEdgeInsets` |         { 3, 0, 0, 0 } |       UIEdgeInsetsZero |
-| fillTopColor                  | `UIColor`      | 	            #373f47ff | 	           #f4f4f4ff |
+| fillTopColor                  | `UIColor`      | 	            #373f47ff | 	         #f4f4f4ff |
 | fillBottomColor               | `UIColor`      |              #3b434cff |              #f4f4f4ff |
 | glossShadowColor              | `UIColor`      |              #c3c5c77f |           #transparent |
 | glossShadowBlurRadius         | `CGFloat`      |                      0 |                      0 |
@@ -45,10 +45,10 @@ WYPopoverController is for the presentation of content in popover on iPhone / iP
 | outerShadowColor              | `UIColor`      |              #000000bf |           #transparent |
 | outerShadowBlurRadius         | `CGFloat`      |                      8 |                      0 |
 | outerShadowOffset             | `CGSize`       |               { 0, 2 } |             CGSizeZero |
-| innerShadowColor              | `UIColor`      | 			        #000000bf | 		      #transparent |
+| innerShadowColor              | `UIColor`      | 			    #000000bf | 		  #transparent |
 | innerShadowBlurRadius         | `CGFloat`      |                      2 |                      0 |
 | innerShadowOffset             | `CGSize`       |               { 0, 1 } |             CGSizeZero |
-| minOuterCornerRadius          | `CGFloat`      |  		                0 |  		                 0 |
+| minOuterCornerRadius          | `CGFloat`      |  		            0 |  		             0 |
 | innerStrokeColor              | `UIColor`      |              #262c31ff |           #transparent |
 | outerStrokeColor              | `UIColor`      |              #262c31ff |           #transparent |
 
@@ -156,7 +156,7 @@ Your PodFile should look like :
 
 ```Ruby
 platform :ios, '6.0'
-pod 'WYPopoverController', '~> 0.2.1'
+pod 'WYPopoverController', '~> 0.2.2'
 ```
 
 To use the `master` branch of the repo :
