@@ -202,6 +202,11 @@
 				CLASSPREFIX = WY;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Nicolas CHENG";
+				TargetAttributes = {
+					976A341A17BB9AEB0071BF21 = {
+						DevelopmentTeam = YST3J3LK7J;
+					};
+				};
 			};
 			buildConfigurationList = 976A341617BB9AEB0071BF21 /* Build configuration list for PBXProject "WYPopoverDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -330,11 +335,14 @@
 		976A344217BB9AEB0071BF21 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WYPopoverDemo/WYPopoverDemo-Prefix.pch";
 				INFOPLIST_FILE = "WYPopoverDemo/WYPopoverDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -343,11 +351,14 @@
 		976A344317BB9AEB0071BF21 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WYPopoverDemo/WYPopoverDemo-Prefix.pch";
 				INFOPLIST_FILE = "WYPopoverDemo/WYPopoverDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

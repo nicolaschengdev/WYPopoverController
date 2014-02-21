@@ -62,11 +62,12 @@
         }];
     */
     
-    [WYPopoverController setDefaultTheme:[WYPopoverTheme themeForIOS6]];
+    //WYPopoverTheme *theme = [WYPopoverTheme themeForIOS6];
+    //[WYPopoverController setDefaultTheme:theme];
     
     WYPopoverBackgroundView *popoverAppearance = [WYPopoverBackgroundView appearance];
-    [popoverAppearance setArrowHeight:23];
-    [popoverAppearance setArrowBase:35];
+    [popoverAppearance setArrowHeight:20];
+    [popoverAppearance setArrowBase:20];
     
     //Appearance 2 (orange popover)
     //
