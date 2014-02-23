@@ -178,7 +178,7 @@
     return YES;
 }
 
-- (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(CGFloat *)value
+- (void)popoverController:(WYPopoverController *)popoverController willTranslatePopoverWithYOffset:(float *)value
 {
     // keyboard is shown and the popover will be moved up by 163 pixels for example ( *value = 163 )
     *value = 0; // set value to 0 if you want to avoid the popover to be moved

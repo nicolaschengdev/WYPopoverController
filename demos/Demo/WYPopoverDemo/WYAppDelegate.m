@@ -66,8 +66,8 @@
     //[WYPopoverController setDefaultTheme:theme];
     
     WYPopoverBackgroundView *popoverAppearance = [WYPopoverBackgroundView appearance];
-    [popoverAppearance setArrowHeight:70];
-    [popoverAppearance setArrowBase:30];
+    [popoverAppearance setArrowHeight:40];
+    [popoverAppearance setArrowBase:60];
     
     //Appearance 2 (orange popover)
     //
