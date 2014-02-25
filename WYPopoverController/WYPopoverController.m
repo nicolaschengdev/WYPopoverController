@@ -503,7 +503,7 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
     return result;
 }
 
-- (float)innerCornerRadius
+- (NSUInteger)innerCornerRadius
 {
     float result = innerCornerRadius;
     

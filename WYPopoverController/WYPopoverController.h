@@ -64,24 +64,24 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 @property (nonatomic, strong) UIColor *glossShadowColor         UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGSize   glossShadowOffset        UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) float  glossShadowBlurRadius    UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSUInteger  glossShadowBlurRadius    UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic, assign) float  borderWidth              UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) float  arrowBase                UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) float  arrowHeight              UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSUInteger  borderWidth              UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSUInteger  arrowBase                UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSUInteger  arrowHeight              UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic, strong) UIColor *outerShadowColor         UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *outerStrokeColor         UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) float  outerShadowBlurRadius    UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSUInteger  outerShadowBlurRadius    UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGSize   outerShadowOffset        UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) float  outerCornerRadius        UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) float  minOuterCornerRadius     UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSUInteger  outerCornerRadius        UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSUInteger  minOuterCornerRadius     UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic, strong) UIColor *innerShadowColor         UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong) UIColor *innerStrokeColor         UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) float  innerShadowBlurRadius    UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSUInteger  innerShadowBlurRadius    UI_APPEARANCE_SELECTOR;
 @property (nonatomic, assign) CGSize   innerShadowOffset        UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign) float  innerCornerRadius        UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSUInteger  innerCornerRadius        UI_APPEARANCE_SELECTOR;
 
 @property (nonatomic, assign) UIEdgeInsets viewContentInsets    UI_APPEARANCE_SELECTOR;
 
@@ -224,24 +224,24 @@ typedef NS_OPTIONS(NSUInteger, WYPopoverAnimationOptions) {
 
 @property (nonatomic, strong) UIColor *glossShadowColor;
 @property (nonatomic, assign) CGSize   glossShadowOffset;
-@property (nonatomic, assign) float  glossShadowBlurRadius;
+@property (nonatomic, assign) NSUInteger  glossShadowBlurRadius;
 
-@property (nonatomic, assign) float  borderWidth;
-@property (nonatomic, assign) float  arrowBase;
-@property (nonatomic, assign) float  arrowHeight;
+@property (nonatomic, assign) NSUInteger  borderWidth;
+@property (nonatomic, assign) NSUInteger  arrowBase;
+@property (nonatomic, assign) NSUInteger  arrowHeight;
 
 @property (nonatomic, strong) UIColor *outerShadowColor;
 @property (nonatomic, strong) UIColor *outerStrokeColor;
-@property (nonatomic, assign) float  outerShadowBlurRadius;
+@property (nonatomic, assign) NSUInteger  outerShadowBlurRadius;
 @property (nonatomic, assign) CGSize   outerShadowOffset;
-@property (nonatomic, assign) float  outerCornerRadius;
-@property (nonatomic, assign) float  minOuterCornerRadius;
+@property (nonatomic, assign) NSUInteger  outerCornerRadius;
+@property (nonatomic, assign) NSUInteger  minOuterCornerRadius;
 
 @property (nonatomic, strong) UIColor *innerShadowColor;
 @property (nonatomic, strong) UIColor *innerStrokeColor;
-@property (nonatomic, assign) float  innerShadowBlurRadius;
+@property (nonatomic, assign) NSUInteger  innerShadowBlurRadius;
 @property (nonatomic, assign) CGSize   innerShadowOffset;
-@property (nonatomic, assign) float  innerCornerRadius;
+@property (nonatomic, assign) NSUInteger  innerCornerRadius;
 
 @property (nonatomic, assign) UIEdgeInsets viewContentInsets;
 
