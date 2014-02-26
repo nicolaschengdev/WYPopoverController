@@ -46,21 +46,17 @@
     [popoverAppearance setViewContentInsets:UIEdgeInsetsMake(3, 0, 0, 0)];
     */
     
-    /*
-    
-    
-    UINavigationBar *navBarAppearance = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], [WYPopoverBackgroundView class], nil];
+    UINavigationBar *navBarInPopoverAppearance = [UINavigationBar appearanceWhenContainedIn:[UINavigationController class], [WYPopoverBackgroundView class], nil];
     
     NSShadow *shadow = [[NSShadow alloc] init];
     [shadow setShadowColor:[UIColor clearColor]];
     [shadow setShadowOffset:CGSizeZero];
     
-    [navBarAppearance setTitleTextAttributes:
+    [navBarInPopoverAppearance setTitleTextAttributes:
         @{
-            NSForegroundColorAttributeName : [UIColor whiteColor],
+            NSForegroundColorAttributeName : [UIColor purpleColor],
             NSShadowAttributeName: shadow
         }];
-    */
     
     //WYPopoverTheme *theme = [WYPopoverTheme themeForIOS6];
     //[WYPopoverController setDefaultTheme:theme];

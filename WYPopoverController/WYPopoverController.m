@@ -787,11 +787,10 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
 
 @interface WYPopoverOverlayView : UIView
 {
-    BOOL _isAccessible;
+    BOOL testHits;
 }
 
 @property(nonatomic, assign) id <WYPopoverOverlayViewDelegate> delegate;
-@property(nonatomic, assign) BOOL testHits;
 @property(nonatomic, unsafe_unretained) NSArray *passthroughViews;
 
 @end
@@ -805,7 +804,6 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
 @protocol WYPopoverOverlayViewDelegate <NSObject>
 
 @optional
-//- (void)popoverOverlayView:(WYPopoverOverlayView *)overlayView didTouchAtPoint:(CGPoint)point;
 - (void)popoverOverlayViewDidTouch:(WYPopoverOverlayView *)overlayView;
 
 @end
@@ -817,26 +815,8 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
 
 @implementation WYPopoverOverlayView
 
-- (id)initWithFrame:(CGRect)aFrame
-{
-    self = [super initWithFrame:aFrame];
-    if (self)
-    {
-        self.autoresizesSubviews = NO;
-        self.accessibilityTraits = UIAccessibilityTraitNone;
-    }
-    return self;
-}
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    //UITouch *oneTouch = [touches anyObject];
-    
-    //if ([self.delegate respondsToSelector:@selector(popoverOverlayView:didTouchAtPoint:)])
-    //{
-    //    [self.delegate popoverOverlayView:self didTouchAtPoint:[oneTouch locationInView:self]];
-    //}
-    
     if ([self.delegate respondsToSelector:@selector(popoverOverlayViewDidTouch:)])
     {
         [self.delegate popoverOverlayViewDidTouch:self];
@@ -845,8 +825,7 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    if (self.testHits)
-    {
+    if (testHits) {
         return NO;
     }
     
@@ -854,9 +833,9 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
     
     if (view == self)
     {
-        self.testHits = YES;
+        testHits = YES;
         UIView *superHitView = [self.superview hitTest:point withEvent:event];
-        self.testHits = NO;
+        testHits = NO;
         
         if ([self isPassthroughView:superHitView])
         {
@@ -886,10 +865,6 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
 
 - (void)accessibilityElementDidBecomeFocused {
     self.accessibilityLabel = NSLocalizedString(@"Double-tap to dismiss pop-up window.", nil);
-}
-
-- (void)accessibilityElementDidLoseFocus {
-    
 }
 
 @end
@@ -923,6 +898,8 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
 @property (nonatomic, assign, readonly) UIEdgeInsets outerShadowInsets;
 @property (nonatomic, assign) float arrowOffset;
 @property (nonatomic, assign) BOOL wantsDefaultContentAppearance;
+
+@property (nonatomic, assign, getter = isAppearing) BOOL appearing;
 
 - (void)setViewController:(UIViewController *)viewController;
 
@@ -1007,11 +984,33 @@ static float edgeSizeFromCornerRadius(float cornerRadius) {
     return self;
 }
 
+/*
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    BOOL result = [super pointInside:point withEvent:event];
+    
+    if (self.isAppearing == NO)
+    {
+        BOOL isTouched = [self isTouchedAtPoint:point];
+        
+        if (isTouched == NO && UIAccessibilityIsVoiceOverRunning())
+        {
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil);
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, NSLocalizedString(@"Double-tap to dismiss pop-up window.", nil));
+        }
+    }
+    
+    return result;
+}
+*/
+
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *oneTouch = [touches anyObject];
+    CGPoint point = [oneTouch locationInView:self];
     
-    if ([self isTouchedAtPoint:[oneTouch locationInView:self]] == NO)
+    if ([self isTouchedAtPoint:point] == NO)
     {
         if ([self.delegate respondsToSelector:@selector(popoverBackgroundViewDidTouchOutside:)])
         {
@@ -1908,14 +1907,19 @@ static WYPopoverTheme *defaultTheme_ = nil;
     if (overlayView == nil)
     {
         overlayView = [[WYPopoverOverlayView alloc] initWithFrame:inView.window.bounds];
+        overlayView.autoresizesSubviews = NO;
+        overlayView.isAccessibilityElement = YES;
+        overlayView.accessibilityTraits = UIAccessibilityTraitNone;
         overlayView.delegate = self;
-        overlayView.userInteractionEnabled = YES;
         overlayView.passthroughViews = passthroughViews;
         
         backgroundView = [[WYPopoverBackgroundView alloc] initWithContentSize:contentViewSize];
+        backgroundView.appearing = YES;
+        backgroundView.isAccessibilityElement = YES;
+        backgroundView.accessibilityTraits = UIAccessibilityTraitNone;
+        
         backgroundView.delegate = self;
         backgroundView.hidden = YES;
-        backgroundView.accessibilityViewIsModal = YES;
         
         [inView.window addSubview:backgroundView];
         [inView.window insertSubview:overlayView belowSubview:backgroundView];
@@ -1936,8 +1940,6 @@ static WYPopoverTheme *defaultTheme_ = nil;
                 [strongSelf->viewController viewDidAppear:YES];
             }
             
-            strongSelf->backgroundView.accessibilityViewIsModal = NO;
-            
             if ([strongSelf->viewController respondsToSelector:@selector(preferredContentSize)])
             {
                 [strongSelf->viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(preferredContentSize)) options:0 context:nil];
@@ -1946,6 +1948,8 @@ static WYPopoverTheme *defaultTheme_ = nil;
             {
                 [strongSelf->viewController addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSizeForViewInPopover)) options:0 context:nil];
             }
+            
+            strongSelf->backgroundView.appearing = NO;
         }
         
         if (completion)
@@ -2032,8 +2036,6 @@ static WYPopoverTheme *defaultTheme_ = nil;
                                                  selector:@selector(keyboardWillHide:)
                                                      name:UIKeyboardWillHideNotification object:nil];
     }
-    
-    overlayView.isAccessibilityElement = YES;
 }
 
 - (void)presentPopoverFromBarButtonItem:(UIBarButtonItem *)aItem
@@ -2212,6 +2214,16 @@ static WYPopoverTheme *defaultTheme_ = nil;
     float overlayWidth = UIInterfaceOrientationIsPortrait(orientation) ? overlayView.bounds.size.width : overlayView.bounds.size.height;
     float overlayHeight = UIInterfaceOrientationIsPortrait(orientation) ? overlayView.bounds.size.height : overlayView.bounds.size.width;
     
+    float keyboardHeight = UIInterfaceOrientationIsPortrait(orientation) ? keyboardRect.size.height : keyboardRect.size.width;
+    
+    if (delegate && [delegate respondsToSelector:@selector(popoverControllerShouldIgnoreKeyboardBounds:)]) {
+        BOOL shouldIgnore = [delegate popoverControllerShouldIgnoreKeyboardBounds:self];
+        
+        if (shouldIgnore) {
+            keyboardHeight = 0;
+        }
+    }
+    
     WYPopoverArrowDirection arrowDirection = permittedArrowDirections;
     
     overlayView.bounds = inView.window.bounds;
@@ -2224,7 +2236,7 @@ static WYPopoverTheme *defaultTheme_ = nil;
     minX = popoverLayoutMargins.left;
     maxX = overlayWidth - popoverLayoutMargins.right;
     minY = WYStatusBarHeight() + popoverLayoutMargins.top;
-    maxY = overlayHeight - popoverLayoutMargins.bottom;
+    maxY = overlayHeight - popoverLayoutMargins.bottom - keyboardHeight;
     
     // Which direction ?
     //
@@ -2236,20 +2248,11 @@ static WYPopoverTheme *defaultTheme_ = nil;
     
     // Position of the popover
     //
-    float keyboardHeight = UIInterfaceOrientationIsPortrait(orientation) ? keyboardRect.size.height : keyboardRect.size.width;
-    
-    if (delegate && [delegate respondsToSelector:@selector(popoverControllerShouldIgnoreKeyboardBounds:)]) {
-        BOOL shouldIgnore = [delegate popoverControllerShouldIgnoreKeyboardBounds:self];
-        
-        if (shouldIgnore) {
-            keyboardHeight = 0;
-        }
-    }
     
     minX -= backgroundView.outerShadowInsets.left;
     maxX += backgroundView.outerShadowInsets.right;
     minY -= backgroundView.outerShadowInsets.top;
-    maxY += backgroundView.outerShadowInsets.bottom - keyboardHeight;
+    maxY += backgroundView.outerShadowInsets.bottom;
     
     if (arrowDirection == WYPopoverArrowDirectionDown)
     {
@@ -2690,8 +2693,6 @@ static WYPopoverTheme *defaultTheme_ = nil;
     {
         completionBlock();
     }
-    
-    overlayView.isAccessibilityElement = NO;
 }
 
 #pragma mark KVO
