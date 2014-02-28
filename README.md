@@ -220,16 +220,20 @@ In the implementation of your view controller
 ##### Appearance (Tint Color)
 
 ```objective-c
-WYPopoverBackgroundView* appearance = [WYPopoverBackgroundView appearance];
+[WYPopoverController setDefaultTheme:[WYPopoverTheme theme]];
+
+WYPopoverBackgroundView *appearance = [WYPopoverBackgroundView appearance];
 [appearance setTintColor:[UIColor orangeColor]];
 ```
 
 ##### Appearance (Flat Popover)
 
 ```objective-c
-UIColor* greenColor = [UIColor colorWithRed:26.f/255.f green:188.f/255.f blue:156.f/255.f alpha:1];
+UIColor *greenColor = [UIColor colorWithRed:26.f/255.f green:188.f/255.f blue:156.f/255.f alpha:1];
 
-WYPopoverBackgroundView* popoverAppearance = [WYPopoverBackgroundView appearance];
+[WYPopoverController setDefaultTheme:[WYPopoverTheme theme]];
+
+WYPopoverBackgroundView *popoverAppearance = [WYPopoverBackgroundView appearance];
         
 [popoverAppearance setOuterCornerRadius:4];
 [popoverAppearance setOuterShadowBlurRadius:0];
