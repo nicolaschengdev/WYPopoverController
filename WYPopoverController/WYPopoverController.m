@@ -210,7 +210,9 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
 #pragma clang diagnostic pop
     
 #ifdef WY_BASE_SDK_7_ENABLED
-    [self setPreferredContentSize:aContentSize];
+    if ([self respondsToSelector:@selector(setPreferredContentSize:)]) {
+        [self setPreferredContentSize:aContentSize];
+    }
 #endif
 }
 
@@ -219,7 +221,9 @@ static char const * const UINavigationControllerEmbedInPopoverTagKey = "UINaviga
     if (self.isEmbedInPopover)
     {
 #ifdef WY_BASE_SDK_7_ENABLED
-        aViewController.edgesForExtendedLayout = UIRectEdgeNone;
+        if ([aViewController respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+            aViewController.edgesForExtendedLayout = UIRectEdgeNone;
+        }
 #endif
         CGSize contentSize = [self contentSize:aViewController];
         [self setContentSize:contentSize];
