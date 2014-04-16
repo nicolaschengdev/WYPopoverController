@@ -34,6 +34,7 @@
 @synthesize bottomLeftButton;
 @synthesize bottomButton;
 @synthesize bottomRightButton;
+@synthesize dialogButton;
 
 - (void)viewDidLoad
 {
@@ -122,11 +123,19 @@
         settingsPopoverController.popoverLayoutMargins = UIEdgeInsetsMake(10, 10, 10, 10);
         settingsPopoverController.wantsDefaultContentAppearance = NO;
         
-        [settingsPopoverController presentPopoverFromRect:btn.bounds
-                                                   inView:btn
-                                 permittedArrowDirections:WYPopoverArrowDirectionAny
-                                                 animated:YES
-                                                  options:WYPopoverAnimationOptionFadeWithScale];
+        if (sender == dialogButton)
+        {
+            [settingsPopoverController presentPopoverAsDialogAnimated:YES
+                                                              options:WYPopoverAnimationOptionFadeWithScale];
+        }
+        else
+        {
+            [settingsPopoverController presentPopoverFromRect:btn.bounds
+                                                       inView:btn
+                                     permittedArrowDirections:WYPopoverArrowDirectionAny
+                                                     animated:YES
+                                                      options:WYPopoverAnimationOptionFadeWithScale];
+        }
     }
     else
     {

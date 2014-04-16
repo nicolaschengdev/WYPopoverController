@@ -125,6 +125,11 @@
                         <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="POPOVER" id="byn-bD-FGA">
+                        <barButtonItem key="leftBarButtonItem" title="dialog" id="00i-bV-EF1">
+                            <connections>
+                                <action selector="showpopover:" destination="SH8-yS-R5W" id="4BR-5E-Fcj"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="show" id="BPj-bm-hiQ">
                             <connections>
                                 <segue destination="jZu-Qq-NBM" kind="custom" identifier="AnotherPopoverSegue" customClass="WYStoryboardPopoverSegue" id="dhM-87-uhU"/>
@@ -136,6 +141,7 @@
                         <outlet property="bottomLeftButton" destination="wkW-SC-eQF" id="6OT-Fp-o67"/>
                         <outlet property="bottomRightButton" destination="TY8-Rs-h6w" id="wPB-Pe-qPE"/>
                         <outlet property="centerButton" destination="wI8-mk-rgX" id="jW6-Kz-9uK"/>
+                        <outlet property="dialogButton" destination="00i-bV-EF1" id="XdR-lm-vwa"/>
                         <outlet property="leftButton" destination="pkn-ju-kvn" id="TCp-c1-iyN"/>
                         <outlet property="rightButton" destination="o1z-4o-5bU" id="g8Z-Xe-BjX"/>
                         <outlet property="topButton" destination="Pvo-1L-Q9i" id="StH-e6-G7W"/>
