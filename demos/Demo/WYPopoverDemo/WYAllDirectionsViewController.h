@@ -22,6 +22,7 @@
 @property (nonatomic, weak) IBOutlet UIButton* bottomLeftButton;
 @property (nonatomic, weak) IBOutlet UIButton* bottomButton;
 @property (nonatomic, weak) IBOutlet UIButton* bottomRightButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *dialogButton;
 
 
 @end

@@ -1906,6 +1906,15 @@ static WYPopoverTheme *defaultTheme_ = nil;
     animated = aAnimated;
     options = aOptions;
     
+    if (!inView)
+    {
+        inView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
+        if (CGRectIsEmpty(rect))
+        {
+            rect = CGRectMake((int)inView.bounds.size.width / 2 - 5, (int)inView.bounds.size.height / 2 - 5, 10, 10);
+        }
+    }
+    
     CGSize contentViewSize = self.popoverContentSize;
     
     if (overlayView == nil)
